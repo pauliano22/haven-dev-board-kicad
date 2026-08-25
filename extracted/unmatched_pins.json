@@ -1,0 +1,1136 @@
+[
+ {
+  "designator": "U1",
+  "pin": "2",
+  "pin_name": "ASDX",
+  "x": 780,
+  "y": 780
+ },
+ {
+  "designator": "U1",
+  "pin": "3",
+  "pin_name": "ASCX",
+  "x": 780,
+  "y": 770
+ },
+ {
+  "designator": "U1",
+  "pin": "4",
+  "pin_name": "INT1",
+  "x": 780,
+  "y": 760
+ },
+ {
+  "designator": "U1",
+  "pin": "5",
+  "pin_name": "VDDIO",
+  "x": 780,
+  "y": 750
+ },
+ {
+  "designator": "U1",
+  "pin": "6",
+  "pin_name": "GNDIO",
+  "x": 780,
+  "y": 740
+ },
+ {
+  "designator": "U1",
+  "pin": "7",
+  "pin_name": "GND",
+  "x": 780,
+  "y": 730
+ },
+ {
+  "designator": "MDBT531",
+  "pin": "62",
+  "pin_name": "P0.23",
+  "x": 210,
+  "y": 865
+ },
+ {
+  "designator": "MDBT531",
+  "pin": "63",
+  "pin_name": "P1.07",
+  "x": 210,
+  "y": 855
+ },
+ {
+  "designator": "MDBT531",
+  "pin": "64",
+  "pin_name": "P1.09",
+  "x": 210,
+  "y": 845
+ },
+ {
+  "designator": "MDBT531",
+  "pin": "65",
+  "pin_name": "P0.29",
+  "x": 210,
+  "y": 835
+ },
+ {
+  "designator": "MDBT531",
+  "pin": "39",
+  "pin_name": "P0.05/AIN1",
+  "x": 430,
+  "y": 485
+ },
+ {
+  "designator": "MDBT531",
+  "pin": "41",
+  "pin_name": "VDDH",
+  "x": 450,
+  "y": 485
+ },
+ {
+  "designator": "MDBT531",
+  "pin": "42",
+  "pin_name": "GND",
+  "x": 460,
+  "y": 485
+ },
+ {
+  "designator": "CARD1",
+  "pin": "1",
+  "pin_name": "RSV",
+  "x": 930,
+  "y": 225
+ },
+ {
+  "designator": "CARD1",
+  "pin": "2",
+  "pin_name": "CS",
+  "x": 930,
+  "y": 235
+ },
+ {
+  "designator": "CARD1",
+  "pin": "11",
+  "pin_name": "EH",
+  "x": 830,
+  "y": 235
+ },
+ {
+  "designator": "CARD1",
+  "pin": "12",
+  "pin_name": "EH",
+  "x": 830,
+  "y": 295
+ },
+ {
+  "designator": "CARD1",
+  "pin": "G",
+  "pin_name": "SW",
+  "x": 930,
+  "y": 305
+ },
+ {
+  "designator": "CARD1",
+  "pin": "13",
+  "pin_name": "EH",
+  "x": 830,
+  "y": 305
+ },
+ {
+  "designator": "C14",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 730,
+  "y": 465
+ },
+ {
+  "designator": "C2",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 790,
+  "y": 465
+ },
+ {
+  "designator": "C3",
+  "pin": "2",
+  "pin_name": "2",
+  "x": 615,
+  "y": 615
+ },
+ {
+  "designator": "C3",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 615,
+  "y": 575
+ },
+ {
+  "designator": "C4",
+  "pin": "2",
+  "pin_name": "2",
+  "x": 470,
+  "y": 450
+ },
+ {
+  "designator": "C11",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 815,
+  "y": 685
+ },
+ {
+  "designator": "C11",
+  "pin": "2",
+  "pin_name": "2",
+  "x": 855,
+  "y": 685
+ },
+ {
+  "designator": "C8",
+  "pin": "2",
+  "pin_name": "2",
+  "x": 1010,
+  "y": 255
+ },
+ {
+  "designator": "R3",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 625,
+  "y": 125
+ },
+ {
+  "designator": "LED3",
+  "pin": "1",
+  "pin_name": "+",
+  "x": 380,
+  "y": 120
+ },
+ {
+  "designator": "R7",
+  "pin": "2",
+  "pin_name": "2",
+  "x": 430,
+  "y": 355
+ },
+ {
+  "designator": "R8",
+  "pin": "2",
+  "pin_name": "2",
+  "x": 435,
+  "y": 280
+ },
+ {
+  "designator": "U2",
+  "pin": "E5",
+  "pin_name": "SCL",
+  "x": 1285,
+  "y": 685
+ },
+ {
+  "designator": "U2",
+  "pin": "E4",
+  "pin_name": "SDA",
+  "x": 1285,
+  "y": 675
+ },
+ {
+  "designator": "U2",
+  "pin": "A4",
+  "pin_name": "SW",
+  "x": 1165,
+  "y": 660
+ },
+ {
+  "designator": "U2",
+  "pin": "A5",
+  "pin_name": "PGND",
+  "x": 1165,
+  "y": 650
+ },
+ {
+  "designator": "U2",
+  "pin": "B1",
+  "pin_name": "BAT",
+  "x": 1165,
+  "y": 640
+ },
+ {
+  "designator": "U2",
+  "pin": "B2",
+  "pin_name": "BAT",
+  "x": 1165,
+  "y": 630
+ },
+ {
+  "designator": "U2",
+  "pin": "B3",
+  "pin_name": "PMID",
+  "x": 1165,
+  "y": 620
+ },
+ {
+  "designator": "U2",
+  "pin": "B4",
+  "pin_name": "VINLS",
+  "x": 1165,
+  "y": 610
+ },
+ {
+  "designator": "U2",
+  "pin": "B5",
+  "pin_name": "SYS",
+  "x": 1165,
+  "y": 600
+ },
+ {
+  "designator": "U2",
+  "pin": "C1",
+  "pin_name": "ISET",
+  "x": 1165,
+  "y": 590
+ },
+ {
+  "designator": "U2",
+  "pin": "C5",
+  "pin_name": "LS/LDO",
+  "x": 1285,
+  "y": 585
+ },
+ {
+  "designator": "U2",
+  "pin": "C2",
+  "pin_name": "ILIM",
+  "x": 1165,
+  "y": 580
+ },
+ {
+  "designator": "U2",
+  "pin": "C4",
+  "pin_name": "VINLS",
+  "x": 1285,
+  "y": 575
+ },
+ {
+  "designator": "U2",
+  "pin": "C3",
+  "pin_name": "TS",
+  "x": 1165,
+  "y": 570
+ },
+ {
+  "designator": "U6",
+  "pin": "A1",
+  "pin_name": "GPOUT",
+  "x": 1285,
+  "y": 315
+ },
+ {
+  "designator": "U6",
+  "pin": "B1",
+  "pin_name": "BIN",
+  "x": 1405,
+  "y": 315
+ },
+ {
+  "designator": "U6",
+  "pin": "A2",
+  "pin_name": "SDA",
+  "x": 1285,
+  "y": 305
+ },
+ {
+  "designator": "U6",
+  "pin": "B2",
+  "pin_name": "VSS",
+  "x": 1405,
+  "y": 305
+ },
+ {
+  "designator": "U6",
+  "pin": "A3",
+  "pin_name": "SCL",
+  "x": 1285,
+  "y": 295
+ },
+ {
+  "designator": "U6",
+  "pin": "B3",
+  "pin_name": "VDD",
+  "x": 1405,
+  "y": 295
+ },
+ {
+  "designator": "U6",
+  "pin": "C1",
+  "pin_name": "SRP",
+  "x": 1285,
+  "y": 275
+ },
+ {
+  "designator": "U6",
+  "pin": "C2",
+  "pin_name": "SRN",
+  "x": 1285,
+  "y": 265
+ },
+ {
+  "designator": "U6",
+  "pin": "C3",
+  "pin_name": "BAT",
+  "x": 1285,
+  "y": 255
+ },
+ {
+  "designator": "C23",
+  "pin": "2",
+  "pin_name": "2",
+  "x": 1420,
+  "y": 295
+ },
+ {
+  "designator": "C23",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 1420,
+  "y": 255
+ },
+ {
+  "designator": "C21",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 1225,
+  "y": 225
+ },
+ {
+  "designator": "R21",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 1160,
+  "y": 265
+ },
+ {
+  "designator": "C22",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 985,
+  "y": 570
+ },
+ {
+  "designator": "C19",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 1010,
+  "y": 570
+ },
+ {
+  "designator": "C20",
+  "pin": "2",
+  "pin_name": "2",
+  "x": 1045,
+  "y": 570
+ },
+ {
+  "designator": "C10",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 1295,
+  "y": 560
+ },
+ {
+  "designator": "C17",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 1330,
+  "y": 560
+ },
+ {
+  "designator": "C18",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 1425,
+  "y": 700
+ },
+ {
+  "designator": "L2",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 1385,
+  "y": 710
+ },
+ {
+  "designator": "L2",
+  "pin": "2",
+  "pin_name": "2",
+  "x": 1425,
+  "y": 710
+ },
+ {
+  "designator": "U9",
+  "pin": "A1",
+  "pin_name": "VOUT",
+  "x": 490,
+  "y": -95
+ },
+ {
+  "designator": "R17",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 1410,
+  "y": 315
+ },
+ {
+  "designator": "R17",
+  "pin": "2",
+  "pin_name": "2",
+  "x": 1450,
+  "y": 315
+ },
+ {
+  "designator": "R15",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 1030,
+  "y": 300
+ },
+ {
+  "designator": "R19",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 990,
+  "y": 305
+ },
+ {
+  "designator": "R27",
+  "pin": "2",
+  "pin_name": "2",
+  "x": 625,
+  "y": 575
+ },
+ {
+  "designator": "R6",
+  "pin": "2",
+  "pin_name": "2",
+  "x": 1255,
+  "y": 435
+ },
+ {
+  "designator": "R13",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 1265,
+  "y": 435
+ },
+ {
+  "designator": "U3",
+  "pin": "A1",
+  "pin_name": "VOUT",
+  "x": 180,
+  "y": -50
+ },
+ {
+  "designator": "U4",
+  "pin": "2",
+  "pin_name": "K",
+  "x": 1365,
+  "y": 865
+ },
+ {
+  "designator": "Q2",
+  "pin": "3",
+  "pin_name": "D",
+  "x": 1400,
+  "y": 820
+ },
+ {
+  "designator": "Q2",
+  "pin": "1",
+  "pin_name": "G",
+  "x": 1360,
+  "y": 800
+ },
+ {
+  "designator": "U8",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 1335,
+  "y": 765
+ },
+ {
+  "designator": "R4",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 1400,
+  "y": 865
+ },
+ {
+  "designator": "R4",
+  "pin": "2",
+  "pin_name": "2",
+  "x": 1400,
+  "y": 825
+ },
+ {
+  "designator": "R1",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 930,
+  "y": 305
+ },
+ {
+  "designator": "R1",
+  "pin": "2",
+  "pin_name": "2",
+  "x": 970,
+  "y": 305
+ },
+ {
+  "designator": "U12",
+  "pin": "14",
+  "pin_name": "14",
+  "x": 585,
+  "y": 400
+ },
+ {
+  "designator": "U12",
+  "pin": "15",
+  "pin_name": "15",
+  "x": 585,
+  "y": 235
+ },
+ {
+  "designator": "U12",
+  "pin": "12",
+  "pin_name": "12",
+  "x": 575,
+  "y": 400
+ },
+ {
+  "designator": "U12",
+  "pin": "13",
+  "pin_name": "13",
+  "x": 575,
+  "y": 235
+ },
+ {
+  "designator": "U12",
+  "pin": "B7",
+  "pin_name": "DN2",
+  "x": 530,
+  "y": 330
+ },
+ {
+  "designator": "U12",
+  "pin": "A6",
+  "pin_name": "DP1",
+  "x": 530,
+  "y": 320
+ },
+ {
+  "designator": "U12",
+  "pin": "A7",
+  "pin_name": "DN1",
+  "x": 530,
+  "y": 310
+ },
+ {
+  "designator": "U12",
+  "pin": "B6",
+  "pin_name": "DP2",
+  "x": 530,
+  "y": 300
+ },
+ {
+  "designator": "U12",
+  "pin": "A8",
+  "pin_name": "SBU1",
+  "x": 530,
+  "y": 290
+ },
+ {
+  "designator": "SW1",
+  "pin": "1",
+  "pin_name": "A",
+  "x": 165,
+  "y": 315
+ },
+ {
+  "designator": "SW1",
+  "pin": "2",
+  "pin_name": "A&apos;",
+  "x": 245,
+  "y": 315
+ },
+ {
+  "designator": "U14",
+  "pin": "A2",
+  "pin_name": "NC",
+  "x": 1175,
+  "y": 115
+ },
+ {
+  "designator": "U14",
+  "pin": "L4",
+  "pin_name": "NC",
+  "x": 1415,
+  "y": 115
+ },
+ {
+  "designator": "U14",
+  "pin": "A4",
+  "pin_name": "NC",
+  "x": 1175,
+  "y": 105
+ },
+ {
+  "designator": "U14",
+  "pin": "L2",
+  "pin_name": "NC",
+  "x": 1415,
+  "y": 105
+ },
+ {
+  "designator": "U14",
+  "pin": "B1",
+  "pin_name": "NC",
+  "x": 1175,
+  "y": 95
+ },
+ {
+  "designator": "U14",
+  "pin": "K5",
+  "pin_name": "NC",
+  "x": 1415,
+  "y": 95
+ },
+ {
+  "designator": "U14",
+  "pin": "B3",
+  "pin_name": "NC",
+  "x": 1175,
+  "y": 85
+ },
+ {
+  "designator": "U14",
+  "pin": "K3",
+  "pin_name": "NC",
+  "x": 1415,
+  "y": 85
+ },
+ {
+  "designator": "U14",
+  "pin": "B5",
+  "pin_name": "NC",
+  "x": 1175,
+  "y": 75
+ },
+ {
+  "designator": "U14",
+  "pin": "K1",
+  "pin_name": "NC",
+  "x": 1415,
+  "y": 75
+ },
+ {
+  "designator": "U14",
+  "pin": "C1",
+  "pin_name": "NC",
+  "x": 1175,
+  "y": 65
+ },
+ {
+  "designator": "U14",
+  "pin": "J5",
+  "pin_name": "NC",
+  "x": 1415,
+  "y": 65
+ },
+ {
+  "designator": "U14",
+  "pin": "C5",
+  "pin_name": "NC",
+  "x": 1175,
+  "y": 55
+ },
+ {
+  "designator": "U14",
+  "pin": "D2",
+  "pin_name": "VCC",
+  "x": 1175,
+  "y": 45
+ },
+ {
+  "designator": "C27",
+  "pin": "2",
+  "pin_name": "2",
+  "x": 1145,
+  "y": 45
+ },
+ {
+  "designator": "C41",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 1720,
+  "y": 735
+ },
+ {
+  "designator": "C34",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 1750,
+  "y": 655
+ },
+ {
+  "designator": "C33",
+  "pin": "2",
+  "pin_name": "2",
+  "x": 1675,
+  "y": 655
+ },
+ {
+  "designator": "U15",
+  "pin": "F7",
+  "pin_name": "AVDD",
+  "x": 1685,
+  "y": 620
+ },
+ {
+  "designator": "U15",
+  "pin": "G2",
+  "pin_name": "AVDD",
+  "x": 1695,
+  "y": 620
+ },
+ {
+  "designator": "U15",
+  "pin": "A3",
+  "pin_name": "DVDD",
+  "x": 1705,
+  "y": 620
+ },
+ {
+  "designator": "U15",
+  "pin": "B3",
+  "pin_name": "DVDD",
+  "x": 1715,
+  "y": 620
+ },
+ {
+  "designator": "U15",
+  "pin": "E1",
+  "pin_name": "HPVDD",
+  "x": 1725,
+  "y": 620
+ },
+ {
+  "designator": "U15",
+  "pin": "A2",
+  "pin_name": "HPVDD_L",
+  "x": 1735,
+  "y": 620
+ },
+ {
+  "designator": "U15",
+  "pin": "D1",
+  "pin_name": "HPVDD_L",
+  "x": 1745,
+  "y": 620
+ },
+ {
+  "designator": "U15",
+  "pin": "B5",
+  "pin_name": "IOVDD",
+  "x": 1755,
+  "y": 620
+ },
+ {
+  "designator": "U15",
+  "pin": "C5",
+  "pin_name": "DMIC01/MP1",
+  "x": 1890,
+  "y": 525
+ },
+ {
+  "designator": "U15",
+  "pin": "C3",
+  "pin_name": "DMIC23/MP2",
+  "x": 1890,
+  "y": 515
+ },
+ {
+  "designator": "U15",
+  "pin": "C4",
+  "pin_name": "DMIC_CLK/MP0",
+  "x": 1890,
+  "y": 505
+ },
+ {
+  "designator": "U15",
+  "pin": "G8",
+  "pin_name": "AINN0",
+  "x": 1890,
+  "y": 355
+ },
+ {
+  "designator": "U15",
+  "pin": "G6",
+  "pin_name": "AINN1",
+  "x": 1890,
+  "y": 345
+ },
+ {
+  "designator": "U15",
+  "pin": "G5",
+  "pin_name": "AINN2",
+  "x": 1890,
+  "y": 335
+ },
+ {
+  "designator": "U15",
+  "pin": "F6",
+  "pin_name": "AINP0",
+  "x": 1890,
+  "y": 325
+ },
+ {
+  "designator": "U15",
+  "pin": "F5",
+  "pin_name": "AINP1",
+  "x": 1890,
+  "y": 315
+ },
+ {
+  "designator": "U15",
+  "pin": "F4",
+  "pin_name": "AINP2",
+  "x": 1890,
+  "y": 305
+ },
+ {
+  "designator": "U15",
+  "pin": "B8",
+  "pin_name": "QSPIM_CLK/MP11",
+  "x": 1890,
+  "y": 275
+ },
+ {
+  "designator": "U15",
+  "pin": "F8",
+  "pin_name": "QSPIM_CS/MP12",
+  "x": 1890,
+  "y": 265
+ },
+ {
+  "designator": "U15",
+  "pin": "C8",
+  "pin_name": "QSPIM_SDIO0/MP13",
+  "x": 1890,
+  "y": 255
+ },
+ {
+  "designator": "U15",
+  "pin": "D8",
+  "pin_name": "QSPIM_SDIO1/MP14",
+  "x": 1890,
+  "y": 245
+ },
+ {
+  "designator": "U15",
+  "pin": "E2",
+  "pin_name": "UART_COMM_RX/MP18",
+  "x": 1550,
+  "y": 240
+ },
+ {
+  "designator": "U15",
+  "pin": "E8",
+  "pin_name": "QSPIM_SDIO2/MP15",
+  "x": 1890,
+  "y": 235
+ },
+ {
+  "designator": "U15",
+  "pin": "D2",
+  "pin_name": "UART_COMM_TX/MP17",
+  "x": 1550,
+  "y": 230
+ },
+ {
+  "designator": "U15",
+  "pin": "E7",
+  "pin_name": "QSPIM_SDIO3/MP16",
+  "x": 1890,
+  "y": 225
+ },
+ {
+  "designator": "U15",
+  "pin": "G7",
+  "pin_name": "AGND",
+  "x": 1710,
+  "y": 130
+ },
+ {
+  "designator": "U15",
+  "pin": "A4",
+  "pin_name": "DGND",
+  "x": 1720,
+  "y": 130
+ },
+ {
+  "designator": "U15",
+  "pin": "B4",
+  "pin_name": "DGND",
+  "x": 1730,
+  "y": 130
+ },
+ {
+  "designator": "U15",
+  "pin": "F1",
+  "pin_name": "HPGND",
+  "x": 1740,
+  "y": 130
+ },
+ {
+  "designator": "C31",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 1715,
+  "y": 835
+ },
+ {
+  "designator": "C36",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 1735,
+  "y": 870
+ },
+ {
+  "designator": "R9",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 605,
+  "y": 60
+ },
+ {
+  "designator": "CN1",
+  "pin": "13",
+  "pin_name": "13",
+  "x": 1055,
+  "y": 785
+ },
+ {
+  "designator": "CN1",
+  "pin": "14",
+  "pin_name": "14",
+  "x": 1115,
+  "y": 785
+ },
+ {
+  "designator": "CN1",
+  "pin": "15",
+  "pin_name": "15",
+  "x": 1055,
+  "y": 775
+ },
+ {
+  "designator": "CN1",
+  "pin": "16",
+  "pin_name": "16",
+  "x": 1115,
+  "y": 775
+ },
+ {
+  "designator": "CN1",
+  "pin": "17",
+  "pin_name": "17",
+  "x": 1055,
+  "y": 755
+ },
+ {
+  "designator": "CN1",
+  "pin": "18",
+  "pin_name": "18",
+  "x": 1115,
+  "y": 755
+ },
+ {
+  "designator": "CN1",
+  "pin": "19",
+  "pin_name": "19",
+  "x": 1055,
+  "y": 745
+ },
+ {
+  "designator": "CN1",
+  "pin": "20",
+  "pin_name": "20",
+  "x": 1115,
+  "y": 745
+ },
+ {
+  "designator": "CN1",
+  "pin": "21",
+  "pin_name": "21",
+  "x": 1055,
+  "y": 735
+ },
+ {
+  "designator": "CN1",
+  "pin": "22",
+  "pin_name": "22",
+  "x": 1115,
+  "y": 735
+ },
+ {
+  "designator": "CN1",
+  "pin": "23",
+  "pin_name": "23",
+  "x": 1055,
+  "y": 725
+ },
+ {
+  "designator": "CN1",
+  "pin": "24",
+  "pin_name": "24",
+  "x": 1115,
+  "y": 725
+ },
+ {
+  "designator": "R10",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 605,
+  "y": -10
+ },
+ {
+  "designator": "C42",
+  "pin": "2",
+  "pin_name": "2",
+  "x": 1655,
+  "y": 690
+ },
+ {
+  "designator": "R28",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 1965,
+  "y": 830
+ },
+ {
+  "designator": "C47",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 1745,
+  "y": 765
+ },
+ {
+  "designator": "C48",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 990,
+  "y": 810.0000000000001
+ },
+ {
+  "designator": "C45",
+  "pin": "1",
+  "pin_name": "1",
+  "x": 1960,
+  "y": 840
+ }
+]

@@ -1,0 +1,5662 @@
+{
+  "schematics": {
+    "f608cfd613e24ea7937ea7eb0aab41a1": {
+      "name": "OpenEarable - Main v2.7",
+      "sheets": [
+        {
+          "name": "OpenEarable v2.7 Main - Schematic",
+          "id": 1,
+          "uuid": "bd38f6a059504bf28556834469bc5c69"
+        }
+      ]
+    }
+  },
+  "pcbs": {
+    "7be1a0d4b47a427b935eec6c7480da3e": "OpenEarable v2.7 Main - Layout"
+  },
+  "panels": {},
+  "symbols": {
+    "014cd8a6e77b4e788936cc6d63d20f96": {
+      "source": "98481d4d729b8f9e801d321ebdeee1fd",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SPI_CS",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "04035c4d9ed543db8e41708dda35714b": {
+      "source": "fb8da5a37e4c9aa935c3c109de7de29b",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SPI_CS_FLASH",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "0843ad20752a441585eca828c8dec4e8": {
+      "source": "a36d042246648a600e19b97bea79a498",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "+1.8V",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "0a304570326240b9a076d55bd4c12713": {
+      "source": "6b6961ea970ae14f51ab1cf0a541aaef",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SD_STATE_3V3",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "0b8d7c529ccc4203baf96de882493cf3": {
+      "source": "ef1fbfe087bcb7cb39b80bb76c865333",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "CSD13380F3T",
+      "version": "4693e5a80e039dc5f487d7156b38be96",
+      "type": 2
+    },
+    "0be4c84d8e7d4159b2b85a61c0a42a16": {
+      "source": "34b9dabaaa6b4b4b5ca584f8af34dfff",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SCL2",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "0ccd023b435b4ddfb4a47129aceec349": {
+      "source": "f904c05bacbf52cb70ce2402fb1ffd85",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "2.2uH",
+      "version": "becb9814f19bf235f442e03f5e66b3ae",
+      "type": 2
+    },
+    "0f1107d38fd0423497bad5f7b1e80013": {
+      "source": "44731c3f3c34f1f411c735849449855c",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "27Ω",
+      "version": "ae114c72b110b8c54546c9fd00e81106",
+      "type": 2
+    },
+    "12aff8f7f4b2477c9d1fed19aeaeb568": {
+      "source": "15f6b42071ee4e500b6cc5363a0d4404",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "BM46B-12DS-0.35V(51)",
+      "version": "fe8c9be861a548b6ecc23580bdb72d92",
+      "type": 2
+    },
+    "1563fe0b6d994a7aaf4c822c8d806b2e": {
+      "source": "21c22b7936b98118c4affb906b2c7352",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SENSORS_ENABLE",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "15a502bca0334d7b8a8636e70f7064e3": {
+      "source": "8b975e52915ce8944ed3b96a2c6e6200",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "IO5",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "178a1b72d529477095d9f64e69340b8e": {
+      "source": "486c4774a4992df7d8fd9d583c27d868",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SDA2",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "19aa8a1d0bec4e46abe93167032140e4": {
+      "source": "58331a8e9a936d2f7b7548b052373455",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "AP22916BCA4-7",
+      "version": "53ca63aeda95355fae3c37bee5a27fa0",
+      "type": 2
+    },
+    "1aadafb4de4f45c48b2dee1ea42ecd14": {
+      "source": "81d1989c745f3f679249878ebd33158b",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "V_BAT",
+      "version": "f2e84fe76375caf8395100ee8bf21fc4",
+      "type": 18
+    },
+    "1c78f376fbf542948f97307c4949925a": {
+      "source": "b5d46e7a95a4c0def1f051488deef357",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "RGB_B",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "1db517380ba346dba8c7079d1ea09391": {
+      "source": "68d91d9da1124cda3f5a8d3e097da0df",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "4.7uF, 10V",
+      "version": "150dfba53e1b3ad746e1d7db34ba0788",
+      "type": 2
+    },
+    "234b594810c34992965ddbf07fc3a60b": {
+      "source": "ac911193821b4a758bc08c81ea7f15c2|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Connectors\",\"Board-to-Board and Backplane Connector\"]",
+      "title": "BM46B-12DP-0.35V(51)",
+      "version": "1731919219",
+      "type": 2
+    },
+    "23bf983be53a40ec978373d19383b678": {
+      "source": "d67554ba4509d713bef7ed28a9a7fc32",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SD_STATE",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "245a2f013f944a8aa861d046f659d1fd": {
+      "source": "eec5ca16eb7a29985d7dcb84eac54c07|897a2117ee0a4f329206e23f09b51de9",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "GND",
+      "version": "95c2d3044e52c8e3322d473919e98840",
+      "type": 18
+    },
+    "255d46ca3f474e01989db70e3d597941": {
+      "source": "b873ca5a050395fa34ebb9bb38f9ecf1",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "USB_DP",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "25da833c6b9a47fe8aa141a01f78a795": {
+      "source": "c3c547e28698a34ef1ad7b5c48703a38",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "DAC_ENABLE",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "25ec47028b6744d18a92d45cdf912274": {
+      "source": "92170de8dfde391e63d39953492144b4",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "RGB_G",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "274af20c5dfb408cb1c4558c2b62bbe8": {
+      "source": "136f0baacd6683a1b360ec7cbf407506",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "GT-USB-9047A",
+      "version": "8859321cadf402c67bb24ed209132d82",
+      "type": 2
+    },
+    "2a1a842d5ae04d039d46a2f6e713b111": {
+      "source": "d7d03cb2e26aacdb6a77ee36ab7f6bfa",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "USB_D+",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "2abc8bff844340fa93d742abe58b4ed6": {
+      "source": "b5558505fd37792b69f9b503cb7c87e7",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "CSD23382F4",
+      "version": "dfd6bb9490e738b0927e55e46090b76c",
+      "type": 2
+    },
+    "2dd203fe439944aab69e582af1eeeeea": {
+      "source": "8b975e52915ce8944ed3b96a2c6e6200",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "IO5",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "2e5366eef5134585aba916e46e87e8ee": {
+      "source": "a3a83c77ee72474295b63b0687e7493b|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Crystals, Oscillators, Resonators\",\"Crystal Oscillators\"]",
+      "title": "SX1M24.576M10F30TNN",
+      "version": "1729729045",
+      "type": 2
+    },
+    "2ed6c032195e441c9faf7f510fa7821f": {
+      "source": "b06d208a92130bfc489fb412adc47d35",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "IO6",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "30313df366da4b07975310105ccaddf8": {
+      "source": "b44faf698e59dfd69432d1f4fa6bd317",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "XL1",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "34fc0ec460b741b782adefbdd35d0827": {
+      "source": "85ffc11975d96d73d223a3c2a726a9f8",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "10kΩ",
+      "version": "ae114c72b110b8c54546c9fd00e81106",
+      "type": 2
+    },
+    "3758ce8cbdc04329980131db51170595": {
+      "source": "44d19721ce7ab1277bf7241c117b1c1c",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "PDMDIN",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "37a24b37f8904c20af54d062d8e88a3a": {
+      "source": "ef53a3f0221b0cf8c07d9d4bb5ad0235",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SPI_MOSI",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "38074f45b4334cd2b6c4beb02760be0c": {
+      "source": "047b37855364f25ce01708c60aeabe37",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SDA",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "3a3c330ff1ab42d5a19c25cab1d561b8": {
+      "source": "d7d03cb2e26aacdb6a77ee36ab7f6bfa",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "USB_D+",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "3ae9c0029c514be399e03c69bbcf64dc": {
+      "source": "63d32ba97c83f6fbe737da5ee9ac7fcf",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "KTD2026",
+      "version": "bdefe2e502b055cd845cb7596d2e8ce2",
+      "type": 2
+    },
+    "3b9b8b0cb5914843b11098080fcb8b82": {
+      "source": "9ae0a3f212b2e5f9d9aa5a8b59eeb9f2",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "USB_D-",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "40325b8225854828bb4bb82e1ce5f63e": {
+      "source": "814277427c0f0d81ac5089fe70348989",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "PDMCLK",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "4110b0a27c044ec488b27f623967c56d": {
+      "source": "f65ec734f3aeaacc900bbbd0a6aad831",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "TS2819A 230GF",
+      "version": "2f2a8067e10ea45ccc957ca8f03a2755",
+      "type": 2
+    },
+    "41fde30161c549e28f7d17195d22733e": {
+      "source": "5df3b602b9603f1a5309bed94e1f7963",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "DOUT",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "420d9913a7aa404a99d4a256b9d96b93": {
+      "source": "047b37855364f25ce01708c60aeabe37",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SDA",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "42ea36644e0e4e7c8b2a75b4e3f45326": {
+      "source": "3b302190c96b5cd8dfcb199ca3be44dc",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SD_ENABLE",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "4332925760ac47c985cc4336942dd773": {
+      "source": "5b92c21139ebf3920c9be88a21b71899",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "#ERROR",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "44b9cc3e9a87445fbbdfd5af99bd11a0": {
+      "source": "6980fbe642689267e423b8f93b6c64ea",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "1uF",
+      "version": "e567a042495753f23b9bb900e250616c",
+      "type": 2
+    },
+    "4538b9646a184278944d6a720f12eb40": {
+      "source": "d5de2300d114c89158243a97262f4e01",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "ADAU1860BCBZRL",
+      "version": "3c5a1e7d037b157dc49da3e658ab1d5f",
+      "type": 2
+    },
+    "46e9ebc2f50f4a58af3a923f6f30041b": {
+      "source": "a05fad7a83dd7479d474af25a6e2bed0",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SWCLK",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "47c1322aff3548a88810d685a660b7de": {
+      "source": "d25b70793cdf78b64be5405a9ee85aac",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "CC_#CD",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "48b7d9d6c6fa43218c2967b48e75012f": {
+      "source": "4f52d2b64f51c93bfbace7ff3f41fae4",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "PRTR5V0U2F",
+      "version": "d36ac8af185dc19bf98c363f0b03a188",
+      "type": 2
+    },
+    "49efe43c06a44b959162680f319266b0": {
+      "source": "01db972763294804a52bbb74cc96a867",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "VCC",
+      "version": "f2e84fe76375caf8395100ee8bf21fc4",
+      "type": 18
+    },
+    "4ab2017d9f474e1488a1f154e898d216": {
+      "source": "95d1d9045e35cce65249ccf8e0785f3a",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "BQ27220YZFR",
+      "version": "95041fe7013d0239ef3adde64e7a1896",
+      "type": 2
+    },
+    "4e527539713b45dd84c7000f756bd9e7": {
+      "source": "5d717e24dcb9ffbde282c264cabba2df",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "IO3",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "50cd79b2218f4111a0ed9d991bc51f77": {
+      "source": "d0e2f12d370a42ce217716d0e4a5417e",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "V_LS",
+      "version": "f2e84fe76375caf8395100ee8bf21fc4",
+      "type": 18
+    },
+    "5135b2183b674198b80b73abfb462bd4": {
+      "source": "e73cdd9ce5e81fa06c5b0af30c36f581",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "LSCTRL",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "53631752f9ef4194b72bf40b505b994a": {
+      "source": "cf7caa8d9b60cfcfa196803612733318",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "2.2uF",
+      "version": "150dfba53e1b3ad746e1d7db34ba0788",
+      "type": 2
+    },
+    "540437cb6fd84005b9c4f5d3c4a9556b": {
+      "source": "c798e24cc093b912c3e99d42c6ccb598",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "NRF_I2S_MCK",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "546aa745b041433c8afbb3a8862e428c": {
+      "source": "7051349fa1a21c0fd1261b9468d71634",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "TF-06A",
+      "version": "541be77b35d49805013b13d7aebea3bf",
+      "type": 2
+    },
+    "555108e960b244baad3e9570367fa071": {
+      "source": "ee8837026aec006c2290acaa241306ea",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SPI_MISO",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "5c0ca3ae287347da86235ec680f59e4f": {
+      "source": "d0e2f12d370a42ce217716d0e4a5417e",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "V_LS",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "5d8dd199850b4aa0bbceeaed00bf4849": {
+      "source": "2b7ddf89908d4fe9b0b468f7ae2dc20b|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Capacitors\",\"Multilayer Ceramic Capacitors MLCC - SMD/SMT\"]",
+      "title": "GJM0336C1E200JB01D",
+      "version": "1729690884",
+      "type": 2
+    },
+    "5dfbd230c8aa41bcb1b99dc1b1771e6d": {
+      "source": "baf6c0f2f878b192ce3d4189abc9bf3e",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "Anonymous Authors_Customize",
+      "version": "48fd6e6c85b95752b9b4e5cdc68a16e7",
+      "type": 20
+    },
+    "5f246ba445bc4c0d8e117059eaae77c4": {
+      "source": "bf0fe4bff7867b87260788f72ca912c5",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "BQ25120AYFPR",
+      "version": "a8dc30d4da2300dd9ea6345cbc9ed5cc",
+      "type": 2
+    },
+    "60ba7807e7bd43a3811bf3145b946d9c": {
+      "source": "5ec62a159a323ab71d31fada259b7bdf",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "1MΩ",
+      "version": "19b0dbaf799d466bc3e76871fc6921bf",
+      "type": 2
+    },
+    "60cffb55702144b2b8f44bd613262c3d": {
+      "source": "b7913a73f90dac7c11c6db21a272afde",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "1uF &gt;10V",
+      "version": "cb8e94a602dff0afdd264fcabe8c87b9",
+      "type": 2
+    },
+    "62ca2d53bb164a1390c2f8f80ece00a3": {
+      "source": "a36d042246648a600e19b97bea79a498",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "+1.8V",
+      "version": "f2e84fe76375caf8395100ee8bf21fc4",
+      "type": 18
+    },
+    "654c827716ac46d794638bc6fd11721d": {
+      "source": "5d717e24dcb9ffbde282c264cabba2df",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "IO3",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "67ad4d5106fc4f669ae3044a745a6c37": {
+      "source": "be13a911fe29ccb8799d77b217f7fcfd",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "VUSB",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "6c93cc4621174aa283d272d552143007": {
+      "source": "678a9e81e58d74d58ba905b566a33693",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "3V3",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "6cd75f12a96840e2b0ab7c65f39bc6a5": {
+      "source": "851071be6138ecf2b177adae6e1298f9",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SN74AXC4T774RSVR",
+      "version": "59e1ff9b398df40a66162028bb1dbf10",
+      "type": 2
+    },
+    "6d1028d64f964e2294a6db2713ecb14b": {
+      "source": "0363dacca15f217f3960874efb0487f3",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "DAC_P",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "722eb34424e6483bb8ea6e7803ae6227": {
+      "source": "7a38fb204b7f48b7af0f2da664eae747|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Capacitors\",\"Multilayer Ceramic Capacitors MLCC - SMD/SMT\"]",
+      "title": "CC0201GRNPO9BN200",
+      "version": "1715989253",
+      "type": 2
+    },
+    "728b9ec7e8cc4e2794409383de309b4f": {
+      "source": "38645ada52c397206fe98a96f0495525",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "CC_#PG",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "731f22e7a3744c9886211d68ebae3f89": {
+      "source": "2ec6894361f64e58b06b7822750c5989|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "33pF (330) ±5% 50V",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Capacitors\",\"Multilayer Ceramic Capacitors MLCC - SMD/SMT\"]",
+      "title": "GRM0335C1H330JA01D",
+      "version": "1713635840",
+      "type": 2
+    },
+    "7648b64b415b4b26b4d1ebbd0bbcd0d8": {
+      "source": "814fb757db8647f5c63d70172e1bf784",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SPI_CS_SD",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "78ca2fdd5297464f838d19a159423edb": {
+      "source": "5616a73f0ef93b2434cf38856392bc45",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "TDO",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "79428eef80d94768803263df2a0e64b4": {
+      "source": "9e5dfc0ebc078e4f03650d778f13d412",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "TMS",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "79ba850d62024393b6af2c46b4fbf3b8": {
+      "source": "486c4774a4992df7d8fd9d583c27d868",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SDA2",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "79f12fb945fc41dc9ccddeddc547e125": {
+      "source": "2924fbcaaec048e389651912b4384f34|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "title": "Sheet-Symbol_A4",
+      "version": "1734001332",
+      "type": 20
+    },
+    "7b242d3e95d24b869f75eca8d655bc73": {
+      "source": "44d19721ce7ab1277bf7241c117b1c1c|897a2117ee0a4f329206e23f09b51de9",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "PDMDIN",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "7b4c120bc7724dce969509d05be01181": {
+      "source": "9ae0a3f212b2e5f9d9aa5a8b59eeb9f2",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "USB_D-",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "7c87e764d8ce4dea8222ea354abfc6c8": {
+      "source": "74bf3e2976fc972f15fb7ed7e0d18525",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "V_PMID",
+      "version": "f2e84fe76375caf8395100ee8bf21fc4",
+      "type": 18
+    },
+    "7d51581e3a784f2b94720578224ebbaa": {
+      "source": "b500cbd8bf10bf4169aed9fee87652bd",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "BMX160",
+      "version": "03686b8835a88ab159ed464bf06e401d",
+      "type": 2
+    },
+    "816648c23f6342018a51c462006ec71c": {
+      "source": "209ac48270863f70bfbb6a782f587bc4",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "USB_DM",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "8250a18b8abf4cd1b16bc85660cf6b54": {
+      "source": "ffa17874525c67430a6b2106158f1045",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "IO2",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "85d78960cf4847cd89934547c5704fbf": {
+      "source": "150d16d19e7c4375b63545df0186b2ca|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Capacitors\",\"Multilayer Ceramic Capacitors MLCC - SMD/SMT\"]",
+      "title": "C0402C103J3RACAUTO",
+      "version": "1747353617",
+      "type": 2
+    },
+    "8846641bee12498a81b9e975f0af1081": {
+      "source": "2b8544857feae7f156fd66499634c309",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SCL",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "89c81077bcd8421ea0c51716d97a21be": {
+      "source": "53f93baa3057821107c750323892fa92",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "INT",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "8df5256a848141ef90fdfd61b275372a": {
+      "source": "af105b898fd629b7e04ad003c2574ee6",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "RGB_R",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "8e2d453db1c548ae8023edfd3cbfd8ac": {
+      "source": "fb9e56f8ecf2ee63789a599ed5219eae",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "2kΩ",
+      "version": "ae114c72b110b8c54546c9fd00e81106",
+      "type": 2
+    },
+    "9098564d9dac473d892cb9e4db02bff4": {
+      "source": "b06d208a92130bfc489fb412adc47d35",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "IO6",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "91df503f4dca44a78925483d4a83e387": {
+      "source": "eec5ca16eb7a29985d7dcb84eac54c07",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "GND",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "9758560d975c43388e87e0fb04ceb5dd": {
+      "source": "eec5ca16eb7a29985d7dcb84eac54c07",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "GND",
+      "version": "95c2d3044e52c8e3322d473919e98840",
+      "type": 18
+    },
+    "998f0f269c824559b3cad7d2f3e216d6": {
+      "source": "8c707d354052eee20eadd4b3687e3d71",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SPI_CLK_SD",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "9e729fb96b994e1fa60c0c12dc812851": {
+      "source": "2e96a6d536350878a71e18c2def9be3d",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "XL-0201SURC",
+      "version": "bda20d47feca1a6a2518886826b57906",
+      "type": 2
+    },
+    "a3ce8b8ae45c4153a3c0ae2020f07857": {
+      "source": "73e837461c851d325a262d88bcc2e760",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "10uF",
+      "version": "67c598b310d578d6edf36ca946bfddff",
+      "type": 2
+    },
+    "a5135b51e8a84f51bcbd3a372c3c3ed5": {
+      "source": "2db875c39c2808c558f206889bb07aa8",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "FLASH_RESET",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "a591da9ef9fc4fdb9d43b8eaba49a98d": {
+      "source": "9a9ab55bd203a2f05adcb21b401b3152",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SCL1",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "a6cfeb819b3f4d75805f96209adb7f90": {
+      "source": "bde1b57784d65e4e5b78ee53f1cbe846",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "51kΩ",
+      "version": "ae114c72b110b8c54546c9fd00e81106",
+      "type": 2
+    },
+    "a7b45eca2a8b448783829c67c76ad54a": {
+      "source": "67e272be525dee988e9095e3dc4e74ef",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "10mΩ, 1%",
+      "version": "2c9a2ae29932e234dc75b292f8654eb5",
+      "type": 2
+    },
+    "a9704ddf5b9448e98736747b2cb76686": {
+      "source": "ffa17874525c67430a6b2106158f1045",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "IO2",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "abe28ad76c4044a1bd202a9152756175": {
+      "source": "251c148443daae7a6da07f52ddaf1e21",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "XL2",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "ac70ca19452747538f03e2dbc3b362ec": {
+      "source": "2b8544857feae7f156fd66499634c309",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SCL",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "b320fa77e98a468082b9913d62e9964f": {
+      "source": "27c9c5f40344ea507dd5a4302d63f1bc",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "V_SD",
+      "version": "f2e84fe76375caf8395100ee8bf21fc4",
+      "type": 18
+    },
+    "b5bdc27c75d44f9cb11d0f84e8f1be2c": {
+      "source": "db77c12d988e4d41bbd41840df5d4551|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Crystals, Oscillators, Resonators\",\"Crystals\"]",
+      "title": "CN4024M57620001",
+      "version": "1698208217",
+      "type": 2
+    },
+    "b5eaee34f8914725ab4f5c867f495eea": {
+      "source": "96fa3d4b0fb06a1a08e95cab75051eeb",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "2.2Ω",
+      "version": "68b4ee6187414e403497105ab9504433",
+      "type": 2
+    },
+    "b6995a9ee4a14ab4a49c409949f63d22": {
+      "source": "6b5937b7fbb3aacc451c06ed475f93ee",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "MX25R6435FBFIL0",
+      "version": "5269f55f1ed6e8ec329fc1a77947b174",
+      "type": 2
+    },
+    "b77a0104219045859090cb26f76cf634": {
+      "source": "854f59df9f9f081946de83ce42f38764",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SPI_CLK",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "b825a8fe963e4fb994bcd073cdbd9741": {
+      "source": "afe66ba2a6cb24fafe364045b4081bb3",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "5.1kΩ",
+      "version": "ae114c72b110b8c54546c9fd00e81106",
+      "type": 2
+    },
+    "b9ee34b3f1c14a299d49153d87cefeb2": {
+      "source": "fb213b92795b93f39b8d207248ec2889",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "TCK",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "c12234aa91c940379b899f90137a9708": {
+      "source": "b035aa7f8fe5423dacaadcc4d7580ca4|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Crystals, Oscillators, Resonators\",\"Crystals\"]",
+      "title": "7D024576H01",
+      "version": "1715280455",
+      "type": 2
+    },
+    "c1830b700d6043e2a05cf3935c490f7e": {
+      "source": "73e837461c851d325a262d88bcc2e760",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "10uF",
+      "version": "73fe26653290e12c1ec714d9e0cb1e08",
+      "type": 2
+    },
+    "c3e69f989db34e0c9028a27fb03b6943": {
+      "source": "536387d3f3178064766c40a0c961898a",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "510Ω",
+      "version": "f0d8cf956bd92d3cd2db435d3fa53bae",
+      "type": 2
+    },
+    "c402cc7793e6490bbc467b68d128a022": {
+      "source": "83e5f1ccde592086d75cf173f1009b38",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SWDIO",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "c429abd486064d8485d94a3da86f8c30": {
+      "source": "e78bf01a7575d536f563399d88ad6a31",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "TDI",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "c5d9a036bfc94529878cc8c7c7a30521": {
+      "source": "2914b1362c8d4a788ddb4ae7081d3257|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Crystals, Oscillators, Resonators\",\"Crystals\"]",
+      "title": "ECS-245.7-12-33Q-JEN-TR",
+      "version": "1706788869",
+      "type": 2
+    },
+    "c637cb37876d432e91fb4e11619bc2c2": {
+      "source": "be13a911fe29ccb8799d77b217f7fcfd",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "VUSB",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "c676c6061bcb4beb95f47c9384f1d8bc": {
+      "source": "678a9e81e58d74d58ba905b566a33693",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "3V3",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "c72625813f574263aa1a326914aec71c": {
+      "source": "81e2e2b85771a4647c1ee71b118ba648",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "MDBT53",
+      "version": "a31cb9008e37dd2b5d23c6b8376cc5d6",
+      "type": 2
+    },
+    "cccd54e52e754d6f907ffd2950b05fe5": {
+      "source": "1ecd1faa503ae1555e8c0f725c83aacb",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "9pF",
+      "version": "150dfba53e1b3ad746e1d7db34ba0788",
+      "type": 2
+    },
+    "cd74d5a3c5c041488b5d3d520c795fd8": {
+      "source": "a5650424d6c42d6d416cb8dcd32bbcc2",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "10uF, &gt;4V",
+      "version": "cb8e94a602dff0afdd264fcabe8c87b9",
+      "type": 2
+    },
+    "cdd958d347ac46f3af244ccf26fa4755": {
+      "source": "0756f27ca9ade505a577fcdbfde2969b",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "DIN",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "d1236cdb46a34a2c922614751a33fc06": {
+      "source": "bfb1619b0a6aff1d863886218a181f37",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "LRCLK",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "d3366ed3e8754cfeba754ffc9c96fd57": {
+      "source": "8e1d7fad72a3a121e29699dee066bd65",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "CLE-107-01-G-DV",
+      "version": "588fe0279110c4257ecebddf387771e9",
+      "type": 2
+    },
+    "d469ccad32034069a9a9f0a03327465c": {
+      "source": "028d2f6029c9071bfa9a7c286f584ca6",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SDA1",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "d4f908d6d7cb481a808f598cf7960644": {
+      "source": "81d8d47f397a4237ab04cea3965640f1|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Connectors\",\"Wire To Board Connector\"]",
+      "title": "BM03B-ACHSS-GAN-ETF",
+      "version": "1732069802",
+      "type": 2
+    },
+    "d573fbcf833f4038a40534e2a47e1687": {
+      "source": "028d2f6029c9071bfa9a7c286f584ca6",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SDA1",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "d5a13d880444485995f5a878be7259a2": {
+      "source": "34b9dabaaa6b4b4b5ca584f8af34dfff",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SCL2",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "d6c2d55bb7aa4307b8d9122a4670c6a2": {
+      "source": "678a9e81e58d74d58ba905b566a33693",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "3V3",
+      "version": "f2e84fe76375caf8395100ee8bf21fc4",
+      "type": 18
+    },
+    "da5dae236f9b40be8840a1e655560bf0": {
+      "source": "15eb0c6528041d838fbf92321ace1e1c",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SPI_MOSI_SD",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "dab00fe37a964d32bbfd346fe0e04237": {
+      "source": "36d2ec13836abb5d4556e83af47a202b",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "MR#",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "e0c1dac53e7b4f8795ef37f1c3b4fc59": {
+      "source": "48191582db40397111b7a68f6dd2eacc",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "4.7uF",
+      "version": "150dfba53e1b3ad746e1d7db34ba0788",
+      "type": 2
+    },
+    "e169eb4cf2164c7a837e93b7f108cd96": {
+      "source": "e2aa6c376bb606ea602ca53753f6d4a2",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "DAC_N",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "e32f101caafd4dbda68889d9b2290b05": {
+      "source": "814277427c0f0d81ac5089fe70348989",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "PDMCLK",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "e3ff592d7dcc4af29991e2f70f1e0dca": {
+      "source": "44c269f2cad8884a0e23a0c7104e2643",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "MHPA1010RGBDT",
+      "version": "51024885d6a109dfebf151879154ba87",
+      "type": 2
+    },
+    "e46b8d5925ba407782bf76d732a7c784": {
+      "source": "d4015baee0214d6f8c9f5a0ac53b8cf0|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Resistors\",\"Chip Resistor - Surface Mount\"]",
+      "title": "RC0201FR-07220RL",
+      "version": "1706527560",
+      "type": 2
+    },
+    "ea5e5af77a7f4045ad8e9b52a4c7865b": {
+      "source": "cb2a2425d9e2b650f55b8603a4a9aa52",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "Q13FC1350000200",
+      "version": "6f26103cb0e60387c7e8c7d8cffa3a22",
+      "type": 2
+    },
+    "ebfcb76c72104d19b00ffc2689874732": {
+      "source": "271ff621ce29b62be1553497f3817c18",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "ON+BTN",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "ee382d996305442faaf513078e01f990": {
+      "source": "e9e50b6064712ae6f5ae246adf9a2e3b",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SPI_MISO_SD",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "f04f87bc26e741b2a86899ceb5eb2403": {
+      "source": "05a1837a5ce45fc685ed4aae471eb7e8",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "IO4",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "f10a8e33a313436dae1cf80ff21bc8a8": {
+      "source": "2df5c3cc015be8c5078da8439e86f61c",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "IO1",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "f1b842f0d6e74a35ac1743213c295185": {
+      "source": "a1d1708c4add3d2e7d234e17f28369f0",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "37.4kΩ, 1%",
+      "version": "41722c114194705b11a58b21734095be",
+      "type": 2
+    },
+    "f74d0ea7db3a488caf757fd9be0a9229": {
+      "source": "b4ff858425c1175f3d38eb4d583392e1",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "BCLK",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "f8408789ab384baba92111a75e7ab8f3": {
+      "source": "9a9ab55bd203a2f05adcb21b401b3152",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SCL1",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "f85d33e2cf064f31988744ec7e4899f6": {
+      "source": "1d9565433806a22a9f5376133e2ba3b1",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "RESETN",
+      "version": "715f31e6c053f7af73e1e0d96cef703b",
+      "type": 19
+    },
+    "f9f069f3165c458c8bf73f7e139d4001": {
+      "source": "9c54410297a844ae80454fbf0d32677b|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"Crystals, Oscillators, Resonators\",\"Crystals\"]",
+      "title": "7C024576RW1",
+      "version": "1683873736",
+      "type": 2
+    },
+    "fdd8eb43ee254b7cb56b33d70696277c": {
+      "source": "2a520e0a1ea422ccd879ea9ca5971167",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "100nF",
+      "version": "4e93002f2b8b7f57d4ca07336ef1dfd5",
+      "type": 2
+    },
+    "ff0de9fe0d8746b2a198c09358bda4ce": {
+      "source": "05a1837a5ce45fc685ed4aae471eb7e8",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "IO4",
+      "version": "382737c216ff37818e531d795d03d540",
+      "type": 19
+    },
+    "ffcf3ddda3f143e18fb8ce63f0b3a21a": {
+      "source": "b5d4dec7440383000337bb39d9d19e3d",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "title": "SPH0641LU4H-1",
+      "version": "c2534c8c97431b980f951b106c0e17c0",
+      "type": 2
+    }
+  },
+  "footprints": {
+    "0a9e26d32b0b40b98258df8a937407d4": {
+      "title": "X1-WLB0808-4_L0.8-W0.8-P0.40-TL",
+      "source": "f72928520565ac6bb728d893a92faf38",
+      "version": "95dfa114e50e97077a5e4c4b876ca46e",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "2d69e036bc924d75a301096fcb8adfd0": {
+      "title": "PICOSTAR-3_L1.0-W0.6-P0.35-TL",
+      "source": "877d994ab7015d7063c9a0d7cbf89f49",
+      "version": "9da67c2a1e61873ee19f5a67dfdcbb4d",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "339dcff109c24be09d6dc1bcbacc6113": {
+      "title": "CONN-SMD_3P-P1.20_BM03B-ACHSS-GAN-ETF",
+      "source": "1f17510f2f7246f2863f15838e3a2acf|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1690186847",
+      "type": 4,
+      "desc": ";SMD,P=1.2mm",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"CONN-SMD\"]"
+    },
+    "3493db7226df4914919d82ead2c1eb20": {
+      "title": "C0402",
+      "source": "ffbf672b777e1a720495702e7cca8c02",
+      "version": "459f4b52009c55e2f9b7874a25294e56",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "34c799e6fab3494dbd29e329b8fc4c9e": {
+      "title": "UQFN-16_L2.6-W1.8-P0.40-BL",
+      "source": "02a0179e025dfd18fde4dd60fe401bc9",
+      "version": "f3789181eeb5dcada8b1a3129233cff6",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "4dcafa6c52c84352b6d14f88039e2e20": {
+      "title": "LGA-14_L3.0-W2.5-P0.50-BL",
+      "source": "d1456312bb9886a20d9e4bb85f982d62",
+      "version": "26e22a46fd621ed842a0a889488ccf9d",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "4f0ccd852fb54ec1a0e1105fdd258f05": {
+      "title": "CLE-107-01-X-DV",
+      "source": "aee688424593dd0724e67765fe2e0704",
+      "version": "09cd733f403170ebdc8192748b2c5ece",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "5b7375f10ebc4a3b84ec793b00f28499": {
+      "title": "USB-C-SMD_GT-USB-9047A",
+      "source": "28f40fad3b7424d6ac9e6d6e510d9563",
+      "version": "e8142232a9cba37166c6161889809fc6",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "5bf6cb7987fd4e03b861d3ed96d916d5": {
+      "title": "SON-6_L1.5-W1.0-P0.50-BL",
+      "source": "10ef8152985a5fe289e5f0df0adadd8c",
+      "version": "12fb2e1cb23213b89a1097eb138349c4",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "5e25a669dacf44509960f3fdabacecf7": {
+      "title": "BGA-56_L3.0-W2.7-P0.35-R8-C7-TL",
+      "source": "c7759cc7354ee16d17c7aa2d390934c2",
+      "version": "a32a8a4ed2ff3a8d19b6302bcabcdfbe",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "63a6ba7909db4e10a76bbc070de7699a": {
+      "title": "LED-ARRAY-SMD_4P-L1.0-W1.0-TR-RD",
+      "source": "9da456a5d2adf4b6cc8b22a52c1a051f",
+      "version": "deb9f208fe6c0d336d69451985935639",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "6684822644394e4eba542a27714dd8a6": {
+      "title": "CRYSTAL-SMD_4P-L2.0-W1.6-BL_HUAXIN_CN4",
+      "source": "21bd3db8d2774cba875b4febfd7ef95c|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1699328120",
+      "type": 4,
+      "desc": ";SMD2016-4P;SMD-2016-4P",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"CRYSTAL-SMD\"]"
+    },
+    "68f040cb2c004734884b14d057d2722c": {
+      "title": "OSC-SMD_4P-L2.0-W1.6-BL_8NE",
+      "source": "eaa1deb986c54ca6a0b484bc4364ec94|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1663215822",
+      "type": 4,
+      "desc": ";SMD2016-4P",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"OSC-SMD\"]"
+    },
+    "7012dbc140dc48b796ec14e0a64274c7": {
+      "title": "CRYSTAL-SMD_4P-L3.2-W2.5-BL",
+      "source": "f00c7f49457d48b2acd9d4c7b9ecce08|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1743402149",
+      "type": 4,
+      "desc": ";SMD-4P;SMD2520-4P;SMD3225-4P;SMD5032-4P;SMD3225-2P;SMD2016-4P;SX-3225;SMD,3.2x2.5x1mm;SMD3225;SMD3215;SMD-3225;-;---;SMD3225_4P;SMD-3225_4P;SMD,2520_4P;1210;SMD-4_2.5X3.2X1.50P;SMD-4_2.5X3.2X1.65P;CRYSTAL-SMD_4P-L3.2-W2.5;SMD-4_2.5X3.2X1.70P;SMD_3225;SMD-4_3225;SMD-4_2.5X3.2X1.60P;SMD-4_3225P;SMD4_3225;CRYSTAL32MHZ;48MHz/10ppm/12pF;SMD3225-4;SMD-4_3525;24MHz;XTAL3225;12MHz/22pF(10PPM);OSC3225-4P;8M20ppm18PF;CRYSTAL-SMD_4P-L3.2-W2.5-BL;XTAL_3225;CY_3225;SMD-4;smd-3225-4p;SMD-4_5232;COSC-SMD-3225_4P;SMD;3225;3225-4P;CRYSTALS_3225;CAYSTAL-SMD_4P-L3.2-W2.5;CRYSTAL-SMD;XTAL4_3225;SMD_4P-3225;3225T;晶振Crystal.32MHZ15PF,+/-30PPM,-40°C~85°C,5032SMD4PAD;SMT-3225;LC-SMD-3225_4P;CJ13-271201210B20-27.12MHZ;SMD-CRY-3225_4P;OSC-3225_4P;smd_xtal4-3225;smd-3225;晶振,SMD-8M-20PF-20PPM,3225,ROHS;CRYSTAL-SMD_4P_3225;X3225;32254PIN;XTALS-2_5X3_2MM;12M;3225-4p;OSC_3225-4P;OSC-SMD-4P;DSX321G;BT-XTAL_2520;CY3225;Y-3.2X2.5MM;24M-12pF-10PPM;26M-20pF-10ppm;3225_4P;8MHz10ppm;SMD 3225;OSC-SMD_3225;CRYSTAL-SMD_4PL3.2-W2.5;晶振3225;3.2x2.5x0.7mm;SMD_3225-4P;CRYSTAL3225;晶振3225-SMD-4P;CRYSTAL-SMD3225-4P;OSC3225-SMD-4P;CRX3225-SMD-4P;XTAL3225-SMD-4P;OSC3225_4P;Crystal-SMT-3225-4P;CRY_4P_SMD3.2X2.5X0.7;CR-SMD3225-4P;SMD_3.2X2.5-4P;CRYSTAL3225-SMD_4P;SMD-3225-4P;OSC3225;3.2*2.5*0.8;CRY-D3225;SMD3225-6P;OSC4_SMD_3225;crystal-250x320x150-4n;SMD-_3225-4P;SMD_3225-4;SMD_3.2x2.5-4P;SMD2532-4P;SMD-4P-L3.2-W2.5;SMD_4P-L3.2-W2.5;SMD322-4P;SMD3225-4P 无源",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"CRYSTAL-SMD\"]"
+    },
+    "75f180577fe34be2982eec92ac38e1e8": {
+      "title": "WLCSP-22_MX25R6435FBFIL0",
+      "source": "f230e41ef06f91331a755bbaeb611dbb",
+      "version": "18058e923f326d3edd3da8de81afa893",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "7a01029067b540c797ebeab1b8428d60": {
+      "title": "DFN-8_L1.5-W1.5-P0.40-BL-EP",
+      "source": "4b4b8ddbaec678ea2ab961fbffa45c50",
+      "version": "07e528d5b7f996278ce12ac6a067b29c",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "7be1a0d4b47a427b935eec6c7480da3e_e1694": {
+      "title": "x1-wlb0808-4_l0.8-w0.8-p0.40-tl",
+      "source": "0a9e26d32b0b40b98258df8a937407d4",
+      "version": 1749189489900,
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "uuid": "7be1a0d4b47a427b935eec6c7480da3e_e1694"
+    },
+    "7be1a0d4b47a427b935eec6c7480da3e_e2006": {
+      "title": "x1-wlb0808-4_l0.8-w0.8-p0.40-tl",
+      "source": "0a9e26d32b0b40b98258df8a937407d4",
+      "version": 1749189489833,
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "",
+      "uuid": "7be1a0d4b47a427b935eec6c7480da3e_e2006"
+    },
+    "7d2fe4712ff34a05930e971be295308a": {
+      "title": "DSBGA-25_L2.5-W2.6-R5-C5-P0.40-BL",
+      "source": "968e0749566d613556dadd059437caa8",
+      "version": "8caa0f5d280573f2191771415fc30ea2",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "82258b2b4c5f437a9e4a0332f214ae0e": {
+      "title": "CONN-SMD_12P-P0.35_BM46B-12DP-0.35V-51",
+      "source": "5785713a80884afea2a38bcf114006e7|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1731750917",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"conn-sdm\"]"
+    },
+    "8dfe793ccded481ea8c299c616af5ce3": {
+      "title": "PICOSTAR-3_L0.7-W0.6-P0.40-TL",
+      "source": "77f004a47a11470e763402f21ccc8e18",
+      "version": "0a7e78b0e816f9a657504e1d8d65556a",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "952d5b4d69e04fa889bcd5c152794ddf": {
+      "title": "FPC-SMD_12P-P0.35_BM46B-12DS-0.35V",
+      "source": "6467c4f3488048148889c0fb04df4567",
+      "version": "d7cf3f19cb69ddda5b6c81c5113c3645",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "959faf70878644c4bb7859e428709fef": {
+      "title": "DSBGA-9_L1.7-W1.6-R3-C3-P0.50-BL",
+      "source": "37531628655da2f993f119061bebbd0d",
+      "version": "89545fa9ae6b6161aa1c99c18e9e6567",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "9c3ff77ecce84ce18e8d4046020c9a0c": {
+      "title": "R0402",
+      "source": "45e219a6b9315b459a45fc48067646c4",
+      "version": "4e5a1afae68932aeb0709cdb8f8b7ea7",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "a0808b36c9af46d0a68584f074a95353": {
+      "title": "L0402",
+      "source": "ba56f08e4c7b835ea941b78f89185b28",
+      "version": "5273f49a1b26aba67f8abbf460f167de",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "a1bd6622d6584811ae6426c3d4c4ce9c": {
+      "title": "SW-SMD_4P-L2.8-W1.9-P1.16-LS3.0",
+      "source": "7ae3b8ac88f682cc4291bea12d9aac52",
+      "version": "2033ad3cb6f91c2c9b0ede6acd5ac154",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "a2c365d7dce843eca08761f7f6458ce0": {
+      "title": "MDBT53",
+      "source": "81e2e2b85771a4647c1ee71b118ba648",
+      "version": "4f086aadfbc4035d0f9fc797057828d2",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "a825ca47ada34174a9978ffd9a09e106": {
+      "title": "LED-SMD_L0.65-W0.35-P0.41_XL-0201SURC",
+      "source": "c9e70b2a50aa2a5523e2752418f2e6c7",
+      "version": "91b16bb91095ec12684df2b9fba39b5d",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "a9cab663cf15437b8838c807023c7f8a": {
+      "title": "FC-135R_L3.2-W1.5",
+      "source": "347be65283742eac4d8defb1c9b982c4",
+      "version": "5c0739a04f718a74291d30cee76c2131",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "b5c2858cad4e462ab76a8d0ccf4ade45": {
+      "title": "C0201",
+      "source": "2203663679134feb963940f05bc050e7|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1659085771",
+      "type": 4,
+      "desc": ";0201;-;C0201",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"CAP-SMD\"]"
+    },
+    "b640f51e380947b6bdc4728de9087ba9": {
+      "title": "CRYSTAL-SMD_4P-L2.0-W1.6-BL-2",
+      "source": "f924db7b71a94801a96685bb42a7ee72|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1649741586",
+      "type": 4,
+      "desc": ";SMD2016-4P;SMD-4P;SMD-4_2016;SMD2106-4P",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"CRYSTAL-SMD\"]"
+    },
+    "ba8a4307c5164049a831d2b8f578885d": {
+      "title": "R0201",
+      "source": "42064170134b174cef85e6091fefcbd2",
+      "version": "405c61cbfb2a1868964adbbbcbf29369",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "bbfa0d26e01148508f3e6ab77602a865": {
+      "title": "R0201",
+      "source": "42064170134b174cef85e6091fefcbd2",
+      "version": "39cf2ca7890ab7c5cade4adee0bdaada",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "bfd63bb64bb6418a9facba67d12c5676": {
+      "title": "C0201",
+      "source": "455d5869d162f00e1f45e02545a4433c",
+      "version": "0f03cd8c615e8b8468a0c7606edd746e",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "c77797d83b4b4c45bcd43b5ad8e820e1": {
+      "title": "CRYSTAL-SMD_4P-L2.5-W2.0-BL",
+      "source": "8bd3e94eb4f545088e41704c64916920|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1679640959",
+      "type": 4,
+      "desc": ";SMD-4P;SMD2520-4P;SMD;SMD2016-4P;2520;SMD-4_2520;clk_2520;SMD_2520;SMD-2520_4P;osc-SMD-3225_4P;CRYSTAL_SMD2520;X25F-G20SSA-25M;SMD2520-4;CRYSTAL-SMD_4P-L2.5-W2.0-BL;SMD-2520-4P",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"CRYSTAL-SMD\"]"
+    },
+    "c947d21a0b594aa79d5886a6e6b3a4cc": {
+      "title": "MIC-SMD_5P_L3.5-W2.7-P0.82_SPH0641LU4H-1",
+      "source": "f979eb258fa1229dd9a7d76e032ae8f7",
+      "version": "a77073ca322dc83da8c7731aba48d565",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "c98f7a1005b940f2a218186f30f7c098": {
+      "title": "C0201",
+      "source": "455d5869d162f00e1f45e02545a4433c",
+      "version": "d4ddf58881e8c03c2386568968ea5631",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "cef4f92115b54348803d28f8706b0456": {
+      "title": "C0402",
+      "source": "6fbbb009724a4aee93b46abcd7ad26b6|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1651210464",
+      "type": 4,
+      "desc": ";0402;1812;1507;1808;-;0;C0402;C1210;01005",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"CAP-SMD\"]"
+    },
+    "e9e420ba3e1444d8ab6ba20cf1778a44": {
+      "title": "TF-SMD_TF-06A",
+      "source": "80cd9bd90f90aaa7cd9e9eb7fb7b1a72",
+      "version": "f724cf192bfdaeace4ba85e1c1273e60",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    },
+    "ea94e26560f84db4a6862024f5c3efa7": {
+      "title": "R0201",
+      "source": "25e046e6a76a46d8a10920d65dce1871|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1651211102",
+      "type": 4,
+      "desc": ";0201;-;SMD;0402;R0201",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"RES-SMD\"]"
+    },
+    "eba5cca11e7a40b08d3523b627f075d4": {
+      "title": "C0402",
+      "source": "ffbf672b777e1a720495702e7cca8c02",
+      "version": "70b0bd87ba04829458c706e1c6118675",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": ""
+    }
+  },
+  "devices": {
+    "030b3375dcae426396afc85ea726a689": {
+      "title": "SX1M24.576M10F30TNN",
+      "attributes": {
+        "LCSC Part Name": "24.576MHz 1.62~3.63V ±10ppm CMOS",
+        "Supplier Part": "C5830661",
+        "Manufacturer": "SCTF(星通时频)",
+        "Manufacturer Part": "SX1M24.576M10F30TNN",
+        "Supplier Footprint": "SMD2016-4P",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20230621/1ED0F726B492EDEE5E8FBB9007C50250.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "2e5366eef5134585aba916e46e87e8ee",
+        "Designator": "X?",
+        "Footprint": "68f040cb2c004734884b14d057d2722c",
+        "3D Model": "f0f16cf646f64064ae1953c6dc2a09a8",
+        "3D Model Title": "OSC-SMD_4P-L2.0-W1.6-BL_8NE",
+        "3D Model Transform": "79.1337,62.992,0,0,0,0,0,0,0",
+        "Value": "24.576MHz",
+        "Normal temperature Frequency Tolerance": "±10ppm",
+        "Output Type": "CMOS",
+        "Supply Voltage": "1.62V~3.63V",
+        "Supply Current (Max)": "10mA",
+        "Frequency Stability(Full temperature range)": "±30ppm",
+        "Operating Temperature": "-40℃~+85℃",
+        "Name": "={Value}",
+        "Description": "Frequency:24.576MHz Normal temperature Frequency Tolerance:±10ppm Normal temperature Frequency Tolerance:±10ppm Output Type:CMOS Supply Voltage:1.62V~3.63V Supply Voltage:1.62V~3.63V Supply Current (Max):10mA Frequency Stability(Full temperature range):±3"
+      },
+      "description": "Frequency:24.576MHz Normal temperature Frequency Tolerance:±10ppm Normal temperature Frequency Tolerance:±10ppm Output Type:CMOS Supply Voltage:1.62V~3.63V Supply Voltage:1.62V~3.63V Supply Current (Max):10mA Frequency Stability(Full temperature range):±3",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230526/30901CC8A051423D72BEDD0703E059F6.jpg"
+      ],
+      "source": "b9e47f4a77e94700b2901488551e390a|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1729672805",
+      "custom_tags": "[\"Crystals, Oscillators, Resonators\",\"Crystal Oscillators\"]"
+    },
+    "056d764741c342eaad4c5e22d179de63": {
+      "title": "TDO",
+      "attributes": {
+        "Symbol": "78ca2fdd5297464f838d19a159423edb",
+        "Footprint": "",
+        "Name": "TDO",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "5616a73f0ef93b2434cf38856392bc45",
+      "version": "3cf3213b542af961e7a81cb89af5ee5e",
+      "custom_tags": ""
+    },
+    "06eedc7e2d844d118202a7f99078598a": {
+      "title": "GT-USB-9047A",
+      "attributes": {
+        "Designator": "U?",
+        "Symbol": "274af20c5dfb408cb1c4558c2b62bbe8",
+        "Supplier": "LCSC",
+        "Supplier Part": "C5117882",
+        "Manufacturer": "G-Switch(品赞)",
+        "Manufacturer Part": "GT-USB-9047A",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "5b7375f10ebc4a3b84ec793b00f28499",
+        "Name": "GT-USB-9047A",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "136f0baacd6683a1b360ec7cbf407506",
+      "version": "816aeeb7612f3077f054bc4ee715c4d5",
+      "custom_tags": ""
+    },
+    "0803fb8fc6914506a1f7f87346b74dab": {
+      "title": "100nF",
+      "attributes": {
+        "Designator": "C?",
+        "Symbol": "fdd8eb43ee254b7cb56b33d70696277c",
+        "Supplier": "LCSC",
+        "Supplier Part": "C2903664",
+        "Manufacturer": "CCTC(三环)",
+        "Manufacturer Part": "TCC0201X5R104M6R3ZT",
+        "JLCPCB Part Class": "Extended Part",
+        "link": "https://lcsc.com/eda_search?q=C2903664&%26type=1&ref=editor",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "c98f7a1005b940f2a218186f30f7c098",
+        "Name": "100nF",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "2a520e0a1ea422ccd879ea9ca5971167",
+      "version": "4dd66566ac4801aa017862c260b023a6",
+      "custom_tags": ""
+    },
+    "0965e8ce0e4c464dbba10dc865e1c563": {
+      "title": "CC_#CD",
+      "attributes": {
+        "Symbol": "47c1322aff3548a88810d685a660b7de",
+        "Footprint": "",
+        "Name": "CC_#CD",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "d25b70793cdf78b64be5405a9ee85aac",
+      "version": "810737835cb35c1a11dcc15948c47089",
+      "custom_tags": ""
+    },
+    "09aed8305ecd4f02867968bf7f27a903": {
+      "title": "SCL2",
+      "attributes": {
+        "Symbol": "d5a13d880444485995f5a878be7259a2",
+        "Footprint": "",
+        "Name": "SCL2",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "34b9dabaaa6b4b4b5ca584f8af34dfff",
+      "version": "cb205ca4b654ed3da99e31171a1a86cc",
+      "custom_tags": ""
+    },
+    "0a1991777f2141d4bba985f10b6ecad7": {
+      "title": "SDA1",
+      "attributes": {
+        "Symbol": "d573fbcf833f4038a40534e2a47e1687",
+        "Footprint": "",
+        "Name": "SDA1",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "028d2f6029c9071bfa9a7c286f584ca6",
+      "version": "c5689d081c83b3244b27b8fc2e7e947b",
+      "custom_tags": ""
+    },
+    "0a1be9c1f3ad4267877f085545815eb0": {
+      "title": "1MΩ",
+      "attributes": {
+        "Designator": "U?",
+        "Symbol": "60ba7807e7bd43a3811bf3145b946d9c",
+        "Supplier": "LCSC",
+        "Supplier Part": "C5151554",
+        "Manufacturer": "UNI-ROYAL(厚声)",
+        "Manufacturer Part": "CQ01WMJ0105TEE",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "bbfa0d26e01148508f3e6ab77602a865",
+        "Name": "1MΩ",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "5ec62a159a323ab71d31fada259b7bdf",
+      "version": "c095d45e4bcbc5e51e100d2c54a5c3fd",
+      "custom_tags": ""
+    },
+    "0b130f9d1424464fba856a384ef88dc2": {
+      "title": "1uF >10V",
+      "attributes": {
+        "Designator": "C?",
+        "Symbol": "60cffb55702144b2b8f44bd613262c3d",
+        "Supplier": "LCSC",
+        "Manufacturer Part": "GRM033R61A105ME44D",
+        "Manufacturer": "muRata(村田)",
+        "Supplier Part": "C76935",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "bfd63bb64bb6418a9facba67d12c5676",
+        "Name": "1uF >10V",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "fb9b35134508de40a6714b9d90dcbd0f",
+      "version": "441a9b1e498b94bad0505ea29967cacf",
+      "custom_tags": ""
+    },
+    "0b994a1ce9674ee3b50d5799f1fc95e7": {
+      "title": "10uF, >4V",
+      "attributes": {
+        "Designator": "C?",
+        "Symbol": "cd74d5a3c5c041488b5d3d520c795fd8",
+        "Supplier": "LCSC",
+        "Manufacturer Part": "CL05A106MQ5NUNC",
+        "Manufacturer": "SAMSUNG(三星)",
+        "Supplier Part": "C15525",
+        "JLCPCB Part Class": "Basic Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "3493db7226df4914919d82ead2c1eb20",
+        "Name": "10uF, >4V",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "d501994363252be6ec763ff703b2a969",
+      "version": "03b71b534a77cf04e0d39418d62bf2cf",
+      "custom_tags": ""
+    },
+    "0d1512167dc54db58395e803c6b2cf1c": {
+      "title": "KTD2026",
+      "attributes": {
+        "Designator": "U?",
+        "Symbol": "3ae9c0029c514be399e03c69bbcf64dc",
+        "Supplier": "LCSC",
+        "Supplier Part": "C500368",
+        "Manufacturer": "KINETIC(芯凯)",
+        "Manufacturer Part": "KTD2026EWE-TR",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "7a01029067b540c797ebeab1b8428d60",
+        "Name": "KTD2026",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "63d32ba97c83f6fbe737da5ee9ac7fcf",
+      "version": "efbf121b6c1b3d134eba090f24d15829",
+      "custom_tags": ""
+    },
+    "0e03779df5cd45bda89399c2526cbde0": {
+      "title": "INT",
+      "attributes": {
+        "Symbol": "89c81077bcd8421ea0c51716d97a21be",
+        "Footprint": "",
+        "Name": "INT",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "53f93baa3057821107c750323892fa92",
+      "version": "df9a11e673dfb8488714dcb55a3900be",
+      "custom_tags": ""
+    },
+    "0e7ff6aad93944258452f71434d3bd9b": {
+      "title": "GRM0335C1H330JA01D",
+      "attributes": {
+        "LCSC Part Name": "33pF ±5% 50V",
+        "Supplier Part": "C76925",
+        "Manufacturer": "muRata(村田)",
+        "Manufacturer Part": "GRM0335C1H330JA01D",
+        "Supplier Footprint": "0201",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20180307/C76925_15204090911841407715.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "731f22e7a3744c9886211d68ebae3f89",
+        "Designator": "C?",
+        "Footprint": "b5c2858cad4e462ab76a8d0ccf4ade45",
+        "3D Model": "c3e75c3d90204c70b153866ab54c789f",
+        "3D Model Title": "C0201_L0.6-W0.3-H0.3",
+        "3D Model Transform": "23.622,11.811,0,0,0,0,0,0,0",
+        "Value": "33pF",
+        "Tolerance": "±5%",
+        "Voltage Rated": "",
+        "Temperature Coefficient": "",
+        "Name": "={Value}",
+        "Description": "Capacitance: Tolerance:±5% Tolerance:±5% Voltage Rated: Temperature Coefficient:"
+      },
+      "description": "Capacitance: Tolerance:±5% Tolerance:±5% Voltage Rated: Temperature Coefficient:",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20221231/7C98A5A9A36C06A5B8116E198FA57D76.jpg"
+      ],
+      "source": "45a31bdc006943909f1041da2fb6c7ff|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1660157981",
+      "custom_tags": "[\"Capacitors\",\"Multilayer Ceramic Capacitors MLCC - SMD/SMT\"]"
+    },
+    "0eaca2fac3344082a79b95c9ddbd1dd5": {
+      "title": "USB_D-",
+      "attributes": {
+        "Symbol": "7b4c120bc7724dce969509d05be01181",
+        "Footprint": "",
+        "Name": "USB_D-",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "9ae0a3f212b2e5f9d9aa5a8b59eeb9f2",
+      "version": "baca93362d8ac38bd7d795a06007c934",
+      "custom_tags": ""
+    },
+    "0f0caefa244f4d8d9313b6affa48a1b0": {
+      "title": "USB_DM",
+      "attributes": {
+        "Symbol": "816648c23f6342018a51c462006ec71c",
+        "Footprint": "",
+        "Name": "USB_DM",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "209ac48270863f70bfbb6a782f587bc4",
+      "version": "d83466ea0ffd29b2a1d031af39b138b2",
+      "custom_tags": ""
+    },
+    "0fd289d5366b4d5781f4732a0cffab1a": {
+      "title": "BCLK",
+      "attributes": {
+        "Symbol": "f74d0ea7db3a488caf757fd9be0a9229",
+        "Footprint": "",
+        "Name": "BCLK",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "b4ff858425c1175f3d38eb4d583392e1",
+      "version": "2d1f2fb0d148a8176c244e0d179fc0cc",
+      "custom_tags": ""
+    },
+    "13ad681a63384c969341f1580ed8047f": {
+      "title": "CC0201GRNPO9BN200",
+      "attributes": {
+        "LCSC Part Name": "20pF ±2% 50V",
+        "Supplier Part": "C541253",
+        "Manufacturer": "YAGEO(国巨)",
+        "Manufacturer Part": "CC0201GRNPO9BN200",
+        "Supplier Footprint": "0201",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20200615/C541253_9EA6E2C9F1C0B6F889020B56608FD726.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "722eb34424e6483bb8ea6e7803ae6227",
+        "Designator": "C?",
+        "Footprint": "b5c2858cad4e462ab76a8d0ccf4ade45",
+        "3D Model": "c3e75c3d90204c70b153866ab54c789f",
+        "3D Model Title": "C0201_L0.6-W0.3-H0.3",
+        "3D Model Transform": "23.622,11.811,0,0,0,0,0,0,0",
+        "Value": "20pF",
+        "Tolerance": "±2%",
+        "Voltage Rated": "",
+        "Temperature Coefficient": "",
+        "Name": "={Value}",
+        "Description": "Capacitance: Tolerance:±2% Tolerance:±2% Voltage Rated: Temperature Coefficient:"
+      },
+      "description": "Capacitance: Tolerance:±2% Tolerance:±2% Voltage Rated: Temperature Coefficient:",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230104/F54395C9086E2B1D54E0850159530C19.jpg"
+      ],
+      "source": "49171e23bb374d5f97676f51592ede49|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1660147835",
+      "custom_tags": "[\"Capacitors\",\"Multilayer Ceramic Capacitors MLCC - SMD/SMT\"]"
+    },
+    "146f7cc18a834058b60a088f555b1889": {
+      "title": "LSCTRL",
+      "attributes": {
+        "Symbol": "5135b2183b674198b80b73abfb462bd4",
+        "Footprint": "",
+        "Name": "LSCTRL",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "e73cdd9ce5e81fa06c5b0af30c36f581",
+      "version": "11d18021ace514fd15a2fce2e50f9338",
+      "custom_tags": ""
+    },
+    "1667b7f1dbde44d7924741093f91c231": {
+      "title": "GND",
+      "attributes": {
+        "Symbol": "91df503f4dca44a78925483d4a83e387",
+        "Footprint": "",
+        "Name": "GND",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "eec5ca16eb7a29985d7dcb84eac54c07",
+      "version": "db000312e87e0e2cdcdeedb1096306e5",
+      "custom_tags": ""
+    },
+    "178147c1b3684861af08e5cea84e06b1": {
+      "title": "SPI_MOSI",
+      "attributes": {
+        "Symbol": "37a24b37f8904c20af54d062d8e88a3a",
+        "Footprint": "",
+        "Name": "SPI_MOSI",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "ef53a3f0221b0cf8c07d9d4bb5ad0235",
+      "version": "b775e175aaa8b59eb676d6a45a88a806",
+      "custom_tags": ""
+    },
+    "17cfd3736d86402bacf3faa9888d1dd9": {
+      "title": "USB_D-",
+      "attributes": {
+        "Symbol": "3b9b8b0cb5914843b11098080fcb8b82",
+        "Footprint": "",
+        "Name": "USB_D-",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "9ae0a3f212b2e5f9d9aa5a8b59eeb9f2",
+      "version": "35faf5325d61d2a0f3a1606810ab3cb6",
+      "custom_tags": ""
+    },
+    "1a47ce79dd014cb9b58e29c0c7aeb17c": {
+      "title": "V_PMID",
+      "attributes": {
+        "Symbol": "7c87e764d8ce4dea8222ea354abfc6c8",
+        "Footprint": "",
+        "Name": "V_PMID",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "74bf3e2976fc972f15fb7ed7e0d18525",
+      "version": "75b1e0b7cf49be735d497fc0bbf3a4b0",
+      "custom_tags": ""
+    },
+    "1a4e5dab7e584f4895f8500c20781fce": {
+      "title": "2.2uH",
+      "attributes": {
+        "Designator": "L?",
+        "Symbol": "0ccd023b435b4ddfb4a47129aceec349",
+        "Supplier": "LCSC",
+        "Supplier Part": "C383389",
+        "Manufacturer": "TDK",
+        "Manufacturer Part": "MLZ1005M2R2WT000",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "a0808b36c9af46d0a68584f074a95353",
+        "Name": "2.2uH",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "f904c05bacbf52cb70ce2402fb1ffd85",
+      "version": "f94ecc7993fa6fc6845e8698ee9b4541",
+      "custom_tags": ""
+    },
+    "1d2a19ad53f74518b4377686762923a5": {
+      "title": "SDA",
+      "attributes": {
+        "Symbol": "420d9913a7aa404a99d4a256b9d96b93",
+        "Footprint": "",
+        "Name": "SDA",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "047b37855364f25ce01708c60aeabe37",
+      "version": "632de585be271ca7a50d63bd4788371b",
+      "custom_tags": ""
+    },
+    "1d997863ad6d40c3871f568a28d1689b": {
+      "title": "SPI_CLK",
+      "attributes": {
+        "Symbol": "b77a0104219045859090cb26f76cf634",
+        "Footprint": "",
+        "Name": "SPI_CLK",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "854f59df9f9f081946de83ce42f38764",
+      "version": "bd09eb37e03d1485ebae73caa7683fef",
+      "custom_tags": ""
+    },
+    "1eed9a603b2f480eb4e4e6cb0ad84947": {
+      "title": "CLE-107-01-G-DV",
+      "attributes": {
+        "Designator": "J?",
+        "Symbol": "d3366ed3e8754cfeba754ffc9c96fd57",
+        "Manufacturer Part": "",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "4f0ccd852fb54ec1a0e1105fdd258f05",
+        "Name": "CLE-107-01-G-DV",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "8e1d7fad72a3a121e29699dee066bd65",
+      "version": "55c87a959613740ec80a251da6f2a947",
+      "custom_tags": ""
+    },
+    "206af67db13e465e89be85616e77400a": {
+      "title": "3V3",
+      "attributes": {
+        "Symbol": "d6c2d55bb7aa4307b8d9122a4670c6a2",
+        "Footprint": "",
+        "Name": "3V3",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "678a9e81e58d74d58ba905b566a33693",
+      "version": "482d740dc656da954267d92acc425d56",
+      "custom_tags": ""
+    },
+    "209365bd2be243e8a35815c91f67242d": {
+      "title": "PDMCLK",
+      "attributes": {
+        "Symbol": "e32f101caafd4dbda68889d9b2290b05",
+        "Footprint": "",
+        "Name": "PDMCLK",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "814277427c0f0d81ac5089fe70348989",
+      "version": "4fa595233bb44c3c05fc80a29757c221",
+      "custom_tags": ""
+    },
+    "20cc5427e0b74e4f8ff18e6d79c07144": {
+      "title": "VUSB",
+      "attributes": {
+        "Symbol": "67ad4d5106fc4f669ae3044a745a6c37",
+        "Footprint": "",
+        "Name": "VUSB",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "be13a911fe29ccb8799d77b217f7fcfd",
+      "version": "76cdf14cc16c3c4c142ab4436ecd3b5f",
+      "custom_tags": ""
+    },
+    "213be06e81ff4eac8031949d08b33757": {
+      "title": "BM03B-ACHSS-GAN-ETF",
+      "attributes": {
+        "LCSC Part Name": "1x3P 间距:1.2mm 卧贴 系列:ACH",
+        "Supplier Part": "C5118705",
+        "Manufacturer": "JST",
+        "Manufacturer Part": "BM03B-ACHSS-GAN-ETF",
+        "Supplier Footprint": "SMD,P=1.2mm",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20220722/F0E39C41AF3EAD867181EC51CBFF2FFF.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "d4f908d6d7cb481a808f598cf7960644",
+        "Designator": "CN?",
+        "Footprint": "339dcff109c24be09d6dc1bcbacc6113",
+        "3D Model": "b58027fa82144219a1bd1dc9ed7597c0",
+        "3D Model Title": "CONN-SMD_3P-P1.20_BM03B-ACHSS-GAN-ETF",
+        "3D Model Transform": "212.9917,169.291,0,0,0,0,-0.001,-2.596,0",
+        "Pins Structure": "1x3P",
+        "Pitch": "1.2mm",
+        "Mounting Style": "Horizontal attachment",
+        "Reference Series": "ACH",
+        "Number of Pins": "3P",
+        "Number of Rows": "1",
+        "Number of PINs Per Row": "3",
+        "Row Spacing": "-",
+        "Current Rating (Max)": "2A",
+        "Contact Material": "Copper alloy",
+        "Contact Plating": "Gold",
+        "Operating Temperature Range": "-25℃~+85℃",
+        "Rated Voltage (Max)": "50V",
+        "Flame Retardant Rating": "UL94V-0",
+        "Supplementary Features": "Auxiliary soldering legs",
+        "Colour": "White",
+        "Z-Height of the Board": "1.4mm",
+        "X-Length of Bottom Edge on Board (Spacing Line)": "5.4mm",
+        "Y-Width of Bottom Edge on Board": "4.3mm",
+        "Name": "={Manufacturer Part}",
+        "Description": "Pins Structure:1x3P Pitch:1.2mm Mounting Style:Horizontal attachment Reference Series:ACH Number of Pins:3P Number of Rows:1 Number of PINs Per Row:3 Row Spacing:- Current Rating (Max):2A Contact Material:Copper alloy Contact Plating:Gold Operating Temper"
+      },
+      "description": "Pins Structure:1x3P Pitch:1.2mm Mounting Style:Horizontal attachment Reference Series:ACH Number of Pins:3P Number of Rows:1 Number of PINs Per Row:3 Row Spacing:- Current Rating (Max):2A Contact Material:Copper alloy Contact Plating:Gold Operating Temper",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230106/98BDBB5BBC9A08D53F955D03457B4031.jpg"
+      ],
+      "source": "d9da681feb1c44509dff046bab8fae14|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1715754002",
+      "custom_tags": "[\"Connectors\",\"Wire To Board Connector\"]"
+    },
+    "225cf7ba468445759cab0e7c63a110a4": {
+      "title": "XL-0201SURC",
+      "attributes": {
+        "Designator": "U?",
+        "Symbol": "9e729fb96b994e1fa60c0c12dc812851",
+        "Supplier": "LCSC",
+        "Supplier Part": "C3646923",
+        "Manufacturer": "XINGLIGHT(成兴光)",
+        "Manufacturer Part": "XL-0201SURC",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "a825ca47ada34174a9978ffd9a09e106",
+        "Name": "XL-0201SURC",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "2e96a6d536350878a71e18c2def9be3d",
+      "version": "d3c9efde15e3670798ff34fc76eb7608",
+      "custom_tags": ""
+    },
+    "23f65787ce7e4e2baa7952a6c8b386c8": {
+      "title": "510Ω",
+      "attributes": {
+        "Designator": "R?",
+        "Symbol": "c3e69f989db34e0c9028a27fb03b6943",
+        "Supplier": "LCSC",
+        "Supplier Part": "C180335",
+        "Manufacturer": "Walsin(华新科)",
+        "Manufacturer Part": "WR02X511JAL",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "bbfa0d26e01148508f3e6ab77602a865",
+        "Name": "510Ω",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "536387d3f3178064766c40a0c961898a",
+      "version": "ff1d953bb703c63caf157df507ca897d",
+      "custom_tags": ""
+    },
+    "258826b168214bd6adf8c74583b62029": {
+      "title": "2.2Ω",
+      "attributes": {
+        "Designator": "R?",
+        "Symbol": "b5eaee34f8914725ab4f5c867f495eea",
+        "Supplier": "LCSC",
+        "Supplier Part": "C473517",
+        "Manufacturer": "UNI-ROYAL(厚声)",
+        "Manufacturer Part": "0201WMF220KTEE",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "bbfa0d26e01148508f3e6ab77602a865",
+        "Name": "2.2Ω",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "96fa3d4b0fb06a1a08e95cab75051eeb",
+      "version": "f13b2417e71520fbda3b0debad59848f",
+      "custom_tags": ""
+    },
+    "295e53ba86984e6cabe4305d64dd329a": {
+      "title": "SPI_CLK_SD",
+      "attributes": {
+        "Symbol": "998f0f269c824559b3cad7d2f3e216d6",
+        "Footprint": "",
+        "Name": "SPI_CLK_SD",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "8c707d354052eee20eadd4b3687e3d71",
+      "version": "9fd016ceb27a88ed0fd1a2249922fa16",
+      "custom_tags": ""
+    },
+    "2c5c0ee42d3141dd9db73f5ec13ad237": {
+      "title": "7C024576RW1",
+      "attributes": {
+        "LCSC Part Name": "24.576MHz ±10ppm 20pF",
+        "Supplier Part": "C655065",
+        "Manufacturer": "HD(浩都频率)",
+        "Manufacturer Part": "7C024576RW1",
+        "Supplier Footprint": "SMD2520-4P",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20220223/46FE96938F58B106845E5981C9AD6028.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "f9f069f3165c458c8bf73f7e139d4001",
+        "Designator": "X?",
+        "Footprint": "c77797d83b4b4c45bcd43b5ad8e820e1",
+        "3D Model": "715e38f124ed4c72bdcb1ac89b20f6b2",
+        "3D Model Title": "CRYSTAL-SMD_4P-L2.5-W2.0-BL",
+        "3D Model Transform": "98.425,78.74,0,0,0,0,0,0,0",
+        "Crystal Type": "贴片晶振",
+        "Value": "24.576MHz",
+        "Normal temperature Frequency Tolerance": "±10ppm",
+        "External load capacitor": "",
+        "Frequency Stability(Full temperature range)": "±20ppm",
+        "Operating Temperature": "-",
+        "Name": "={Value}",
+        "Description": "Crystal Type:贴片晶振 Frequency: Normal temperature Frequency Tolerance:±10ppm Normal temperature Frequency Tolerance:±10ppm External load capacitor: Frequency Stability(Full temperature range):±20ppm Frequency Stability(Full temperature range):±20ppm Operati"
+      },
+      "description": "Crystal Type:贴片晶振 Frequency: Normal temperature Frequency Tolerance:±10ppm Normal temperature Frequency Tolerance:±10ppm External load capacitor: Frequency Stability(Full temperature range):±20ppm Frequency Stability(Full temperature range):±20ppm Operati",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230104/F146AEC769022590972B63A4F16AA79F.jpg"
+      ],
+      "source": "6fafb30b984343b3af09410ba3249edc|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1665258017",
+      "custom_tags": "[\"Crystals, Oscillators, Resonators\",\"Crystals\"]"
+    },
+    "2cb3aa521979434b9afc81a735508d0d": {
+      "title": "IO5",
+      "attributes": {
+        "Symbol": "15a502bca0334d7b8a8636e70f7064e3",
+        "Footprint": "",
+        "Name": "IO5",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "8b975e52915ce8944ed3b96a2c6e6200",
+      "version": "8dfa5dbf35a89ae3f44a78cba695325a",
+      "custom_tags": ""
+    },
+    "2d5b9c6f97ab44a492ad64b2056c12f1": {
+      "title": "IO6",
+      "attributes": {
+        "Symbol": "2ed6c032195e441c9faf7f510fa7821f",
+        "Footprint": "",
+        "Name": "IO6",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "b06d208a92130bfc489fb412adc47d35",
+      "version": "574cf43b725506eb3937f0e8abb3396c",
+      "custom_tags": ""
+    },
+    "2d8d082175bb4332897672f18f6dbf20": {
+      "title": "MDBT53",
+      "attributes": {
+        "Designator": "MDBT?",
+        "Symbol": "c72625813f574263aa1a326914aec71c",
+        "Manufacturer Part": "",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "a2c365d7dce843eca08761f7f6458ce0",
+        "Name": "MDBT53",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "81e2e2b85771a4647c1ee71b118ba648",
+      "version": "3f74beec6e14d9dc7d8e3be486a8364d",
+      "custom_tags": ""
+    },
+    "2edf81cdbe164a8e93c5b247163018ce": {
+      "title": "Sheet-Symbol_A4",
+      "attributes": {
+        "@Project Name": "Project Name",
+        "@Page Count": "3",
+        "@Update Date": "2021.11.05",
+        "@Create Date": "2021.11.05",
+        "@Schematic Name": "Schematic Name",
+        "@Page No": "1",
+        "@Page Name": "P1",
+        "Company": "EasyEDA.com",
+        "Reviewed": "",
+        "Version": "V1.0",
+        "Page Size": "A4",
+        "Part Number": "",
+        "Drawn": "",
+        "Name": "",
+        "@Create Time": "",
+        "@Update Time": "",
+        "Symbol": "79f12fb945fc41dc9ccddeddc547e125",
+        "Description": "",
+        "Footprint": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "5350f3eb55bb4053a33f1326ce27e859|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1734001332",
+      "custom_tags": "[\"\",\"\"]"
+    },
+    "2f4282109ab947e3bc9596c9663da0f2": {
+      "title": "VCC",
+      "attributes": {
+        "Symbol": "49efe43c06a44b959162680f319266b0",
+        "Footprint": "",
+        "Name": "VCC",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "01db972763294804a52bbb74cc96a867",
+      "version": "c57a5691c03113e80f5cc9766b3778ac",
+      "custom_tags": ""
+    },
+    "305e88463f5d402ab50adbf17e7d4439": {
+      "title": "DOUT",
+      "attributes": {
+        "Symbol": "41fde30161c549e28f7d17195d22733e",
+        "Footprint": "",
+        "Name": "DOUT",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "5df3b602b9603f1a5309bed94e1f7963",
+      "version": "0a5d61d92186617d12f5fa73569afdd8",
+      "custom_tags": ""
+    },
+    "312ddc0980e141c9838e36868bec9bb2": {
+      "title": "USB_DP",
+      "attributes": {
+        "Symbol": "255d46ca3f474e01989db70e3d597941",
+        "Footprint": "",
+        "Name": "USB_DP",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "b873ca5a050395fa34ebb9bb38f9ecf1",
+      "version": "af8540ebba672d47dc3d67151a3797cf",
+      "custom_tags": ""
+    },
+    "31fcb9f737e940a381be403952ff1f45": {
+      "title": "GND",
+      "attributes": {
+        "Symbol": "9758560d975c43388e87e0fb04ceb5dd",
+        "Footprint": "",
+        "Name": "GND",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "eec5ca16eb7a29985d7dcb84eac54c07",
+      "version": "496380a0d2ffa15173a4c736c2d8caa8",
+      "custom_tags": ""
+    },
+    "32146a8fb30045718a459322bc62168e": {
+      "title": "IO2",
+      "attributes": {
+        "Symbol": "8250a18b8abf4cd1b16bc85660cf6b54",
+        "Footprint": "",
+        "Name": "IO2",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "ffa17874525c67430a6b2106158f1045",
+      "version": "2624bd5cee4c54652fb4b17bc2ca2a9a",
+      "custom_tags": ""
+    },
+    "34557bbae78e4d6f8a619021310e9e8b": {
+      "title": "ON+BTN",
+      "attributes": {
+        "Symbol": "ebfcb76c72104d19b00ffc2689874732",
+        "Footprint": "",
+        "Name": "ON+BTN",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "271ff621ce29b62be1553497f3817c18",
+      "version": "7f6d9b03320f9027c3aa6eb630a90f5f",
+      "custom_tags": ""
+    },
+    "37c15c5bcda948a4a460d7239e56b841": {
+      "title": "SPI_MISO",
+      "attributes": {
+        "Symbol": "555108e960b244baad3e9570367fa071",
+        "Footprint": "",
+        "Name": "SPI_MISO",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "ee8837026aec006c2290acaa241306ea",
+      "version": "9b88985c137936397e8360b5a617af32",
+      "custom_tags": ""
+    },
+    "3a6304a541ef4ff2a1565499ba1c912b": {
+      "title": "IO1",
+      "attributes": {
+        "Symbol": "f10a8e33a313436dae1cf80ff21bc8a8",
+        "Footprint": "",
+        "Name": "IO1",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "2df5c3cc015be8c5078da8439e86f61c",
+      "version": "6e416aa9ed2169d279d510e97645ede5",
+      "custom_tags": ""
+    },
+    "3b19e7b9a9a549729966e47f1ce10478": {
+      "title": "+1.8V",
+      "attributes": {
+        "Symbol": "62ca2d53bb164a1390c2f8f80ece00a3",
+        "Footprint": "",
+        "Name": "+1.8V",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "a36d042246648a600e19b97bea79a498",
+      "version": "21fc0611f40b6fc48fc7717a1dfe5187",
+      "custom_tags": ""
+    },
+    "3e0e613a4ca645cea59e1af30d08a373": {
+      "title": "CN4024M57620001",
+      "attributes": {
+        "LCSC Part Name": "24.576MHz ±10ppm 20pF",
+        "Supplier Part": "C7294677",
+        "Manufacturer": "HUAXIN(华昕)",
+        "Manufacturer Part": "CN4024M57620001",
+        "Supplier Footprint": "SMD-2016-4P",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20230629/60BB1F001F1BE929A0AB11A98926D18A.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "b5bdc27c75d44f9cb11d0f84e8f1be2c",
+        "Designator": "CRYSTAL?",
+        "Footprint": "6684822644394e4eba542a27714dd8a6",
+        "3D Model": "737722a4134e46bf84bf2a5ec6d20997",
+        "3D Model Title": "CRYSTAL-SMD_4P-L2.0-W1.6-BL_HUAXIN_CN4",
+        "3D Model Transform": "79.1337,62.992,0,0,0,0,-0.002,-0.003,0",
+        "Crystal Type": "贴片晶振",
+        "Value": "24.576MHz",
+        "Normal temperature Frequency Tolerance": "±10ppm",
+        "External load capacitor": "20pF",
+        "Frequency Stability(Full temperature range)": "±30ppm",
+        "Equivalent Series Resistance (ESR)": "60Ω",
+        "Operating Temperature": "",
+        "Name": "={Value}",
+        "Description": "Crystal Type:贴片晶振 Frequency: Normal temperature Frequency Tolerance:±10ppm Normal temperature Frequency Tolerance:±10ppm External load capacitor:20pF Frequency Stability(Full temperature range):±30ppm Frequency Stability(Full temperature range):±30ppm Equ"
+      },
+      "description": "Crystal Type:贴片晶振 Frequency: Normal temperature Frequency Tolerance:±10ppm Normal temperature Frequency Tolerance:±10ppm External load capacitor:20pF Frequency Stability(Full temperature range):±30ppm Frequency Stability(Full temperature range):±30ppm Equ",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230722/7B8360D121811265AB2E301A85C1A61A.jpg"
+      ],
+      "source": "04bbc23926b840879bb682491bb780f1|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1698208811",
+      "custom_tags": "[\"Crystals, Oscillators, Resonators\",\"Crystals\"]"
+    },
+    "3fce2c35004f4ccc8ef8670412406bfc": {
+      "title": "DIN",
+      "attributes": {
+        "Symbol": "cdd958d347ac46f3af244ccf26fa4755",
+        "Footprint": "",
+        "Name": "DIN",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "0756f27ca9ade505a577fcdbfde2969b",
+      "version": "6580369cf88b7e3a78546cd1deb906df",
+      "custom_tags": ""
+    },
+    "43d0e359a5124aeeb47307380a1294fc": {
+      "title": "10kΩ",
+      "attributes": {
+        "Designator": "R?",
+        "Symbol": "34fc0ec460b741b782adefbdd35d0827",
+        "Supplier": "LCSC",
+        "Manufacturer": "YAGEO(国巨)",
+        "Manufacturer Part": "RC0201FR-0710KL",
+        "Supplier Part": "C106225",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "bbfa0d26e01148508f3e6ab77602a865",
+        "Name": "10kΩ",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "85ffc11975d96d73d223a3c2a726a9f8",
+      "version": "3c32eb189c44d4b47f8cf0f0bcec7f78",
+      "custom_tags": ""
+    },
+    "46f5c8d0bb704e8a86acf60845baa753": {
+      "title": "3V3",
+      "attributes": {
+        "Symbol": "c676c6061bcb4beb95f47c9384f1d8bc",
+        "Footprint": "",
+        "Name": "3V3",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "678a9e81e58d74d58ba905b566a33693",
+      "version": "b208cf8824f5ca056829d0727cdf01d3",
+      "custom_tags": ""
+    },
+    "48a2a7ea0be6417a9fffdc3392afae4e": {
+      "title": "SDA1",
+      "attributes": {
+        "Symbol": "d469ccad32034069a9a9f0a03327465c",
+        "Footprint": "",
+        "Name": "SDA1",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "028d2f6029c9071bfa9a7c286f584ca6",
+      "version": "c10d9f478799e30b67e786628852929a",
+      "custom_tags": ""
+    },
+    "4d60871f3a08454e89ccc56f3ae9c2ee": {
+      "title": "IO3",
+      "attributes": {
+        "Symbol": "4e527539713b45dd84c7000f756bd9e7",
+        "Footprint": "",
+        "Name": "IO3",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "5d717e24dcb9ffbde282c264cabba2df",
+      "version": "ccf4b19d355847214fb36267e1c0e376",
+      "custom_tags": ""
+    },
+    "4d6f4066e9564d2ca1e89aecb7d1b2c2": {
+      "title": "PDMDIN",
+      "attributes": {
+        "Symbol": "7b242d3e95d24b869f75eca8d655bc73",
+        "Footprint": "",
+        "Name": "PDMDIN",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "44d19721ce7ab1277bf7241c117b1c1c|897a2117ee0a4f329206e23f09b51de9",
+      "version": "b183a5810c3d3b5cad65a04a03837b4e",
+      "custom_tags": ""
+    },
+    "4e3111b92d5e47cc84f7ddddabf52f5a": {
+      "title": "MHPA1010RGBDT",
+      "attributes": {
+        "Designator": "LED?",
+        "Symbol": "e3ff592d7dcc4af29991e2f70f1e0dca",
+        "Supplier": "LCSC",
+        "Supplier Part": "C404280",
+        "Manufacturer": "MEIHUA(美华)",
+        "Manufacturer Part": "MHPA1010RGBDT",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "63a6ba7909db4e10a76bbc070de7699a",
+        "Name": "MHPA1010RGBDT",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "44c269f2cad8884a0e23a0c7104e2643",
+      "version": "ab5df4dde163fbb53243edc260750b54",
+      "custom_tags": ""
+    },
+    "4e522c4fb83e4951adaca746bca7d107": {
+      "title": "SDA2",
+      "attributes": {
+        "Symbol": "79ba850d62024393b6af2c46b4fbf3b8",
+        "Footprint": "",
+        "Name": "SDA2",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "486c4774a4992df7d8fd9d583c27d868",
+      "version": "11b26d154290ec935ab9304f48a762b4",
+      "custom_tags": ""
+    },
+    "502452c6012f47c5a194fa0c5541bdfb": {
+      "title": "C0402C103J3RACAUTO",
+      "attributes": {
+        "LCSC Part Name": "10nF ±5% 25V",
+        "Supplier Part": "C2180806",
+        "Manufacturer": "KEMET(基美)",
+        "Manufacturer Part": "C0402C103J3RACAUTO",
+        "Supplier Footprint": "0402",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20210401/FDDC6E55C3E4F3789C68062DB1227DE4.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "85d78960cf4847cd89934547c5704fbf",
+        "Designator": "C?",
+        "Footprint": "cef4f92115b54348803d28f8706b0456",
+        "3D Model": "b7d13df3e9464d7a99d0651d1a5b4d57",
+        "3D Model Title": "C0402_L1.0-W0.5-H0.5",
+        "3D Model Transform": "39.37,19.685,0,0,0,0,0,0,0",
+        "Value": "10nF",
+        "Tolerance": "±5%",
+        "Voltage Rating": "25V",
+        "Temperature Coefficient": "X7R",
+        "Name": "={Value}",
+        "Description": "Capacitance:10nF Tolerance:±5% Tolerance:±5% Voltage Rating:25V Temperature Coefficient:X7R"
+      },
+      "description": "Capacitance:10nF Tolerance:±5% Tolerance:±5% Voltage Rating:25V Temperature Coefficient:X7R",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20240413/0C636C0942870388A79BA51A40CD303C.jpg"
+      ],
+      "source": "0c63897018594f3290fee6dfdb5486c9|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1747354802",
+      "custom_tags": "[\"Capacitors\",\"Multilayer Ceramic Capacitors MLCC - SMD/SMT\"]"
+    },
+    "517c872867ec4a9fb5b4f30bb0e15618": {
+      "title": "SPI_CS",
+      "attributes": {
+        "Symbol": "014cd8a6e77b4e788936cc6d63d20f96",
+        "Footprint": "",
+        "Name": "SPI_CS",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "98481d4d729b8f9e801d321ebdeee1fd",
+      "version": "3db1bad506b90431b72e630095305201",
+      "custom_tags": ""
+    },
+    "528d7c18c9bf40438c3c54d3be33dd93": {
+      "title": "10mΩ, 1%",
+      "attributes": {
+        "Designator": "R?",
+        "Symbol": "a7b45eca2a8b448783829c67c76ad54a",
+        "Supplier": "LCSC",
+        "Supplier Part": "C346478",
+        "Manufacturer": "SEI(Stackpole Electronics Inc.)",
+        "Manufacturer Part": "CSRF0402FT10L0",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "9c3ff77ecce84ce18e8d4046020c9a0c",
+        "Name": "10mΩ, 1%",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "67e272be525dee988e9095e3dc4e74ef",
+      "version": "95e3d3daf107845f1492900762e1b415",
+      "custom_tags": ""
+    },
+    "575446a9e27b4d1b81ebb7faa28feae5": {
+      "title": "10uF",
+      "attributes": {
+        "Designator": "C?",
+        "Symbol": "a3ce8b8ae45c4153a3c0ae2020f07857",
+        "Supplier": "LCSC",
+        "Manufacturer Part": "CL05A106MQ5NUNC",
+        "Manufacturer": "SAMSUNG(三星)",
+        "Supplier Part": "C15525",
+        "JLCPCB Part Class": "Basic Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "3493db7226df4914919d82ead2c1eb20",
+        "Name": "10uF",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "73e837461c851d325a262d88bcc2e760",
+      "version": "187b2d326a502cd89418c9b2f28303a2",
+      "custom_tags": ""
+    },
+    "585ec72280744631a3ef7b20e4c79309": {
+      "title": "5.1kΩ",
+      "attributes": {
+        "Designator": "R?",
+        "Symbol": "b825a8fe963e4fb994bcd073cdbd9741",
+        "Supplier": "LCSC",
+        "Supplier Part": "C274341",
+        "Manufacturer": "YAGEO(国巨)",
+        "Manufacturer Part": "RC0201FR-075K1L",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "ba8a4307c5164049a831d2b8f578885d",
+        "Name": "5.1kΩ",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "afe66ba2a6cb24fafe364045b4081bb3",
+      "version": "8b00ace2fb3d8e8e03310d81b2ad39c9",
+      "custom_tags": ""
+    },
+    "5b388307d9b3418898d1f4131fc66a4d": {
+      "title": "ECS-245.7-12-33Q-JEN-TR",
+      "attributes": {
+        "LCSC Part Name": "24.576MHz ±20ppm 12pF",
+        "Supplier Part": "C2450917",
+        "Manufacturer": "ECS",
+        "Manufacturer Part": "ECS-245.7-12-33Q-JEN-TR",
+        "Supplier Footprint": "SMD3225-4P",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20201126/C962472_61933582DE9745E546F0AA6E0ACAAEDC.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "c5d9a036bfc94529878cc8c7c7a30521",
+        "Designator": "U?",
+        "Footprint": "7012dbc140dc48b796ec14e0a64274c7",
+        "3D Model": "02485e56ba8d4732a26526d2983fc729",
+        "3D Model Title": "CRYSTAL-SMD_4P-L3.2-W2.5-BL",
+        "3D Model Transform": "125.984,98.425,0,0,0,0,0,0,0",
+        "Value": "24.576MHz",
+        "Normal temperature Frequency Tolerance": "±20ppm",
+        "External load capacitor": "",
+        "Frequency Stability(Full temperature range)": "±50ppm",
+        "Equivalent Series Resistance (ESR)": "40Ω",
+        "Operating Temperature": "",
+        "Name": "={Value}",
+        "Description": "Frequency: Normal temperature Frequency Tolerance:±20ppm Normal temperature Frequency Tolerance:±20ppm External load capacitor: Frequency Stability(Full temperature range):±50ppm Frequency Stability(Full temperature range):±50ppm Equivalent Series Resista"
+      },
+      "description": "Frequency: Normal temperature Frequency Tolerance:±20ppm Normal temperature Frequency Tolerance:±20ppm External load capacitor: Frequency Stability(Full temperature range):±50ppm Frequency Stability(Full temperature range):±50ppm Equivalent Series Resista",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "fb43c499f63c4cb29488c0e15e42028b|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1661461549",
+      "custom_tags": "[\"Crystals, Oscillators, Resonators\",\"Crystals\"]"
+    },
+    "5b80a0001ea245c39003a28bc8123b54": {
+      "title": "DAC_N",
+      "attributes": {
+        "Symbol": "e169eb4cf2164c7a837e93b7f108cd96",
+        "Footprint": "",
+        "Name": "DAC_N",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "e2aa6c376bb606ea602ca53753f6d4a2",
+      "version": "4525c9df5a8fa619ddf1301ebbd8a2cf",
+      "custom_tags": ""
+    },
+    "5cc929c8a1f9418d8167cef4ae9b7c31": {
+      "title": "PDMDIN",
+      "attributes": {
+        "Symbol": "3758ce8cbdc04329980131db51170595",
+        "Footprint": "",
+        "Name": "PDMDIN",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "44d19721ce7ab1277bf7241c117b1c1c",
+      "version": "b183a5810c3d3b5cad65a04a03837b4e",
+      "custom_tags": ""
+    },
+    "5de8a68d499043a9a62370b3e41bf43b": {
+      "title": "3V3",
+      "attributes": {
+        "Symbol": "6c93cc4621174aa283d272d552143007",
+        "Footprint": "",
+        "Name": "3V3",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "678a9e81e58d74d58ba905b566a33693",
+      "version": "10a919980319cdbeae1543ec97c404b7",
+      "custom_tags": ""
+    },
+    "5ed5ff08e884441e95b78539bdddf86e": {
+      "title": "SCL",
+      "attributes": {
+        "Symbol": "ac70ca19452747538f03e2dbc3b362ec",
+        "Footprint": "",
+        "Name": "SCL",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "2b8544857feae7f156fd66499634c309",
+      "version": "6ace24c52918a4e651cf47b6d5f104f0",
+      "custom_tags": ""
+    },
+    "62588954438b45699be265721ef9d1d9": {
+      "title": "IO6",
+      "attributes": {
+        "Symbol": "9098564d9dac473d892cb9e4db02bff4",
+        "Footprint": "",
+        "Name": "IO6",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "b06d208a92130bfc489fb412adc47d35",
+      "version": "09605be8903342921f5d81e6c8536ca8",
+      "custom_tags": ""
+    },
+    "6538cb6cb6a64d518054fcb39efac8e2": {
+      "title": "NRF_I2S_MCK",
+      "attributes": {
+        "Symbol": "540437cb6fd84005b9c4f5d3c4a9556b",
+        "Footprint": "",
+        "Name": "NRF_I2S_MCK",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "c798e24cc093b912c3e99d42c6ccb598",
+      "version": "9643fadea798a235e63f13694d402db3",
+      "custom_tags": ""
+    },
+    "6549b63a3f5a45d9a84ec7bcfa384f18": {
+      "title": "7D024576H01",
+      "attributes": {
+        "LCSC Part Name": "24.576MHz ±10ppm 9pF",
+        "Supplier Part": "C648937",
+        "Manufacturer": "HD(浩都频率)",
+        "Manufacturer Part": "7D024576H01",
+        "Supplier Footprint": "SMD2016-4P",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20220223/3A8917F8C31F864CCBF1C2D5E7F70111.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "c12234aa91c940379b899f90137a9708",
+        "Designator": "X?",
+        "Footprint": "b640f51e380947b6bdc4728de9087ba9",
+        "3D Model": "88b2bfffe1bb4b03835469d29dfc2d00",
+        "3D Model Title": "CRYSTAL-SMD_4P-L2.0-W1.6-BL-2",
+        "3D Model Transform": "78.74,62.992,0,0,0,0,0,0,0",
+        "Crystal Type": "贴片晶振",
+        "Value": "24.576MHz",
+        "Normal temperature Frequency Tolerance": "±10ppm",
+        "External load capacitor": "",
+        "Frequency Stability(Full temperature range)": "±20ppm",
+        "Operating Temperature": "-",
+        "Name": "={Value}",
+        "Description": "Crystal Type:贴片晶振 Frequency: Normal temperature Frequency Tolerance:±10ppm Normal temperature Frequency Tolerance:±10ppm External load capacitor: Frequency Stability(Full temperature range):±20ppm Frequency Stability(Full temperature range):±20ppm Operati"
+      },
+      "description": "Crystal Type:贴片晶振 Frequency: Normal temperature Frequency Tolerance:±10ppm Normal temperature Frequency Tolerance:±10ppm External load capacitor: Frequency Stability(Full temperature range):±20ppm Frequency Stability(Full temperature range):±20ppm Operati",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230104/5E00A6110C946B096CA452EFFCAC5E73.jpg"
+      ],
+      "source": "69b99afd95c646f4afd42c25d29d0984|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1697514003",
+      "custom_tags": "[\"Crystals, Oscillators, Resonators\",\"Crystals\"]"
+    },
+    "6874181b84c3437c8fc0f263e61e7a41": {
+      "title": "RGB_R",
+      "attributes": {
+        "Symbol": "8df5256a848141ef90fdfd61b275372a",
+        "Footprint": "",
+        "Name": "RGB_R",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "af105b898fd629b7e04ad003c2574ee6",
+      "version": "d65d859db2ffe4312176edee6a07cb16",
+      "custom_tags": ""
+    },
+    "68f398b11b5742eead4fe05ad1069e47": {
+      "title": "SENSORS_ENABLE",
+      "attributes": {
+        "Symbol": "1563fe0b6d994a7aaf4c822c8d806b2e",
+        "Footprint": "",
+        "Name": "SENSORS_ENABLE",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "21c22b7936b98118c4affb906b2c7352",
+      "version": "f9479610879b7a9fcb94061a0045a46a",
+      "custom_tags": ""
+    },
+    "6a98e987f2fe481094867dbecfe465cd": {
+      "title": "IO3",
+      "attributes": {
+        "Symbol": "654c827716ac46d794638bc6fd11721d",
+        "Footprint": "",
+        "Name": "IO3",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "5d717e24dcb9ffbde282c264cabba2df",
+      "version": "060229bae06206b69e7fb4eeb3c396ea",
+      "custom_tags": ""
+    },
+    "6e1455a521904dfca7b5a62e3b772916": {
+      "title": "10kΩ",
+      "attributes": {
+        "Designator": "R?",
+        "Symbol": "34fc0ec460b741b782adefbdd35d0827",
+        "Supplier": "LCSC",
+        "Manufacturer": "YAGEO(国巨)",
+        "Manufacturer Part": "RC0201FR-0710KL",
+        "Supplier Part": "C106225",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "ba8a4307c5164049a831d2b8f578885d",
+        "Name": "10kΩ",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "85ffc11975d96d73d223a3c2a726a9f8",
+      "version": "7551b7c5b5c23c2c4b4b66d85a342bd5",
+      "custom_tags": ""
+    },
+    "70541e4ef5374569a7ef9321eff59ceb": {
+      "title": "SD_STATE_3V3",
+      "attributes": {
+        "Symbol": "0a304570326240b9a076d55bd4c12713",
+        "Footprint": "",
+        "Name": "SD_STATE_3V3",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "6b6961ea970ae14f51ab1cf0a541aaef",
+      "version": "89c16b731888245fdb67bc804d35e027",
+      "custom_tags": ""
+    },
+    "7071ebfe85524be5abee0cabbb977981": {
+      "title": "IO4",
+      "attributes": {
+        "Symbol": "ff0de9fe0d8746b2a198c09358bda4ce",
+        "Footprint": "",
+        "Name": "IO4",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "05a1837a5ce45fc685ed4aae471eb7e8",
+      "version": "9d59cd9dd84024d61eaaf8bb240027a3",
+      "custom_tags": ""
+    },
+    "7247af3611814d9988992be61c9b1410": {
+      "title": "RESETN",
+      "attributes": {
+        "Symbol": "f85d33e2cf064f31988744ec7e4899f6",
+        "Footprint": "",
+        "Name": "RESETN",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "1d9565433806a22a9f5376133e2ba3b1",
+      "version": "11bc1744440ef7c0c7358c96080fd243",
+      "custom_tags": ""
+    },
+    "7571730c78eb4929bdaba5f57e7ef772": {
+      "title": "Q13FC1350000200",
+      "attributes": {
+        "Designator": "X?",
+        "Symbol": "ea5e5af77a7f4045ad8e9b52a4c7865b",
+        "Supplier": "LCSC",
+        "Manufacturer Part": "Q13FC1350000200",
+        "Manufacturer": "EPSON(爱普生)",
+        "Supplier Part": "C48615",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "a9cab663cf15437b8838c807023c7f8a",
+        "Name": "Q13FC1350000200",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "cb2a2425d9e2b650f55b8603a4a9aa52",
+      "version": "4e5d7f50fdf571dbc8213497d144e83f",
+      "custom_tags": ""
+    },
+    "767583b6d3164fd18a0fe115f8ec0cd7": {
+      "title": "1uF >10V",
+      "attributes": {
+        "Designator": "C?",
+        "Symbol": "60cffb55702144b2b8f44bd613262c3d",
+        "Supplier": "LCSC",
+        "Manufacturer Part": "GRM033R61A105ME44D",
+        "Manufacturer": "muRata(村田)",
+        "Supplier Part": "C76935",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "c98f7a1005b940f2a218186f30f7c098",
+        "Name": "1uF >10V",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "fb9b35134508de40a6714b9d90dcbd0f",
+      "version": "73a72f34bc8f6fd4e9faf2a2cb13a6b9",
+      "custom_tags": ""
+    },
+    "7690fbfd3d9f4b80bbfe752cfb30d331": {
+      "title": "GND",
+      "attributes": {
+        "Symbol": "245a2f013f944a8aa861d046f659d1fd",
+        "Footprint": "",
+        "Name": "GND",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "eec5ca16eb7a29985d7dcb84eac54c07|897a2117ee0a4f329206e23f09b51de9",
+      "version": "496380a0d2ffa15173a4c736c2d8caa8",
+      "custom_tags": ""
+    },
+    "788431cd1aae4a27a7d62b797f69e83b": {
+      "title": "BM46B-12DP-0.35V(51)",
+      "attributes": {
+        "LCSC Part Name": "间距:0.35mm 公 立贴",
+        "Supplier Part": "C3642308",
+        "Manufacturer": "HRS(广濑)",
+        "Manufacturer Part": "BM46B-12DP-0.35V(51)",
+        "Supplier Footprint": "SMD,P=0.35mm",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20241025/0C5D3304AC55DC1CF00DB95F558A8B79.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "234b594810c34992965ddbf07fc3a60b",
+        "Designator": "CN?",
+        "Footprint": "82258b2b4c5f437a9e4a0332f214ae0e",
+        "Number of Pins": "-",
+        "Pitch": "0.35mm",
+        "Mounting Style": "Standing paste",
+        "Number of Rows": "2",
+        "Contact Plating": "Gold",
+        "Name": "={Manufacturer Part}",
+        "Description": "Number of Pins:- Pitch:0.35mm Mounting Style:Standing paste Number of Rows:2 Contact Plating:Gold"
+      },
+      "description": "Number of Pins:- Pitch:0.35mm Mounting Style:Standing paste Number of Rows:2 Contact Plating:Gold",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "d25f0b201b9848e4bc4a5960f045ccc4|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1731920403",
+      "custom_tags": "[\"Connectors\",\"Board-to-Board and Backplane Connector\"]"
+    },
+    "7aa23b47b9984f00a7e146eca4ec20f8": {
+      "title": "CC_#PG",
+      "attributes": {
+        "Symbol": "728b9ec7e8cc4e2794409383de309b4f",
+        "Footprint": "",
+        "Name": "CC_#PG",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "38645ada52c397206fe98a96f0495525",
+      "version": "dd558d0b1fbc2569c3f4d954653e400e",
+      "custom_tags": ""
+    },
+    "807f5bc6f6974fea85e249bb1436e0a3": {
+      "title": "V_SD",
+      "attributes": {
+        "Symbol": "b320fa77e98a468082b9913d62e9964f",
+        "Footprint": "",
+        "Name": "V_SD",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "27c9c5f40344ea507dd5a4302d63f1bc",
+      "version": "0cadb2acfdfc01a53769879c0e87c898",
+      "custom_tags": ""
+    },
+    "836148d43bbf45e397146565546f0d9f": {
+      "title": "SCL",
+      "attributes": {
+        "Symbol": "8846641bee12498a81b9e975f0af1081",
+        "Footprint": "",
+        "Name": "SCL",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "2b8544857feae7f156fd66499634c309",
+      "version": "c84d8dfdf844e691ef3d606e2f3000e1",
+      "custom_tags": ""
+    },
+    "83ea0ab735b14d9e8ce9321e16d91053": {
+      "title": "RGB_G",
+      "attributes": {
+        "Symbol": "25ec47028b6744d18a92d45cdf912274",
+        "Footprint": "",
+        "Name": "RGB_G",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "92170de8dfde391e63d39953492144b4",
+      "version": "b8f65eead792bccadab96a83c5db54eb",
+      "custom_tags": ""
+    },
+    "84d4a58328324687b9f9d010cac3c6a1": {
+      "title": "FLASH_RESET",
+      "attributes": {
+        "Symbol": "a5135b51e8a84f51bcbd3a372c3c3ed5",
+        "Footprint": "",
+        "Name": "FLASH_RESET",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "2db875c39c2808c558f206889bb07aa8",
+      "version": "4a589c02e2e8ed79c13a9ad794aa106f",
+      "custom_tags": ""
+    },
+    "8608a0999d80464b8ed64099ecb8f8b8": {
+      "title": "XL2",
+      "attributes": {
+        "Symbol": "abe28ad76c4044a1bd202a9152756175",
+        "Footprint": "",
+        "Name": "XL2",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "251c148443daae7a6da07f52ddaf1e21",
+      "version": "50fbbc4fe404c749f05523f9aec62120",
+      "custom_tags": ""
+    },
+    "87a2f552a11b492eababc569a5823a9c": {
+      "title": "37.4kΩ, 1%",
+      "attributes": {
+        "Designator": "R?",
+        "Symbol": "f1b842f0d6e74a35ac1743213c295185",
+        "Supplier": "LCSC",
+        "Supplier Part": "C185422",
+        "Manufacturer": "YAGEO(国巨)",
+        "Manufacturer Part": "RC0402FR-0737K4L",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "9c3ff77ecce84ce18e8d4046020c9a0c",
+        "Name": "37.4kΩ, 1%",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "a1d1708c4add3d2e7d234e17f28369f0",
+      "version": "8d7f14a60b03f485fdf99d398e239b5c",
+      "custom_tags": ""
+    },
+    "8aa2de7090e84d6896993991762e3de0": {
+      "title": "SWDIO",
+      "attributes": {
+        "Symbol": "c402cc7793e6490bbc467b68d128a022",
+        "Footprint": "",
+        "Name": "SWDIO",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "83e5f1ccde592086d75cf173f1009b38",
+      "version": "06fcc342be73928c923602b28b3ad3ba",
+      "custom_tags": ""
+    },
+    "8e8aefc0ac7f4fb997b8ae943e74d0a5": {
+      "title": "V_LS",
+      "attributes": {
+        "Symbol": "5c0ca3ae287347da86235ec680f59e4f",
+        "Footprint": "",
+        "Name": "V_LS",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "d0e2f12d370a42ce217716d0e4a5417e",
+      "version": "b0f0ab657142f0b7c6d033a0dce9c116",
+      "custom_tags": ""
+    },
+    "8ebec167d6be4f7ab238fa7864ad71b9": {
+      "title": "BMX160",
+      "attributes": {
+        "Designator": "U?",
+        "Symbol": "7d51581e3a784f2b94720578224ebbaa",
+        "Supplier Part": "828-1087-1-ND",
+        "Supplier": "Digi-Key",
+        "Manufacturer": "Bosch",
+        "Manufacturer Part": "BMI160",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "4dcafa6c52c84352b6d14f88039e2e20",
+        "Name": "BMX160",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "b500cbd8bf10bf4169aed9fee87652bd",
+      "version": "adec660b5a08ce073edabf3030fb9a2f",
+      "custom_tags": ""
+    },
+    "8f50d76b04d8443c8301dbd8b88731e2": {
+      "title": "V_LS",
+      "attributes": {
+        "Symbol": "50cd79b2218f4111a0ed9d991bc51f77",
+        "Footprint": "",
+        "Name": "V_LS",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "d0e2f12d370a42ce217716d0e4a5417e",
+      "version": "a7a228bbd94b551290ff23b09becf747",
+      "custom_tags": ""
+    },
+    "8f98d1199cc94e1591850bf5a89b94fc": {
+      "title": "IO4",
+      "attributes": {
+        "Symbol": "f04f87bc26e741b2a86899ceb5eb2403",
+        "Footprint": "",
+        "Name": "IO4",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "05a1837a5ce45fc685ed4aae471eb7e8",
+      "version": "dba23d14e80ed4eb30fefb2cfcc681b3",
+      "custom_tags": ""
+    },
+    "906f53e6d7cd41ed88ec478fa9976069": {
+      "title": "SPI_MISO_SD",
+      "attributes": {
+        "Symbol": "ee382d996305442faaf513078e01f990",
+        "Footprint": "",
+        "Name": "SPI_MISO_SD",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "e9e50b6064712ae6f5ae246adf9a2e3b",
+      "version": "64e95ece5f1f9312582ceaba54c505d6",
+      "custom_tags": ""
+    },
+    "94bd47f83fae403581a69eb59a6b0f89": {
+      "title": "27Ω",
+      "attributes": {
+        "Designator": "R?",
+        "Symbol": "0f1107d38fd0423497bad5f7b1e80013",
+        "Supplier": "LCSC",
+        "Supplier Part": "C273268",
+        "Manufacturer": "YAGEO(国巨)",
+        "Manufacturer Part": "RC0201FR-0727RL",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "bbfa0d26e01148508f3e6ab77602a865",
+        "Name": "27Ω",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "44731c3f3c34f1f411c735849449855c",
+      "version": "927b0987d45a549f562071a8975ee0bc",
+      "custom_tags": ""
+    },
+    "96b31e97c38540d399e760311754c3d8": {
+      "title": "TCK",
+      "attributes": {
+        "Symbol": "b9ee34b3f1c14a299d49153d87cefeb2",
+        "Footprint": "",
+        "Name": "TCK",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "fb213b92795b93f39b8d207248ec2889",
+      "version": "8aeb81f913baf720a8e9bbc3ac0c1e33",
+      "custom_tags": ""
+    },
+    "96e456910f3648a9ac9165a12ecab646": {
+      "title": "SCL2",
+      "attributes": {
+        "Symbol": "0be4c84d8e7d4159b2b85a61c0a42a16",
+        "Footprint": "",
+        "Name": "SCL2",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "34b9dabaaa6b4b4b5ca584f8af34dfff",
+      "version": "e5e12e7b784fc13cf31aa2fd0aa651ff",
+      "custom_tags": ""
+    },
+    "97cb1841a3d7471aa5e404aebb136632": {
+      "title": "SN74AXC4T774RSVR",
+      "attributes": {
+        "Designator": "U?",
+        "Symbol": "6cd75f12a96840e2b0ab7c65f39bc6a5",
+        "Supplier": "LCSC",
+        "Supplier Part": "C1849454",
+        "Manufacturer": "TI(德州仪器)",
+        "Manufacturer Part": "SN74AXC4T774RSVR",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "34c799e6fab3494dbd29e329b8fc4c9e",
+        "Name": "SN74AXC4T774RSVR",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "851071be6138ecf2b177adae6e1298f9",
+      "version": "5eb5594d8c77d722e0f55ffed04b3e48",
+      "custom_tags": ""
+    },
+    "989a576d94504ab0835cbc0f688be145": {
+      "title": "SDA2",
+      "attributes": {
+        "Symbol": "178a1b72d529477095d9f64e69340b8e",
+        "Footprint": "",
+        "Name": "SDA2",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "486c4774a4992df7d8fd9d583c27d868",
+      "version": "dc659127654c6a40cb5fecf9145ceda2",
+      "custom_tags": ""
+    },
+    "989f49f4cef64d70bafd33fe9452a07a": {
+      "title": "SPI_CS_SD",
+      "attributes": {
+        "Symbol": "7648b64b415b4b26b4d1ebbd0bbcd0d8",
+        "Footprint": "",
+        "Name": "SPI_CS_SD",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "814fb757db8647f5c63d70172e1bf784",
+      "version": "84ba872f61d322e06d089c8332916c6b",
+      "custom_tags": ""
+    },
+    "99fec12b77b84b47930ab12ddb959f9a": {
+      "title": "BQ25120AYFPR",
+      "attributes": {
+        "Designator": "U?",
+        "Symbol": "5f246ba445bc4c0d8e117059eaae77c4",
+        "Supplier": "LCSC",
+        "Supplier Part": "C2866577",
+        "Manufacturer": "TI(德州仪器)",
+        "Manufacturer Part": "BQ25120AYFPR",
+        "JLCPCB Part Class": "Extended Part",
+        "link": "https://lcsc.com/eda_search?q=C2866577&%26type=1&ref=editor",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "7d2fe4712ff34a05930e971be295308a",
+        "Name": "BQ25120AYFPR",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "bf0fe4bff7867b87260788f72ca912c5",
+      "version": "ab6c8eae38cba084b75d4f0ea920f75d",
+      "custom_tags": ""
+    },
+    "9dc51c0d315a42b6a581f18e60da13fb": {
+      "title": "SPI_MOSI_SD",
+      "attributes": {
+        "Symbol": "da5dae236f9b40be8840a1e655560bf0",
+        "Footprint": "",
+        "Name": "SPI_MOSI_SD",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "15eb0c6528041d838fbf92321ace1e1c",
+      "version": "0d160bc31478741ee955c05c88c35ff0",
+      "custom_tags": ""
+    },
+    "9fa155460cf147a5a69596afde4f1ecf": {
+      "title": "CSD13380F3T",
+      "attributes": {
+        "Designator": "Q?",
+        "Symbol": "0b8d7c529ccc4203baf96de882493cf3",
+        "Supplier": "LCSC",
+        "Supplier Part": "C2871092",
+        "Manufacturer": "TI(德州仪器)",
+        "Manufacturer Part": "CSD13380F3T",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "8dfe793ccded481ea8c299c616af5ce3",
+        "Name": "CSD13380F3T",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "ef1fbfe087bcb7cb39b80bb76c865333",
+      "version": "7d1db37a750de1afd391899397614fce",
+      "custom_tags": ""
+    },
+    "a17bd20fee4d4843a8f0b475e23b895b": {
+      "title": "2.2uF",
+      "attributes": {
+        "Designator": "C?",
+        "Symbol": "53631752f9ef4194b72bf40b505b994a",
+        "Supplier": "LCSC",
+        "Supplier Part": "C285111",
+        "Manufacturer": "FH(风华)",
+        "Manufacturer Part": "0201X225M6R3NT",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "bfd63bb64bb6418a9facba67d12c5676",
+        "Name": "2.2uF",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "cf7caa8d9b60cfcfa196803612733318",
+      "version": "768d249fdd18635ee90f031dfa8472a7",
+      "custom_tags": ""
+    },
+    "a2d76c9d9c8c4fe4ad367188cc5843a9": {
+      "title": "TF-06A",
+      "attributes": {
+        "Designator": "CARD?",
+        "Symbol": "546aa745b041433c8afbb3a8862e428c",
+        "Supplier": "LCSC",
+        "Supplier Part": "C693844",
+        "Manufacturer": "韩国韩荣",
+        "Manufacturer Part": "TF-06A",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "e9e420ba3e1444d8ab6ba20cf1778a44",
+        "Name": "TF-06A",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "7051349fa1a21c0fd1261b9468d71634",
+      "version": "d8d2a6e6e13ebe856953352e36c7f226",
+      "custom_tags": ""
+    },
+    "a2ff2e00e38c440886341a51537562e4": {
+      "title": "TS2819A 230GF",
+      "attributes": {
+        "Designator": "SW?",
+        "Symbol": "4110b0a27c044ec488b27f623967c56d",
+        "Supplier": "LCSC",
+        "Supplier Part": "C388293",
+        "Manufacturer": "SHOU HAN(首韩)",
+        "Manufacturer Part": "TS2819A 230gf",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "a1bd6622d6584811ae6426c3d4c4ce9c",
+        "Name": "TS2819A 230GF",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "f65ec734f3aeaacc900bbbd0a6aad831",
+      "version": "3b90d29c7e7d3e57c543962cf2aacdd8",
+      "custom_tags": ""
+    },
+    "a378dd0759c5475e9e4e940b0bf8a4a6": {
+      "title": "IO2",
+      "attributes": {
+        "Symbol": "a9704ddf5b9448e98736747b2cb76686",
+        "Footprint": "",
+        "Name": "IO2",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "ffa17874525c67430a6b2106158f1045",
+      "version": "be3418f9007e8339d99aced9cc457beb",
+      "custom_tags": ""
+    },
+    "a3de319d95cd47e981490bf229147914": {
+      "title": "+1.8V",
+      "attributes": {
+        "Symbol": "0843ad20752a441585eca828c8dec4e8",
+        "Footprint": "",
+        "Name": "+1.8V",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "a36d042246648a600e19b97bea79a498",
+      "version": "f1cb0fc0463a7867098568fc58594b1d",
+      "custom_tags": ""
+    },
+    "ad97c9d3abfe4a36a08521fc2a7eedfb": {
+      "title": "SWCLK",
+      "attributes": {
+        "Symbol": "46e9ebc2f50f4a58af3a923f6f30041b",
+        "Footprint": "",
+        "Name": "SWCLK",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "a05fad7a83dd7479d474af25a6e2bed0",
+      "version": "ed7fb2eab61d8525abf4862c69723ea5",
+      "custom_tags": ""
+    },
+    "afe60f6e119349f9a0e8e86cdf688f62": {
+      "title": "4.7uF",
+      "attributes": {
+        "Designator": "C?",
+        "Symbol": "e0c1dac53e7b4f8795ef37f1c3b4fc59",
+        "Supplier": "LCSC",
+        "Supplier Part": "C335103",
+        "Manufacturer": "muRata(村田)",
+        "Manufacturer Part": "GRM035R60J475ME15D",
+        "JLCPCB Part Class": "Extended Part",
+        "link": "https://lcsc.com/eda_search?q=C335103&%26type=1&ref=editor",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "c98f7a1005b940f2a218186f30f7c098",
+        "Name": "4.7uF",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "48191582db40397111b7a68f6dd2eacc",
+      "version": "4ebc8b613ef9138f085fd55d451b5f01",
+      "custom_tags": ""
+    },
+    "b0c1c6e50ad443fbbd38892ddba35769": {
+      "title": "PRTR5V0U2F",
+      "attributes": {
+        "Designator": "D?",
+        "Symbol": "48b7d9d6c6fa43218c2967b48e75012f",
+        "Supplier": "LCSC",
+        "Supplier Part": "C2937001",
+        "Manufacturer": "TECH PUBLIC(台舟)",
+        "Manufacturer Part": "PRTR5V0U2F",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "5bf6cb7987fd4e03b861d3ed96d916d5",
+        "Name": "PRTR5V0U2F",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "4f52d2b64f51c93bfbace7ff3f41fae4",
+      "version": "fd605b70018aae81ee91e7f1a89a0035",
+      "custom_tags": ""
+    },
+    "b2a7afb7b8f94abea664a5aa01ffe431": {
+      "title": "BM46B-12DS-0.35V(51)",
+      "attributes": {
+        "Designator": "CN?",
+        "Symbol": "12aff8f7f4b2477c9d1fed19aeaeb568",
+        "Supplier": "LCSC",
+        "Supplier Part": "C3646713",
+        "Manufacturer": "HRS(广濑)",
+        "Manufacturer Part": "BM46B-12DS-0.35V(51)",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "952d5b4d69e04fa889bcd5c152794ddf",
+        "Name": "BM46B-12DS-0.35V(51)",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "15f6b42071ee4e500b6cc5363a0d4404",
+      "version": "d6697e059210f535652e8e3bee8f8ef0",
+      "custom_tags": ""
+    },
+    "b3eb1f30a1434843891c71a438f576f6": {
+      "title": "TDI",
+      "attributes": {
+        "Symbol": "c429abd486064d8485d94a3da86f8c30",
+        "Footprint": "",
+        "Name": "TDI",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "e78bf01a7575d536f563399d88ad6a31",
+      "version": "5f01c91c005bc11e794b32247a9b28c4",
+      "custom_tags": ""
+    },
+    "b40985566a1246b9aea7784909d6a17d": {
+      "title": "RGB_B",
+      "attributes": {
+        "Symbol": "1c78f376fbf542948f97307c4949925a",
+        "Footprint": "",
+        "Name": "RGB_B",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "b5d46e7a95a4c0def1f051488deef357",
+      "version": "cd53d75ad3759e01e5abf8e63b035547",
+      "custom_tags": ""
+    },
+    "b50ff6bd8da04cf98a7c88e4bb0a7a92": {
+      "title": "VUSB",
+      "attributes": {
+        "Symbol": "c637cb37876d432e91fb4e11619bc2c2",
+        "Footprint": "",
+        "Name": "VUSB",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "be13a911fe29ccb8799d77b217f7fcfd",
+      "version": "53467a7be239fa72cd07d2987158eef1",
+      "custom_tags": ""
+    },
+    "b514ccc9315b455a95c868350bf6d0ac": {
+      "title": "V_BAT",
+      "attributes": {
+        "Symbol": "1aadafb4de4f45c48b2dee1ea42ecd14",
+        "Footprint": "",
+        "Name": "V_BAT",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "81d1989c745f3f679249878ebd33158b",
+      "version": "b7a88d7e77f87372e32abb2dd74ec824",
+      "custom_tags": ""
+    },
+    "b62dafce697c4eb595ee9b037132fe45": {
+      "title": "SCL1",
+      "attributes": {
+        "Symbol": "a591da9ef9fc4fdb9d43b8eaba49a98d",
+        "Footprint": "",
+        "Name": "SCL1",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "9a9ab55bd203a2f05adcb21b401b3152",
+      "version": "2dbd4ea65279d24cacb44c4e99cb1580",
+      "custom_tags": ""
+    },
+    "b88bba95d75144ba8c3605c8c64046db": {
+      "title": "XL1",
+      "attributes": {
+        "Symbol": "30313df366da4b07975310105ccaddf8",
+        "Footprint": "",
+        "Name": "XL1",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "b44faf698e59dfd69432d1f4fa6bd317",
+      "version": "41f51e0ef5b7d09799ba9f58c36ba71e",
+      "custom_tags": ""
+    },
+    "ba66ae0d09ba4cd19392035268e56e5a": {
+      "title": "LRCLK",
+      "attributes": {
+        "Symbol": "d1236cdb46a34a2c922614751a33fc06",
+        "Footprint": "",
+        "Name": "LRCLK",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "bfb1619b0a6aff1d863886218a181f37",
+      "version": "9cde66725d9b141988beb76577722c8c",
+      "custom_tags": ""
+    },
+    "bf27ad052c964e089450988593381d6c": {
+      "title": "SD_ENABLE",
+      "attributes": {
+        "Symbol": "42ea36644e0e4e7c8b2a75b4e3f45326",
+        "Footprint": "",
+        "Name": "SD_ENABLE",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "3b302190c96b5cd8dfcb199ca3be44dc",
+      "version": "1d5b2384ebbd18bf3601c44e4f326bca",
+      "custom_tags": ""
+    },
+    "c0a0d252d4274894b6891f97aa18d425": {
+      "title": "Anonymous Authors_Customize",
+      "attributes": {
+        "Symbol": "5dfbd230c8aa41bcb1b99dc1b1771e6d",
+        "@Project Name": "OpenEarable 2.0 - Main",
+        "REV": "2.0",
+        "Date": "2024-05-01",
+        "Sheet": "1/1",
+        "Draw By": "Anonymous Author(s)",
+        "Company": "Anonymous Author(s)",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "",
+        "Name": "Anonymous Authors_Customize",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "baf6c0f2f878b192ce3d4189abc9bf3e",
+      "version": "c39f31d8225ccfa229a6398ffa9f5d1e",
+      "custom_tags": ""
+    },
+    "c0d3c72416bf409bb3cf353aeaaf7e1e": {
+      "title": "BQ27220YZFR",
+      "attributes": {
+        "Designator": "U?",
+        "Symbol": "4ab2017d9f474e1488a1f154e898d216",
+        "Supplier": "LCSC",
+        "Supplier Part": "C528617",
+        "Manufacturer": "TI(德州仪器)",
+        "Manufacturer Part": "BQ27220YZFR",
+        "JLCPCB Part Class": "Extended Part",
+        "link": "https://lcsc.com/eda_search?q=C528617&%26type=1&ref=editor",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "959faf70878644c4bb7859e428709fef",
+        "Name": "BQ27220YZFR",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "95d1d9045e35cce65249ccf8e0785f3a",
+      "version": "7e1433041ea91de4794f2697e7908eec",
+      "custom_tags": ""
+    },
+    "c1b563eaa3fd48b8a18ca7d5371cbc0c": {
+      "title": "DAC_ENABLE",
+      "attributes": {
+        "Symbol": "25da833c6b9a47fe8aa141a01f78a795",
+        "Footprint": "",
+        "Name": "DAC_ENABLE",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "c3c547e28698a34ef1ad7b5c48703a38",
+      "version": "9b47abe8e462fc206f95a1a5998dc27f",
+      "custom_tags": ""
+    },
+    "c488c73229114bcebaa21ea1a60fc860": {
+      "title": "2kΩ",
+      "attributes": {
+        "Designator": "R?",
+        "Symbol": "8e2d453db1c548ae8023edfd3cbfd8ac",
+        "Supplier": "LCSC",
+        "Supplier Part": "C100158",
+        "Manufacturer": "LIZ(丽智电子)",
+        "Manufacturer Part": "CR0201JH0202G",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "bbfa0d26e01148508f3e6ab77602a865",
+        "Name": "2kΩ",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "fb9e56f8ecf2ee63789a599ed5219eae",
+      "version": "5c4cbe25d7b5088cc4bd2ef1cb701c72",
+      "custom_tags": ""
+    },
+    "c6be1544e45a457a9bb299c4213217ef": {
+      "title": "AP22916BCA4-7",
+      "attributes": {
+        "Designator": "U?",
+        "Symbol": "19aa8a1d0bec4e46abe93167032140e4",
+        "Supplier": "LCSC",
+        "Supplier Part": "C5244375",
+        "Manufacturer": "DIODES(美台)",
+        "Manufacturer Part": "AP22916BCA4-7",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "0a9e26d32b0b40b98258df8a937407d4",
+        "Name": "AP22916BCA4-7",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "58331a8e9a936d2f7b7548b052373455",
+      "version": "d217a34910a37e3a61220f0269a60637",
+      "custom_tags": ""
+    },
+    "cc0cc1ed866746c0bcc246ee7ee67fe3": {
+      "title": "MX25R6435FBFIL0",
+      "attributes": {
+        "Designator": "U?",
+        "Symbol": "b6995a9ee4a14ab4a49c409949f63d22",
+        "Supplier": "LCSC",
+        "Supplier Part": "C6330263",
+        "Manufacturer": "MXIC(旺宏电子)",
+        "Manufacturer Part": "MX25R6435FBFIL0",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "75f180577fe34be2982eec92ac38e1e8",
+        "Name": "MX25R6435FBFIL0",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "6b5937b7fbb3aacc451c06ed475f93ee",
+      "version": "672b3303ac011f887a3081ca087ed502",
+      "custom_tags": ""
+    },
+    "cd4d930576bf43ef9394bbe69942d8fb": {
+      "title": "1uF",
+      "attributes": {
+        "Designator": "C?",
+        "Symbol": "44b9cc3e9a87445fbbdfd5af99bd11a0",
+        "Supplier": "LCSC",
+        "Manufacturer Part": "GRM033R61A105ME44D",
+        "Manufacturer": "muRata(村田)",
+        "Supplier Part": "C76935",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "c98f7a1005b940f2a218186f30f7c098",
+        "Name": "1uF",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "6980fbe642689267e423b8f93b6c64ea",
+      "version": "77414e9d2de55da801e8788b922946ea",
+      "custom_tags": ""
+    },
+    "d3da71fc090e428a8d710b9660704cfe": {
+      "title": "4.7uF, 10V",
+      "attributes": {
+        "Designator": "C?",
+        "Symbol": "1db517380ba346dba8c7079d1ea09391",
+        "Supplier": "LCSC",
+        "Supplier Part": "C368809",
+        "Manufacturer": "SAMSUNG(三星)",
+        "Manufacturer Part": "CL05A475KP5NRNC",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "3493db7226df4914919d82ead2c1eb20",
+        "Name": "4.7uF, 10V",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "68d91d9da1124cda3f5a8d3e097da0df",
+      "version": "f23783667655815dce22c346ed77eff1",
+      "custom_tags": ""
+    },
+    "d49388c5247a474b85994d1546bf5a5a": {
+      "title": "51kΩ",
+      "attributes": {
+        "Designator": "R?",
+        "Symbol": "a6cfeb819b3f4d75805f96209adb7f90",
+        "Supplier": "LCSC",
+        "Supplier Part": "C320938",
+        "Manufacturer": "FH(风华)",
+        "Manufacturer Part": "RC-01W5102FT",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "ba8a4307c5164049a831d2b8f578885d",
+        "Name": "51kΩ",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "bde1b57784d65e4e5b78ee53f1cbe846",
+      "version": "4a8d1dee9161c7922bc1a3ca021bd1bc",
+      "custom_tags": ""
+    },
+    "d58718fd06c24aa3bdc5ac6d836910e4": {
+      "title": "IO5",
+      "attributes": {
+        "Symbol": "2dd203fe439944aab69e582af1eeeeea",
+        "Footprint": "",
+        "Name": "IO5",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "8b975e52915ce8944ed3b96a2c6e6200",
+      "version": "194071c177b5ce02a863a09cd8d598aa",
+      "custom_tags": ""
+    },
+    "d7a5c91e7f13495a98126fd49ef08704": {
+      "title": "PDMCLK",
+      "attributes": {
+        "Symbol": "40325b8225854828bb4bb82e1ce5f63e",
+        "Footprint": "",
+        "Name": "PDMCLK",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "814277427c0f0d81ac5089fe70348989",
+      "version": "cc197dbd7ebd8e223bb01ea9caeb51a7",
+      "custom_tags": ""
+    },
+    "dab4ff8ca5054de9998293c1319d8f6e": {
+      "title": "SD_STATE",
+      "attributes": {
+        "Symbol": "23bf983be53a40ec978373d19383b678",
+        "Footprint": "",
+        "Name": "SD_STATE",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "d67554ba4509d713bef7ed28a9a7fc32",
+      "version": "ce140b54a4e212130c7b459318c1aa3b",
+      "custom_tags": ""
+    },
+    "dab5a44076d64083a7a652587cedf986": {
+      "title": "MR#",
+      "attributes": {
+        "Symbol": "dab00fe37a964d32bbfd346fe0e04237",
+        "Footprint": "",
+        "Name": "MR#",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "36d2ec13836abb5d4556e83af47a202b",
+      "version": "c89ef3d9dfa09d20f3948d3dfa46158d",
+      "custom_tags": ""
+    },
+    "dacd869d3a0a431895170c3bee9dc390": {
+      "title": "RC0201FR-07220RL",
+      "attributes": {
+        "LCSC Part Name": "厚膜电阻 220Ω ±1% 50mW",
+        "Supplier Part": "C274342",
+        "Manufacturer": "YAGEO(国巨)",
+        "Manufacturer Part": "RC0201FR-07220RL",
+        "Supplier Footprint": "0201",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20180821/C275644_0D56F95EFF785E7D9A1FEF436B37DA78.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "e46b8d5925ba407782bf76d732a7c784",
+        "Designator": "R?",
+        "Footprint": "ea94e26560f84db4a6862024f5c3efa7",
+        "3D Model": "d3c6830bf3df48b598874c11a7d9c817",
+        "3D Model Title": "R0201_L0.6-W0.3-H0.3",
+        "3D Model Transform": "23.622,11.811,0,0,0,0,0,-0.0005,0",
+        "Type": "Thick Film Resistors",
+        "Value": "220Ω",
+        "Tolerance": "±1%",
+        "Power(Watts)": "",
+        "Overload Voltage (Max)": "",
+        "Temperature Coefficient": "±200ppm/℃",
+        "Operating Temperature Range": "-55℃~+125℃",
+        "Name": "={Value}",
+        "Description": "Type:Thick Film Resistors Resistance: Tolerance:±1% Tolerance:±1% Power(Watts): Overload Voltage (Max): Temperature Coefficient:±200ppm/℃ Temperature Coefficient:±200ppm/℃ Operating Temperature Range:-55℃~+125℃ Operating Temperature Range:-55℃~+125℃"
+      },
+      "description": "Type:Thick Film Resistors Resistance: Tolerance:±1% Tolerance:±1% Power(Watts): Overload Voltage (Max): Temperature Coefficient:±200ppm/℃ Temperature Coefficient:±200ppm/℃ Operating Temperature Range:-55℃~+125℃ Operating Temperature Range:-55℃~+125℃",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230108/743E6830E534310D1352D03BBFD5E1B7.jpg"
+      ],
+      "source": "bcc75a0d8c724c3ea076bee9bf758459|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1665171621",
+      "custom_tags": "[\"Resistors\",\"Chip Resistor - Surface Mount\"]"
+    },
+    "db3d9a392c1b4cb09d52e4f6ff44e524": {
+      "title": "SPH0641LU4H-1",
+      "attributes": {
+        "Designator": "U?",
+        "Symbol": "ffcf3ddda3f143e18fb8ce63f0b3a21a",
+        "Supplier": "LCSC",
+        "Supplier Part": "C2879853",
+        "Manufacturer": "Knowles(楼氏)",
+        "Manufacturer Part": "SPH0641LU4H-1",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "c947d21a0b594aa79d5886a6e6b3a4cc",
+        "Name": "SPH0641LU4H-1",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "b5d4dec7440383000337bb39d9d19e3d",
+      "version": "f6cd3a976fd3a5665af66ed6a099fe49",
+      "custom_tags": ""
+    },
+    "dbecd2b1a98846fda9f305260561d019": {
+      "title": "USB_D+",
+      "attributes": {
+        "Symbol": "3a3c330ff1ab42d5a19c25cab1d561b8",
+        "Footprint": "",
+        "Name": "USB_D+",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "d7d03cb2e26aacdb6a77ee36ab7f6bfa",
+      "version": "f51e9c421bc95fb5536e17ca82e6208c",
+      "custom_tags": ""
+    },
+    "dda7f6b92fa44304be1592386dd02a3f": {
+      "title": "GJM0336C1E200JB01D",
+      "attributes": {
+        "LCSC Part Name": "20pF ±5% 25V",
+        "Supplier Part": "C161300",
+        "Manufacturer": "muRata(村田)",
+        "Manufacturer Part": "GJM0336C1E200JB01D",
+        "Supplier Footprint": "0201",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20180224/C162513_15194365328741363565.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "5d8dd199850b4aa0bbceeaed00bf4849",
+        "Designator": "C?",
+        "Footprint": "b5c2858cad4e462ab76a8d0ccf4ade45",
+        "3D Model": "c3e75c3d90204c70b153866ab54c789f",
+        "3D Model Title": "C0201_L0.6-W0.3-H0.3",
+        "3D Model Transform": "23.622,11.811,0,0,0,0,0,0,0",
+        "Value": "20pF",
+        "Tolerance": "±5%",
+        "Voltage Rated": "",
+        "Temperature Coefficient": "",
+        "Name": "={Value}",
+        "Description": "Capacitance: Tolerance:±5% Tolerance:±5% Voltage Rated: Temperature Coefficient:"
+      },
+      "description": "Capacitance: Tolerance:±5% Tolerance:±5% Voltage Rated: Temperature Coefficient:",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230110/34EABFBC9C15955F343BCA77EF8CCBC4.jpg"
+      ],
+      "source": "e089a987071a4cabacd8f9afba09ead1|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1660161515",
+      "custom_tags": "[\"Capacitors\",\"Multilayer Ceramic Capacitors MLCC - SMD/SMT\"]"
+    },
+    "e85df8febe7c4faebf2ef40b5b35c4f9": {
+      "title": "SCL1",
+      "attributes": {
+        "Symbol": "f8408789ab384baba92111a75e7ab8f3",
+        "Footprint": "",
+        "Name": "SCL1",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "9a9ab55bd203a2f05adcb21b401b3152",
+      "version": "2663c3d01bbc179160d6622e4245b0b2",
+      "custom_tags": ""
+    },
+    "e8a1e3e6ecbd4e3c9cf11d53ccc5f68b": {
+      "title": "#ERROR",
+      "attributes": {
+        "Symbol": "4332925760ac47c985cc4336942dd773",
+        "Footprint": "",
+        "Name": "#ERROR",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "5b92c21139ebf3920c9be88a21b71899",
+      "version": "7fdddc4db7b3ac5124397904e3ecbd42",
+      "custom_tags": ""
+    },
+    "e9cde76f8d834a3583caa4989e2b6250": {
+      "title": "10uF",
+      "attributes": {
+        "Designator": "C?",
+        "Symbol": "a3ce8b8ae45c4153a3c0ae2020f07857",
+        "Supplier": "LCSC",
+        "Manufacturer Part": "CL05A106MQ5NUNC",
+        "Manufacturer": "SAMSUNG(三星)",
+        "Supplier Part": "C15525",
+        "JLCPCB Part Class": "Basic Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "eba5cca11e7a40b08d3523b627f075d4",
+        "Name": "10uF",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "73e837461c851d325a262d88bcc2e760",
+      "version": "f77fbf2300bb9805b9c12db19292dab8",
+      "custom_tags": ""
+    },
+    "e9f1dd1e34c8497b985abd69926b367a": {
+      "title": "10uF",
+      "attributes": {
+        "Designator": "C?",
+        "Symbol": "c1830b700d6043e2a05cf3935c490f7e",
+        "Supplier": "LCSC",
+        "Supplier Part": "C2846677",
+        "Manufacturer": "FH(风华)",
+        "Manufacturer Part": "0402X106M100NT",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "3493db7226df4914919d82ead2c1eb20",
+        "Name": "10uF",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "73e837461c851d325a262d88bcc2e760",
+      "version": "cf102c3f875f4a676fc92ac60812bef6",
+      "custom_tags": ""
+    },
+    "eaba975f2dd04702b27f64477004847b": {
+      "title": "100nF",
+      "attributes": {
+        "Designator": "C?",
+        "Symbol": "fdd8eb43ee254b7cb56b33d70696277c",
+        "Supplier": "LCSC",
+        "Supplier Part": "C2903664",
+        "Manufacturer": "CCTC(三环)",
+        "Manufacturer Part": "TCC0201X5R104M6R3ZT",
+        "JLCPCB Part Class": "Extended Part",
+        "link": "https://lcsc.com/eda_search?q=C2903664&%26type=1&ref=editor",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "bfd63bb64bb6418a9facba67d12c5676",
+        "Name": "100nF",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "2a520e0a1ea422ccd879ea9ca5971167",
+      "version": "a00d096cdb8d228d5eb818aa917c668d",
+      "custom_tags": ""
+    },
+    "eb15200375cf47199f53da3700e1ccea": {
+      "title": "SPI_CS_FLASH",
+      "attributes": {
+        "Symbol": "04035c4d9ed543db8e41708dda35714b",
+        "Footprint": "",
+        "Name": "SPI_CS_FLASH",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "fb8da5a37e4c9aa935c3c109de7de29b",
+      "version": "1f6477f9d2ee95232ca6e7e4febfe40f",
+      "custom_tags": ""
+    },
+    "f5467ed953024d0ea0264f1b8a248815": {
+      "title": "1uF",
+      "attributes": {
+        "Designator": "C?",
+        "Symbol": "44b9cc3e9a87445fbbdfd5af99bd11a0",
+        "Supplier": "LCSC",
+        "Manufacturer Part": "GRM033R61A105ME44D",
+        "Manufacturer": "muRata(村田)",
+        "Supplier Part": "C76935",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "bfd63bb64bb6418a9facba67d12c5676",
+        "Name": "1uF",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "6980fbe642689267e423b8f93b6c64ea",
+      "version": "e2e13243d9ff82e009cd696acb90eb1d",
+      "custom_tags": ""
+    },
+    "f587417bc49848779a1b1a167ce59cfe": {
+      "title": "TMS",
+      "attributes": {
+        "Symbol": "79428eef80d94768803263df2a0e64b4",
+        "Footprint": "",
+        "Name": "TMS",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "9e5dfc0ebc078e4f03650d778f13d412",
+      "version": "a8d1f6a1e17b876099f9b11074353972",
+      "custom_tags": ""
+    },
+    "f75a17ceda4747eaaf5a443d23e1dc5f": {
+      "title": "CSD23382F4",
+      "attributes": {
+        "Designator": "Q?",
+        "Symbol": "2abc8bff844340fa93d742abe58b4ed6",
+        "Supplier": "LCSC",
+        "Supplier Part": "C2861620",
+        "Manufacturer": "TI(德州仪器)",
+        "Manufacturer Part": "CSD23382F4",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "2d69e036bc924d75a301096fcb8adfd0",
+        "Name": "CSD23382F4",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "b5558505fd37792b69f9b503cb7c87e7",
+      "version": "78610a0f1ee6c6c8976305c0fec04a46",
+      "custom_tags": ""
+    },
+    "f766b2cac22a49218a46692541c743ad": {
+      "title": "SDA",
+      "attributes": {
+        "Symbol": "38074f45b4334cd2b6c4beb02760be0c",
+        "Footprint": "",
+        "Name": "SDA",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "047b37855364f25ce01708c60aeabe37",
+      "version": "9090333ac1258e7ec9c6a0f667476929",
+      "custom_tags": ""
+    },
+    "f9928aa1998b4e0399f0594ae1262ee3": {
+      "title": "USB_D+",
+      "attributes": {
+        "Symbol": "2a1a842d5ae04d039d46a2f6e713b111",
+        "Footprint": "",
+        "Name": "USB_D+",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "d7d03cb2e26aacdb6a77ee36ab7f6bfa",
+      "version": "fa2fa6f817dba9e8313f850fbf8281fb",
+      "custom_tags": ""
+    },
+    "fcd25e33824449ecb64d8fd5cb9da096": {
+      "title": "9pF",
+      "attributes": {
+        "Designator": "C?",
+        "Symbol": "cccd54e52e754d6f907ffd2950b05fe5",
+        "Supplier": "LCSC",
+        "Supplier Part": "C277498",
+        "Manufacturer": "YAGEO(国巨)",
+        "Manufacturer Part": "CC0201CRNPO9BN9R0",
+        "JLCPCB Part Class": "Extended Part",
+        "link": "https://lcsc.com/eda_search?q=C277498&%26type=1&ref=editor",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "bfd63bb64bb6418a9facba67d12c5676",
+        "Name": "9pF",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "1ecd1faa503ae1555e8c0f725c83aacb",
+      "version": "56402c77e3f925a1e3e855ae00c60465",
+      "custom_tags": ""
+    },
+    "fce5fa57952343a3acaf4f2fdb01adf5": {
+      "title": "DAC_P",
+      "attributes": {
+        "Symbol": "6d1028d64f964e2294a6db2713ecb14b",
+        "Footprint": "",
+        "Name": "DAC_P",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "0363dacca15f217f3960874efb0487f3",
+      "version": "fa5d194b8247a597905601ee56aadcea",
+      "custom_tags": ""
+    },
+    "fdbd57b7c52b4b6798fba54384c53543": {
+      "title": "ADAU1860BCBZRL",
+      "attributes": {
+        "Designator": "U?",
+        "Symbol": "4538b9646a184278944d6a720f12eb40",
+        "Supplier": "LCSC",
+        "Supplier Part": "C17592940",
+        "Manufacturer": "ADI(亚德诺)",
+        "Manufacturer Part": "ADAU1860BCBZRL",
+        "JLCPCB Part Class": "Extended Part",
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Footprint": "5e25a669dacf44509960f3fdabacecf7",
+        "Name": "ADAU1860BCBZRL",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [],
+      "source": "d5de2300d114c89158243a97262f4e01",
+      "version": "070fc399ca7175b2fe711723d8a4b826",
+      "custom_tags": ""
+    }
+  },
+  "boards": {
+    "OpenEarable - Main v2.7": {
+      "schematic": "f608cfd613e24ea7937ea7eb0aab41a1",
+      "pcb": "7be1a0d4b47a427b935eec6c7480da3e"
+    }
+  },
+  "config": {
+    "title": "OpenEarable - Main v2.7",
+    "cbbProject": false,
+    "defaultSheet": "",
+    "editorVersion": "2.1.64.d1969c9c.217bcf"
+  }
+}
