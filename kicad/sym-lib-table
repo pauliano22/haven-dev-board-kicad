@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "haven_dev_board")(type "KiCad")(uri "${KIPRJMOD}/haven_dev_board.kicad_sym")(options "")(descr "Haven dev board custom symbols, generated from the stock OpenEarable EasyEDA export"))
+)

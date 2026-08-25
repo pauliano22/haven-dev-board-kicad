@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name "haven_footprints")(type "KiCad")(uri "${KIPRJMOD}/footprints.pretty")(options "")(descr "Haven dev board custom footprints, generated from the stock OpenEarable EasyEDA export"))
+)
