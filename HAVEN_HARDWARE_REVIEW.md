@@ -295,3 +295,36 @@ roughly in priority order:
 | Decoupling cap distances | Tool-verified (measured from real placement data) |
 | HPVDD/HPVDD_L identity | Unresolved — genuinely could not locate in parsed data |
 | "No ground pad" = antenna keepout, not an exposed-pad note | High-confidence inference, not certain |
+| U1 (IMU) is actually BMI160, not BMX160 | Resolved by wiring inspection — see §8 below |
+
+---
+
+## 8. U1 resolved: BMX160 label vs. BMI160 sourced part
+
+Previously flagged (BOM `U1` row) as a genuine discrepancy: the schematic's
+own component value said `BMX160` (Bosch 9-axis IMU, has an on-die
+magnetometer) while the sourced Manufacturer Part was `BMI160` (6-axis,
+accel+gyro only, no magnetometer) — a real difference, not a typo, since
+both are legitimate distinct Bosch part numbers. Both share the same
+LGA-14 (3.0×2.5mm, 0.5mm pitch) package and pinout, so footprint alone
+can't disambiguate them.
+
+**Resolved by checking the actual net connections at U1's pins 2/3
+(`ASDX`/`ASCX`)** — BMI160's auxiliary sensor interface, meant for wiring
+an *external* magnetometer (e.g. a companion BMM150) when one is wanted.
+In this schematic those two pins are tied to `GND`. Grounding an unused
+aux interface is BMI160's own documented reference-design pattern for "no
+external magnetometer connected." BMX160 has no analogous *external*
+aux-magnetometer pins to ground in the first place — its magnetometer is
+on-die, using that same physical interface internally — so grounding them
+is specifically a BMI160-without-magnetometer configuration, not a valid
+way to wire a BMX160.
+
+**Fix applied**: schematic `Value` property for U1 corrected from `BMX160`
+to `BMI160` (both the library symbol definition and the placed instance)
+to match the part that's actually wired and actually sourced. `HAVEN_BOM.csv`
+updated to match, with its discrepancy note replaced by this resolution.
+Net effect: no magnetometer is present on this board as wired — nothing
+in Haven's firmware currently expects one, so this doesn't change any
+functional behavior, only fixes the part-number inconsistency before a
+production order could lock in the wrong label.

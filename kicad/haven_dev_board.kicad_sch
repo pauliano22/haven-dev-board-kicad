@@ -4,7 +4,7 @@
   (lib_symbols
     (symbol "U1" (in_bom yes) (on_board yes)
       (property "Reference" "U" (at -10.160 7.620 0) (effects (font (size 1.27 1.27))))
-      (property "Value" "BMX160" (at -10.160 -7.620 0) (effects (font (size 1.27 1.27))))
+      (property "Value" "BMI160" (at -10.160 -7.620 0) (effects (font (size 1.27 1.27))))
       (symbol "U1_0_1"
         (rectangle (start -10.160 -5.080) (end 10.160 5.080) (stroke (width 0.254) (type default)) (fill (type background)))
       )
@@ -1259,7 +1259,7 @@
   (symbol (lib_id "haven_dev_board:U1") (at 210.820 193.040 0) (unit 1)
     (uuid "00000000-0000-0000-0000-000000000002")
     (property "Reference" "U1" (at 210.820 188.040 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "BMX160" (at 210.820 198.040 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "BMI160" (at 210.820 198.040 0) (effects (font (size 1.27 1.27))))
   )
   (label "GND" (at 198.120 200.660 0) (effects (font (size 1.27 1.27)) (justify left)) (uuid "00000000-0000-0000-0000-000000000003"))
   (label "SDA2" (at 223.520 200.660 0) (effects (font (size 1.27 1.27)) (justify left)) (uuid "00000000-0000-0000-0000-000000000004"))
