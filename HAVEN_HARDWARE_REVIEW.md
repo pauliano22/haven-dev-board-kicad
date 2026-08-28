@@ -328,3 +328,58 @@ Net effect: no magnetometer is present on this board as wired — nothing
 in Haven's firmware currently expects one, so this doesn't change any
 functional behavior, only fixes the part-number inconsistency before a
 production order could lock in the wrong label.
+
+---
+
+## 9. Board rescale + autoroute: why ~93 nets remain unrouted
+
+After rescaling the board 5x (see `feature/board-rescale-and-route`) and
+routing with Freerouting (a real autorouter, not hand-placed traces), 93
+of 304 nets remain unrouted. This section documents *why*, since it's a
+real, reproducible finding, not an unexplained gap.
+
+**Tool-verified, via three independent attempts**: a fresh autorouter run
+with default settings (prioritized selection, greedy optimization)
+converges to exactly 93 unrouted / 2 violations. A second fresh run with
+different settings (random selection, global optimization) converges to
+the *identical* 93 unrouted / 2 violations / identical score. Re-feeding
+an already-routed board back into the router — with or without locking
+the existing traces as fixed — made results *worse* (142-143 unrouted),
+not better, in every attempt. Two structurally different search
+strategies landing on the exact same outcome, while every attempt to
+build on partial progress regresses, is strong evidence this is a real
+structural ceiling, not an under-explored search space.
+
+**Root cause, tool-verified**: the unrouted connections concentrate
+overwhelmingly on the board's finest-pitch packages:
+
+| Component | Package | Pitch | Share of unrouted connections |
+|---|---|---|---|
+| U15 (ADAU1860) | BGA-56 | 0.35mm | 37% |
+| U2 (charger) | DSBGA-25 | 0.40mm | 20% |
+| MDBT531 (nRF5340 module) | 65-pin castellated | 0.50mm | 24% |
+| U10 | UQFN-16 | 0.40mm | 13% |
+| CN1 | FPC connector | 0.35mm | 11% |
+
+(Percentages overlap since some connections involve two of these parts.)
+
+Escaping a 56-ball BGA at 0.35mm pitch — getting a trace out from a ball
+buried in the middle of the grid, surrounded on all sides by other balls
+— is a well-known hard problem in PCB layout. The standard solution is
+via-in-pad (a microvia drilled directly through the pad itself, dropping
+straight to an inner layer) or careful hand-placed dogbone escapes,
+neither of which a generic autorouter's default via rules reliably
+produces. This board's current via spec (drill 0.15mm / pad ~0.25-0.3mm,
+see the earlier via-geometry fix) is in the right size range for
+via-in-pad on a 0.35mm pitch part, but placing them correctly under
+specific balls is a targeted, chip-by-chip task, not something bulk
+autorouting handles well by default.
+
+**What this means practically**: the remaining ~93 connections need
+either (a) a human doing manual escape routing for these five specific
+fine-pitch parts in KiCad's interactive router — a normal, bounded PCB
+layout task, likely 30-60 minutes of focused work given the board now
+has generous surrounding space — or (b) confirming the fab can support
+via-in-pad at this pitch and re-running the router with that explicitly
+modeled. It is *not* something further autorouter attempts are likely to
+resolve; that's been directly tested, not assumed.
