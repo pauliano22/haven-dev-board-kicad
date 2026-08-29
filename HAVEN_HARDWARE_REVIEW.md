@@ -153,42 +153,41 @@ codec's ground pin connections — not something to do mechanically without
 the codec's actual pinout diagram in hand (which pins ADI's own reference
 layout marks as "AGND" vs "DGND").
 
-### 3.2 BLE antenna keepout (MDBT53 module)
+### 3.2 BLE antenna keepout (MDBT53 module) — RESOLVED
 
-**Sourced from a real datasheet lookup** (WebSearch/WebFetch — full PDF
-render wasn't possible in this sandbox, no `pdftoppm`/poppler available, so
-the exact keepout dimension in mm from Raytac's diagram could not be
-extracted, only the text guidance surrounding it):
+**Originally flagged as the single highest-priority hardware finding in
+this review**, with the exact keepout dimension unobtainable at the time
+(no PDF rendering available in this environment). Once `poppler-utils`
+was installed, the real Raytac MDBT53 datasheet was downloaded and its
+actual mechanical pages read directly (section 2.3, "RF Layout Suggestion
+(aka Keep-Out Area)"):
 
-> "Make sure to keep the 'No Ground Pad' as wider as you can regardless of
-> the size of your PCB... included in the corresponding position of the
-> antenna in EACH LAYER... place the module towards the edge of PCB."
-> — Raytac RF layout guidance for the MDBT53 family
-> ([SparkFun-hosted datasheet PDF](https://cdn.sparkfun.com/assets/9/7/0/8/6/_nRF5340__MDBT53-1M___MDBT53-P1M_Spec__Ver.D_.pdf))
+> "Make sure to keep the 'No Ground Pad' as wider as you can... No Ground
+> Pad should be included in the corresponding position of the antenna in
+> EACH LAYER. Place the module towards the edge of PCB to have better
+> performance than placing it on the center."
 
-This is almost certainly the actual source of the "no ground pad, as wide
-as possible" callout mentioned for this project — it's Raytac's own literal
-phrasing. (I initially went looking for this near a component's exposed
-thermal pad — U5/KTD2026 has a `DFN...-EP` footprint — but its exposed pad
-turns out to already be normally tied to `GND`, not a special case. The
-antenna-keepout reading fits far better.)
+The datasheet's own diagram (page 13) gives the exact dimension: **3.7mm
+deep, along the module's full 9.3mm short edge**, on every copper layer.
 
-**Tool-verified against the actual generated PCB**: this guidance is **not
-implemented**. MDBT531's placement center sits ~7.3mm from the nearest
-board edge (board is ~14.6mm × 32.2mm; the module is a 14.3mm × 9.3mm
-part, so it is reasonably close to an edge — partial credit on the
-"place near the edge" guidance). But a real point-in-polygon test against
-the actual `GND` copper pour on both inner layers (15 and 16) shows the
-module's center point sits **inside solid ground copper fill**, with the
-nearest pour boundary only ~2.5mm away — nowhere near "as wide as possible."
-I did not check whether this holds specifically under the antenna trace
-itself (that needs the module's mechanical drawing to know exactly which
-edge of the package the antenna occupies, which I couldn't extract from the
-un-renderable PDF) — but given the pour comes this close to the module's
-center generally, a real keepout is very unlikely to exist anywhere nearby.
-**This is the single highest-priority hardware finding in this review** —
-worth Raytac's own free layout-review service (`sales@raytac.com`,
-mentioned on their site) before this ever gets fabricated.
+**Fix applied**: anchored the keepout to this board's real geometry
+rather than an assumed orientation — pin 1 (GND) sits at (75.010,
+65.928)mm and pin 61 (GND) at (75.010, 74.028)mm on this board, same X,
+confirming that short edge runs along Y at X=75.010 with the antenna
+extending outward (decreasing X). The resulting keepout range, X ∈
+[71.11, 75.01], lines up almost exactly with the board's own physical
+left edge — consistent with (and confirming) the "place near the edge"
+guidance the original placement already nominally followed, just without
+the actual copper clearance.
+
+Implemented as a KiCad rule area (blocks copper pour, vias, and tracks)
+across all 6 copper layers. Five pre-existing GND traces/vias that sat
+inside the new keepout (placed before the rule existed) were removed and
+the zones re-filled. Verified via DRC (zero keepout violations) and
+visually via SVG export (clean copper-free rectangle exactly where
+expected). Still recommend Raytac's free layout review
+(`sales@raytac.com`) as a final sanity check before ordering boards, but
+the specific gap this review found is now closed.
 
 ### 3.3 Decoupling capacitor placement
 
@@ -249,13 +248,11 @@ a decoupling-proximity issue.
 Given everything above, here's what a human should walk through by hand,
 roughly in priority order:
 
-1. **Antenna keepout first** — before anything else gets fixed, either
-   send the layout to Raytac's free review service or get the exact
-   keepout dimension from the datasheet's diagram (needs real PDF
-   rendering, unavailable here) and clear the `GND` pour on layers 15/16
-   under and around the module accordingly. This is the one finding here
-   that materially affects RF certification/range, not just signal
-   integrity.
+1. ~~**Antenna keepout first**~~ — **RESOLVED**, see §3.2. Real datasheet
+   dimension obtained and implemented as a proper keepout rule area on
+   all copper layers, verified via DRC and visually. Still worth a final
+   Raytac free-review pass before ordering, as a sanity check, not
+   because a known gap remains.
 2. **Resolve the DIN/DOUT direction question (§1)** against the ADAU1860's
    actual register-configuration for its serial port 0, not just its
    default pin names, before trusting either the overlay's comment or my
@@ -290,8 +287,8 @@ roughly in priority order:
 | I2C1/I2S net names & pin numbers match overlay | Tool-verified |
 | DIN/DOUT direction discrepancy vs. overlay | Tool-verified data, inference-level conclusion (genuinely needs datasheet/register check) |
 | No analog/digital ground split | Tool-verified |
-| Antenna keepout guidance (Raytac quote) | Sourced from real datasheet search — exact mm dimension NOT obtained (PDF unrenderable here) |
-| Antenna keepout not implemented in this port | Tool-verified (point-in-polygon against real pour data) |
+| Antenna keepout guidance (Raytac quote) | Sourced from real datasheet, exact dimension obtained (3.7mm x 9.3mm, page 13 diagram) |
+| Antenna keepout — RESOLVED | Implemented as rule area on all copper layers, verified via DRC and SVG — see §3.2 |
 | Decoupling cap distances | Tool-verified (measured from real placement data) |
 | HPVDD/HPVDD_L identity | Unresolved — genuinely could not locate in parsed data |
 | "No ground pad" = antenna keepout, not an exposed-pad note | High-confidence inference, not certain |
