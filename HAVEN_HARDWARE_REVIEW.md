@@ -294,6 +294,7 @@ roughly in priority order:
 | "No ground pad" = antenna keepout, not an exposed-pad note | High-confidence inference, not certain |
 | U1 (IMU) is actually BMI160, not BMX160 | Resolved by wiring inspection — see §8 below |
 | 87 unrouted nets is a real structural ceiling, not under-explored | Tool-verified across 4 independent autorouter attempts — see §9 |
+| Most of the 38 shorting-error DRC violations are dangling-stub artifacts of the same unrouted nets | Tool-verified — 24/38 match a documented dangling stub's exact coordinates — see §9 |
 | 78 footprint-mismatch warnings are baked-in rotation, functionally fine as routed | Tool-verified pad-by-pad (numeric diff, not text) against the library — see §10 |
 
 ---
@@ -396,6 +397,22 @@ has generous surrounding space — or (b) confirming the fab can support
 via-in-pad at this pitch and re-running the router with that explicitly
 modeled. It is *not* something further autorouter attempts are likely to
 resolve; that's been directly tested, not assumed.
+
+**The 38 `error`-severity "shorting_items" violations are mostly the same
+problem, not a separate one.** 37 of 38 involve a `Track` (not two solid
+pads/vias) — i.e. a dangling stub left behind by the autorouter's partial
+attempt at one of these unrouted nets, sitting close enough to a
+different net's copper to trip a clearance/short check. Cross-referencing
+violation coordinates directly against `REMAINING_CONNECTIONS.md`'s
+dangling-stub list (exact coordinate match, not a guess): **24 of the 38
+land within 0.1mm of an already-documented dangling stub** — e.g. the
+`GND`-vs-`V_SD` short at (104.4599, 3.1326) is the exact same point as
+the "dangling track stub near 104.4599mm,3.1326mm" already listed under
+`GND`. **Practical takeaway**: most of these should resolve as a
+byproduct of finishing the manual escape routing in §9, not as 38
+separate things to fix one-by-one — but re-run DRC after that pass
+rather than assuming it, since roughly a third didn't directly match a
+listed stub and may need their own look.
 
 ---
 
