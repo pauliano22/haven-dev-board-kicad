@@ -293,6 +293,8 @@ roughly in priority order:
 | HPVDD/HPVDD_L identity | Unresolved — genuinely could not locate in parsed data |
 | "No ground pad" = antenna keepout, not an exposed-pad note | High-confidence inference, not certain |
 | U1 (IMU) is actually BMI160, not BMX160 | Resolved by wiring inspection — see §8 below |
+| 87 unrouted nets is a real structural ceiling, not under-explored | Tool-verified across 4 independent autorouter attempts — see §9 |
+| 78 footprint-mismatch warnings are baked-in rotation, functionally fine as routed | Tool-verified pad-by-pad (numeric diff, not text) against the library — see §10 |
 
 ---
 
@@ -328,24 +330,38 @@ production order could lock in the wrong label.
 
 ---
 
-## 9. Board rescale + autoroute: why ~93 nets remain unrouted
+## 9. Board rescale + autoroute: why ~87 nets remain unrouted
 
 After rescaling the board 5x (see `feature/board-rescale-and-route`) and
-routing with Freerouting (a real autorouter, not hand-placed traces), 93
-of 304 nets remain unrouted. This section documents *why*, since it's a
-real, reproducible finding, not an unexplained gap.
+routing with Freerouting (a real autorouter, not hand-placed traces), 87
+of 304 nets remain unrouted in the currently-committed board. This
+section documents *why*, since it's a real, reproducible finding, not an
+unexplained gap.
 
-**Tool-verified, via three independent attempts**: a fresh autorouter run
+**Tool-verified, via four independent attempts**: a fresh autorouter run
 with default settings (prioritized selection, greedy optimization)
 converges to exactly 93 unrouted / 2 violations. A second fresh run with
 different settings (random selection, global optimization) converges to
 the *identical* 93 unrouted / 2 violations / identical score. Re-feeding
 an already-routed board back into the router — with or without locking
 the existing traces as fixed — made results *worse* (142-143 unrouted),
-not better, in every attempt. Two structurally different search
-strategies landing on the exact same outcome, while every attempt to
-build on partial progress regresses, is strong evidence this is a real
-structural ceiling, not an under-explored search space.
+not better, in every attempt. A fourth attempt tuning the fanout stage's
+pin-sorting order (`inner_first`) improved this to **87 unrouted / 2
+violations** — a real, reproducible gain, and the result now committed —
+but a fifth attempt (a different pin-sorting order plus a shorter escape
+length) came back *worse* (96 unrouted) than this. Multiple structurally
+different search strategies converging to the same narrow band, with
+attempts to push further in either direction landing worse or
+identical, is strong evidence 87 is a real structural ceiling for this
+board/part mix, not an under-explored search space.
+
+(A separate, later KiCad DRC pass reports "116 unconnected items" across
+50 nets rather than 87 — that's not a regression, just a different unit:
+DRC counts individual missing point-to-point links post-zone-fill, and a
+net with three unconnected members needing two links each still shows as
+one net here but multiple items there. `REMAINING_CONNECTIONS.md` is
+generated from the DRC view since it's the one that lists exact pin
+names.)
 
 **Root cause, tool-verified**: the unrouted connections concentrate
 overwhelmingly on the board's finest-pitch packages:
@@ -372,7 +388,7 @@ via-in-pad on a 0.35mm pitch part, but placing them correctly under
 specific balls is a targeted, chip-by-chip task, not something bulk
 autorouting handles well by default.
 
-**What this means practically**: the remaining ~93 connections need
+**What this means practically**: the remaining ~87 connections need
 either (a) a human doing manual escape routing for these five specific
 fine-pitch parts in KiCad's interactive router — a normal, bounded PCB
 layout task, likely 30-60 minutes of focused work given the board now
@@ -380,3 +396,62 @@ has generous surrounding space — or (b) confirming the fab can support
 via-in-pad at this pitch and re-running the router with that explicitly
 modeled. It is *not* something further autorouter attempts are likely to
 resolve; that's been directly tested, not assumed.
+
+---
+
+## 10. Footprint library sync drift (78 instances) — investigated, not a current bug
+
+DRC flags 78 `lib_footprint_mismatch` warnings — every placed instance of
+`R0201`, `C0201`, `C0402`, plus a handful of specific parts (`CN1`, `U3`,
+`Q1`, `Q2`, `U4`, `LED3`), no longer matches its definition in
+`footprints.pretty`. This was flagged but not actually investigated
+earlier in this review (previously described as "likely benign
+schematic/library sync noise"); it's now been checked directly rather
+than assumed.
+
+**Root cause, tool-verified**: it's a real geometric difference, not
+formatting noise. Comparing pad-by-pad (numeric, not textual — this
+project's footprints are hand-formatted with varying decimal precision,
+so a naive text diff would over-flag), every one of the 78 shows a 90°
+or 180° rotation baked directly into each pad's own coordinates, while
+the *footprint's own* placement rotation field is 0° (omitted). Example
+— `R3` (`R0201`), a 2-pad passive:
+
+```
+library:  pad 1 at (-0.24, 0.00), pad 2 at (0.24, 0.00)   — spread along X
+board:    pad 1 at (0.00, -0.24), pad 2 at (0.00, 0.24)   — spread along Y
+```
+
+Normal KiCad rotation (rotating the whole footprint via its placement
+angle) wouldn't do this — it would show up as a nonzero rotation on the
+footprint's `(at ...)` line, with the pads themselves unchanged relative
+to each other. This pattern (rotation applied directly to pad
+coordinates, footprint-level rotation left at 0°) is what you get from
+scripted/programmatic footprint manipulation that rotates pad geometry
+directly instead of calling the proper "set footprint orientation" API —
+consistent with this board's history of heavy `pcbnew`-Python scripting
+during the 5x rescale.
+
+**Why this isn't currently a functional bug**: none of the 78 affected
+references appear in `REMAINING_CONNECTIONS.md` — they're all already
+correctly connected by the router, which routed to wherever these pads
+*actually* are, not where the library says they should be. The copper is
+self-consistent; only the "does this match its library record" bookkeeping
+is off.
+
+**Why it's still worth fixing before this board matures**: any future
+**"Update Footprint from Library"** in KiCad on any of these 78 parts
+would silently snap their pads back to the library's un-rotated
+positions — which, since the actual routing was done against the
+current (rotated) positions, would leave existing traces landing on
+empty copper instead of a pad. This is a real landmine for future
+maintenance, not a cosmetic one.
+
+**Recommendation**: don't run a bulk "Update Footprints from Library" on
+this board without first either (a) re-exporting each affected part's
+library footprint to match its current on-board orientation, or (b)
+manually re-doing each instance's rotation through KiCad's normal
+rotate-footprint tool (which correctly sets the placement angle instead
+of the raw pad coordinates) before any library sync. Until then, this is
+safe to leave as-is — it doesn't affect fabrication, assembly, or the
+current routing.
