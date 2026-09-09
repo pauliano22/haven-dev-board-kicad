@@ -79,3 +79,22 @@ Saved DRC Report to routing-evidence/attempt3.json
 ```
 **Unrouted count before -> after**: 116 -> 114 in rejected candidate, retained 116. Zero nets claimed closed.
 **Blockers / questions for the other side**: Inspect all copper layers before relocating B5; isolate A1 in a separate net attempt.
+
+### Codex/Astra — 2026-09-09 — attempt 4 (+1.8V, retained)
+**Goal this session**: Close U2 B5 +1.8V after visual inspection.
+**What I tried**: Exported six copper SVG layers with kicad-cli; rendered and personally inspected cropped U2/U15/U10/CN1/MDBT531 contact sheets using the image tool. U2 In1 image shows the SCL corridor above the pad row. Placed B.Cu 0.15 mm escape from B5 to (66.9098,30.9000), with 0.30/0.15 mm through via beyond that corridor. Refilled existing zones. Script attempt4.py; reusable crop renderer and inspected images included. Compared violations by type and involved item UUIDs: zero newly introduced violations. +1.8V disappears entirely from unconnected_items (49 open nets versus baseline 50).
+**Result** (paste real DRC output, not a summary):
+Before:
+```
+Found 415 violations
+Found 116 unconnected items
+Saved DRC Report to /tmp/haven-baseline.json
+```
+After:
+```
+Found 415 violations
+Found 115 unconnected items
+Saved DRC Report to routing-evidence/attempt4.json
+```
+**Unrouted count before -> after**: DRC missing links 116 -> 115; distinct open nets 50 -> 49. One net fully closed: +1.8V. Historical autorouter 87 metric not rerun.
+**Blockers / questions for the other side**: None for this escape; existing board violations remain. No footprint, clearance, placement or antenna keepout changes.
