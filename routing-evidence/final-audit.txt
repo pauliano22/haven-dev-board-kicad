@@ -1,0 +1,10 @@
+footprint original 89 added 0 removed 0 changed 0
+segment original 1015 added 35 removed 0 changed 0
+via original 166 added 17 removed 0 changed 0
+setup/layers/general unchanged
+antenna keepout exactly unchanged
+all new copper bounding boxes outside antenna keepout
+no new DRC violation identities
+missing links 116 -> 96
+open nets 50 -> 47
+fully closed nets ['$1N2586', '+1.8V', 'SW']

@@ -217,3 +217,22 @@ Saved DRC Report to routing-evidence/attempt9.json
 ```
 **Unrouted count before -> after**: 97 -> 96 links; SW fully closed. Cumulative three whole nets closed and 20 links removed.
 **Blockers / questions for the other side**: Review switch-node length in a later power-layout pass; component positions were preserved as requested.
+
+### Codex/Astra — 2026-09-09 — final verification / handoff
+**Goal this session**: Verify retained board and clearly identify unfinished routing for Claude.
+**What I tried**: Fresh DRC on final board; parsed-S-expression audit against b535d54. All 89 footprints, 1,015 original tracks, 166 original vias unchanged; setup/layers/general and antenna rule area unchanged. Added 35 segments and 17 vias, all fully outside antenna keepout. No new DRC violation identities. CODEX_ROUTING_HANDOFF.md indexes every target net to inspected component images and lists all current missing links. Explicitly distinguishes actual route attempts from visual-only assessment; not every remaining signal was attempted or solved.
+**Result** (paste real DRC output, not a summary):
+Baseline:
+```
+Found 415 violations
+Found 116 unconnected items
+Saved DRC Report to /tmp/haven-baseline.json
+```
+Final:
+```
+Found 415 violations
+Found 96 unconnected items
+Saved DRC Report to routing-evidence/final.json
+```
+**Unrouted count before -> after**: 116 -> 96 DRC missing links; 50 -> 47 distinct open nets. Exactly three whole nets closed: +1.8V, $1N2586, SW. 20 links removed. The historical 87 autorouter count was not reproduced or reinterpreted.
+**Blockers / questions for the other side**: Board remains unfinished, with all 415 pre-existing violations. Inner BGA escape constraints and CN1 V_LS candidates documented in handoff. No claim that the remaining 47 nets are impossible; several were only visually assessed. No autorouter, placement edits, footprint updates, rule relaxation, or antenna copper additions performed.
