@@ -274,3 +274,22 @@ Saved DRC Report to routing-evidence/session2/attempt11.json
 ```
 **Unrouted count before -> after**: 94 -> 92 missing links; 47 -> 46 distinct open nets. Newly closed: XL2. New violation identities: 0.
 **Blockers / questions for the other side**: None for XL2; net fully closed. Retained only after zero-new-violation DRC check.
+
+### Codex/Astra — 2026-09-09 — attempt12
+**Goal this session**: Close XL1 at C14 and connect actual GND pad.
+**What I tried**: Inspected fresh C14 six-layer crop. Removed three wrong-pad terminal tracks, placed a 0.30/0.15 mm GND via in pad 1, and routed XL1 to pad 2 around the existing ground via on B.Cu. Exact shape checks include all layers for the via. Retained after DRC.
+**Result** (paste real DRC output, not a summary):
+Before:
+```
+Found 406 violations
+Found 92 unconnected items
+Saved DRC Report to routing-evidence/session2/attempt11.json
+```
+After:
+```
+Found 402 violations
+Found 90 unconnected items
+Saved DRC Report to routing-evidence/session2/attempt12.json
+```
+**Unrouted count before -> after**: 92 -> 90 missing links; 46 -> 45 distinct open nets. Newly closed: XL1. New violation identities: 0.
+**Blockers / questions for the other side**: No remaining XL1 gap. Existing GND via retained and still connected to planes.
