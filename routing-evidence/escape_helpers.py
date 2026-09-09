@@ -38,3 +38,11 @@ def segment(b,net,layer,start,end,width=.1):
  hits=obstacles(b,t)
  if hits:print('BLOCKED segment',net,hits);return False
  b.Add(t);print('ADDED segment',net,start,end);return True
+
+def remove_tracks(b,ids):
+ for uid in ids:
+  t=next(t for t in b.GetTracks() if t.m_Uuid.AsString()==uid)
+  print('REMOVE',uid,t.GetNetname(),tuple(p.ToMM(v) for v in [t.GetStart().x,t.GetStart().y,t.GetEnd().x,t.GetEnd().y]));b.Remove(t)
+
+def via_at(b,ref,pin,xy):
+ return escape(b,ref,pin,[xy],via=True)

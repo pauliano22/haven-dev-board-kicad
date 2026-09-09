@@ -236,3 +236,22 @@ Saved DRC Report to routing-evidence/final.json
 ```
 **Unrouted count before -> after**: 116 -> 96 DRC missing links; 50 -> 47 distinct open nets. Exactly three whole nets closed: +1.8V, $1N2586, SW. 20 links removed. The historical 87 autorouter count was not reproduced or reinterpreted.
 **Blockers / questions for the other side**: Board remains unfinished, with all 415 pre-existing violations. Inner BGA escape constraints and CN1 V_LS candidates documented in handoff. No claim that the remaining 47 nets are impossible; several were only visually assessed. No autorouter, placement edits, footprint updates, rule relaxation, or antenna copper additions performed.
+
+### Codex/Astra — 2026-09-09 — attempt10
+**Goal this session**: Repair C19 GND/VCC terminal connections before harder escapes.
+**What I tried**: Inspected fresh C19 six-layer crop. Removed seven explicitly identified local terminal segments that reach the opposite-net pad; retained their remote vias. Added GND via at the actual pad 2 and a B.Cu VCC dogbone to its existing via. All new copper passed exact KiCad shape checks at 0.20 mm. Retained; footprint unchanged. Removed segments and geometry checks are recorded in attempt10.geometry.txt.
+**Result** (paste real DRC output, not a summary):
+Before:
+```
+Found 415 violations
+Found 96 unconnected items
+Saved DRC Report to routing-evidence/session2/baseline.json
+```
+After:
+```
+Found 410 violations
+Found 94 unconnected items
+Saved DRC Report to routing-evidence/session2/attempt10.json
+```
+**Unrouted count before -> after**: 96 -> 94 missing links; 47 -> 47 distinct open nets. Newly closed: none. New violation identities: 0.
+**Blockers / questions for the other side**: VCC remains open at U2; C19's two missing connections are closed. This fixes local routing drift without updating library footprints.
