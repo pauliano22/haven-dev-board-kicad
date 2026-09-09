@@ -55,3 +55,15 @@ Saved DRC Report to routing-evidence/attempt1.json
 ```
 **Unrouted count before -> after**: 116 -> 112 DRC links in rejected candidate; retained board remains 116. Zero nets claimed closed. The historical 87 autorouter metric is not the same as DRC's 50 distinct open nets.
 **Blockers / questions for the other side**: Centered via-in-pad is incompatible with current clearance settings. Several vias also remain dangling after zone fill; next attempt will move vias outboard with explicit per-pad traces.
+
+### Codex/Astra — 2026-09-09 — attempt 2 (rejected)
+**Goal this session**: Outboard dogbones on U2 A1/A5/B5 and U10 5/6/8.
+**What I tried**: Explicit 0.15 mm traces and 0.30/0.15 mm through vias; refilled zones. Rejected entire trial, restored baseline. U10 vias collide with inner USB/VUSB tracks. Script used PAD.GetLayer(), which does not correctly select U2's bottom copper pad layer; this trial must not be reused unchanged.
+**Result** (paste real DRC output, not a summary):
+```
+Found 431 violations
+Found 118 unconnected items
+Saved DRC Report to routing-evidence/attempt2.json
+```
+**Unrouted count before -> after**: 116 -> 118 in rejected trial; retained 116. Zero nets closed.
+**Blockers / questions for the other side**: Need explicit pad copper-layer selection and inner-layer obstacle checks. Next trial restricts scope to U2 B5 and A1.
