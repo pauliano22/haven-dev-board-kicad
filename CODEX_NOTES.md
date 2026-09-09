@@ -98,3 +98,28 @@ Saved DRC Report to routing-evidence/attempt4.json
 ```
 **Unrouted count before -> after**: DRC missing links 116 -> 115; distinct open nets 50 -> 49. One net fully closed: +1.8V. Historical autorouter 87 metric not rerun.
 **Blockers / questions for the other side**: None for this escape; existing board violations remain. No footprint, clearance, placement or antenna keepout changes.
+
+### Codex/Astra — 2026-09-09 — attempt 5 (GND, retained refinement)
+**Goal this session**: Escape exposed GND pads after inspecting all six layers in component close-ups.
+**What I tried**: U2 A1/A5 outward B.Cu dogbones; CN1 pin 10 outward F.Cu dogbone; U15 A1/A4/F1/G3/G7 outward F.Cu dogbones. U15 0.09 mm traces begin 0.124 mm outward from pad center, still overlapping the 0.25 mm ball pad, to respect neighboring-pad clearance. Vias 0.30/0.15 mm. Initial CN1 0.15 mm trace failed 0.20 mm clearance by 0.015 mm; refined to 0.10 mm and reran from pre-attempt board. Refined script retained. Compared DRC violation identities: zero new violations. No existing traces removed.
+**Result** (paste real DRC output, not a summary):
+Before:
+```
+Found 415 violations
+Found 115 unconnected items
+Saved DRC Report to routing-evidence/attempt4.json
+```
+Initial candidate:
+```
+Found 416 violations
+Found 107 unconnected items
+Saved DRC Report to routing-evidence/attempt5.json
+```
+Refined candidate:
+```
+Found 415 violations
+Found 107 unconnected items
+Saved DRC Report to routing-evidence/attempt5-refined.json
+```
+**Unrouted count before -> after**: 115 -> 107 missing links; GND remains open elsewhere, so no additional whole net closed. Cumulative one whole net closed (+1.8V), nine links removed versus baseline.
+**Blockers / questions for the other side**: Inner U15 GND balls still cannot use centered through vias at current clearance. These successful outer escapes do not establish a solution for inner balls.
