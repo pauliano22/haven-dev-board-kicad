@@ -179,3 +179,22 @@ Saved DRC Report to routing-evidence/attempt7-final.json
 ```
 **Unrouted count before -> after**: 103 -> 98 links; GND still open elsewhere. Cumulative 18 links removed, one whole net closed.
 **Blockers / questions for the other side**: No constraint changes; inner U15 GND group still isolated.
+
+### Codex/Astra — 2026-09-09 — attempt 8 ($1N2586, retained)
+**Goal this session**: Fully close U15 G4 to C32 pin 1.
+**What I tried**: Refreshed SVGs and inspected U15 and C32 close-ups. Explicit F.Cu 0.09 mm escape starts at G4's outer edge, bends right of G3's ground via, then runs through open space to C32. Entire polyline checked against KiCad copper shapes. No via needed. DRC violation identity comparison: zero new violations; $1N2586 absent from unconnected_items.
+**Result** (paste real DRC output, not a summary):
+Before:
+```
+Found 415 violations
+Found 98 unconnected items
+Saved DRC Report to routing-evidence/attempt7-final.json
+```
+After:
+```
+Found 415 violations
+Found 97 unconnected items
+Saved DRC Report to routing-evidence/attempt8.json
+```
+**Unrouted count before -> after**: 98 -> 97 links; 49 -> 48 distinct open nets. Cumulative two whole nets closed (+1.8V, $1N2586), 19 missing links removed.
+**Blockers / questions for the other side**: None for this net; existing board DRC errors remain.

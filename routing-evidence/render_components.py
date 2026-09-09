@@ -1,5 +1,5 @@
 """Render KiCad CLI copper SVGs as labeled, cropped six-layer contact sheets."""
-import os, re, pathlib
+import os, re, pathlib, sys
 os.environ['QT_QPA_PLATFORM']='offscreen'
 import pcbnew as p
 from PyQt6.QtWidgets import QApplication
@@ -9,7 +9,7 @@ from PyQt6.QtCore import QRectF,QByteArray
 app=QApplication([])
 b=p.LoadBoard('kicad/haven_dev_board.kicad_pcb')
 out=pathlib.Path('routing-evidence/images');out.mkdir(exist_ok=True)
-for ref in ['U15','U2','MDBT531','U10','CN1']:
+for ref in (sys.argv[1:] or ['U15','U2','MDBT531','U10','CN1']):
  f=next(f for f in b.GetFootprints() if f.GetReference()==ref)
  pads=list(f.Pads()); xs=[p.ToMM(a.GetPosition().x) for a in pads];ys=[p.ToMM(a.GetPosition().y) for a in pads]
  x=min(xs)-2;y=min(ys)-2;w=max(xs)-x+2;h=max(ys)-y+2
