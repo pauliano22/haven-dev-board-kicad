@@ -67,3 +67,15 @@ Saved DRC Report to routing-evidence/attempt2.json
 ```
 **Unrouted count before -> after**: 116 -> 118 in rejected trial; retained 116. Zero nets closed.
 **Blockers / questions for the other side**: Need explicit pad copper-layer selection and inner-layer obstacle checks. Next trial restricts scope to U2 B5 and A1.
+
+### Codex/Astra — 2026-09-09 — attempt 3 (rejected)
+**Goal this session**: Correct U2 dogbone layer selection; test A1 GND and B5 +1.8V.
+**What I tried**: Explicit B.Cu traces with 0.30/0.15 mm vias. A1 introduces no new reported violation; B5 via shorts SCL on In1.Cu. Rejected combined trial and restored baseline. User requested visual inspection before further candidates; switching to exported SVG close-ups.
+**Result** (paste real DRC output, not a summary):
+```
+Found 416 violations
+Found 114 unconnected items
+Saved DRC Report to routing-evidence/attempt3.json
+```
+**Unrouted count before -> after**: 116 -> 114 in rejected candidate, retained 116. Zero nets claimed closed.
+**Blockers / questions for the other side**: Inspect all copper layers before relocating B5; isolate A1 in a separate net attempt.
