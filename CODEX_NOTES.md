@@ -324,3 +324,229 @@ Saved DRC Report to C:/Work/haven-board/routing-evidence/session3/final.json
 ```
 **Unrouted count before -> after**: 90 -> 90 unconnected items; no connections closed. The two direct via-in-pad attempts were more complex than a clean single-via fix under the existing copper/clearance geometry, so both were skipped and documented rather than forcing new violations.
 **Blockers / questions for the other side**: Further cap work needs local dogbone/track cleanup or a different via location after inspecting each six-layer neighborhood. No batch edits were made, and the board file is back to its exact pre-session state.
+
+
+### Codex/Astra — 2026-09-09 — session4: visually inspected capacitor repairs
+**Goal this session**: Repair C6, C8, C9, C13, C22, C34, C38, C44 and C46 in that order after inspecting real KiCad SVG exports of all six copper layers. Started from `5fd8faa` on `experiment/codex-astra-routing`.
+**Method**: Exported with `kicad-cli pcb export svg --mode-multi --page-size-mode 1 --exclude-drawing-sheet --layers F.Cu,In1.Cu,In2.Cu,In3.Cu,In4.Cu,B.Cu`. Cropped the SVG viewBox to each capacitor's 5.5 mm neighborhood, rendered and inspected the labeled six-layer images before selecting each explicit repair. Each attempt below is one local capacitor repair transaction (terminal removals/replacements, plus at most one via), followed immediately by zone refill and full `kicad-cli pcb drc --format json`. No other repair was applied before checking that result. Rejected transactions were restored immediately. Comparisons use violation type plus involved item UUIDs, not just total counts. These were visually planned file/API edits, not interactive GUI routing.
+**Evidence**: `routing-evidence/session4/` contains before/final SVG crops and PNG contact sheets, exact route specifications, removed-item UUIDs and geometry checks, raw DRC JSON/stdout, and new-violation lists. Unlike session3's text reports with `.json` names, these reports are actual JSON.
+
+### Codex/Astra — 2026-09-09 — session4 c6
+**Goal this attempt**: Repair C6 terminal connections after six-layer visual inspection.
+**What I tried / disposition**: Rejected. The inspected bottom-layer image showed the GND terminal branch overlapping C6 pad 1 (V_SD), and the V_SD branch approaching pad 2 (GND). Replaced the wrong terminal copper with an explicit V_SD path and one 0.30/0.15 mm GND via at pad 2. DRC found a newly dangling upstream GND branch (28c7088c-ad2d-4e1b-9752-405a83096f01); restored the pre-attempt board immediately.
+**Result** (actual CLI output):
+Before:
+```
+Found 402 violations
+Found 90 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\baseline.json
+```
+Attempt:
+```
+Found 393 violations
+Found 88 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\c6.json
+```
+**Unrouted count before -> after trial**: 90 -> 88 missing links. Rejected trial was rolled back; retained count stayed 90.
+**Blockers / follow-up**: See the subsequent refined attempt and the preserved new-violation report.
+
+### Codex/Astra — 2026-09-09 — session4 c6-refined
+**Goal this attempt**: Repair C6 terminal connections after six-layer visual inspection.
+**What I tried / disposition**: Retained. Same C6 repair, also removing the obsolete GND branch back to C8's existing ground connection so no dangling end remains. One new GND via at C6 pad 2. All added copper passed 0.20 mm shape checks. Zero new DRC identities.
+**Result** (actual CLI output):
+Before:
+```
+Found 402 violations
+Found 90 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\baseline.json
+```
+Attempt:
+```
+Found 390 violations
+Found 88 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\c6-refined.json
+```
+**Unrouted count before -> after trial**: 90 -> 88 missing links.
+**Blockers / follow-up**: Both capacitor terminals are connected in retained DRC; other connections on the broader net may remain open.
+
+### Codex/Astra — 2026-09-09 — session4 c8
+**Goal this attempt**: Repair C8 terminal connections after six-layer visual inspection.
+**What I tried / disposition**: Retained. Six-layer close-up confirmed swapped B.Cu terminal paths: GND reached V_SD pad 2 and V_SD reached GND pad 1. Replaced those paths to the correct pads using the existing vias. No new via. Zero new DRC identities. V_SD now fully closed.
+**Result** (actual CLI output):
+Before:
+```
+Found 390 violations
+Found 88 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\c6-refined.json
+```
+Attempt:
+```
+Found 386 violations
+Found 86 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\c8.json
+```
+**Unrouted count before -> after trial**: 88 -> 86 missing links.
+**Blockers / follow-up**: Both capacitor terminals are connected in retained DRC; other connections on the broader net may remain open.
+
+### Codex/Astra — 2026-09-09 — session4 c9
+**Goal this attempt**: Repair C9 terminal connections after six-layer visual inspection.
+**What I tried / disposition**: Retained. Inspected V_PMID trace reaching the GND pad and a GND rail crossing the V_PMID pad. Rerouted the local GND rail below the capacitor, connected V_PMID pad 1 around the left side to its existing via, and placed one 0.30/0.15 mm GND via at (78.8000,25.8134), slightly offset within pad 2 to clear the nearby V_PMID via. All added copper passed shape checks; zero new DRC identities.
+**Result** (actual CLI output):
+Before:
+```
+Found 386 violations
+Found 86 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\c8.json
+```
+Attempt:
+```
+Found 374 violations
+Found 84 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\c9.json
+```
+**Unrouted count before -> after trial**: 86 -> 84 missing links.
+**Blockers / follow-up**: Both capacitor terminals are connected in retained DRC; other connections on the broader net may remain open.
+
+### Codex/Astra — 2026-09-09 — session4 c13
+**Goal this attempt**: Repair C13 terminal connections after six-layer visual inspection.
+**What I tried / disposition**: Retained. Close-up showed the V_LS terminal crossing the GND pad and an offset GND terminal stub. Replaced the local bottom paths: V_LS approaches pad 1 from the left/above and GND reaches pad 2 from the existing ground via on the right. No via added; zero new DRC identities.
+**Result** (actual CLI output):
+Before:
+```
+Found 374 violations
+Found 84 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\c9.json
+```
+Attempt:
+```
+Found 366 violations
+Found 82 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\c13.json
+```
+**Unrouted count before -> after trial**: 84 -> 82 missing links.
+**Blockers / follow-up**: Both capacitor terminals are connected in retained DRC; other connections on the broader net may remain open.
+
+### Codex/Astra — 2026-09-09 — session4 c22
+**Goal this attempt**: Repair C22 terminal connections after six-layer visual inspection.
+**What I tried / disposition**: Retained. Close-up showed VUSB reaching GND pad 2 and GND copper crossing VUSB pad 1. Replaced the wrong terminal branches, connected each actual pad to its existing via, and moved the local ground-rail approach clear of VUSB. No via added; zero new DRC identities.
+**Result** (actual CLI output):
+Before:
+```
+Found 366 violations
+Found 82 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\c13.json
+```
+Attempt:
+```
+Found 353 violations
+Found 80 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\c22.json
+```
+**Unrouted count before -> after trial**: 82 -> 80 missing links.
+**Blockers / follow-up**: Both capacitor terminals are connected in retained DRC; other connections on the broader net may remain open.
+
+### Codex/Astra — 2026-09-09 — session4 c34
+**Goal this attempt**: Repair C34 terminal connections after six-layer visual inspection.
+**What I tried / disposition**: Retained. The six-layer image showed the two B.Cu terminal paths reaching opposite pads despite the top-layer routing. Removed the wrong bottom paths and connected GND pad 2 to the existing upper ground via, and V_LS pad 1 to the existing lower power path. No via added; zero new DRC identities.
+**Result** (actual CLI output):
+Before:
+```
+Found 353 violations
+Found 80 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\c22.json
+```
+Attempt:
+```
+Found 349 violations
+Found 78 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\c34.json
+```
+**Unrouted count before -> after trial**: 80 -> 78 missing links.
+**Blockers / follow-up**: Both capacitor terminals are connected in retained DRC; other connections on the broader net may remain open.
+
+### Codex/Astra — 2026-09-09 — session4 c38
+**Goal this attempt**: Repair C38 terminal connections after six-layer visual inspection.
+**What I tried / disposition**: Retained. The close-up showed GND reaching the lower V_LS pad and V_LS approaching the upper GND pad. Replaced both bottom paths: ground goes around the left to pad 1; V_LS goes around the right from its existing via to pad 2. No via added; zero new DRC identities.
+**Result** (actual CLI output):
+Before:
+```
+Found 349 violations
+Found 78 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\c34.json
+```
+Attempt:
+```
+Found 339 violations
+Found 76 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\c38.json
+```
+**Unrouted count before -> after trial**: 78 -> 76 missing links.
+**Blockers / follow-up**: Both capacitor terminals are connected in retained DRC; other connections on the broader net may remain open.
+
+### Codex/Astra — 2026-09-09 — session4 c44
+**Goal this attempt**: Repair C44 terminal connections after six-layer visual inspection.
+**What I tried / disposition**: Retained. Close-up confirmed the long bottom GND branch ended at V_LS pad 1, while the V_LS dogbone ended at GND pad 2. Redirected the ground branch to actual pad 2 and connected actual V_LS pad 1 to its existing via. No via added; zero new DRC identities.
+**Result** (actual CLI output):
+Before:
+```
+Found 339 violations
+Found 76 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\c38.json
+```
+Attempt:
+```
+Found 335 violations
+Found 74 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\c44.json
+```
+**Unrouted count before -> after trial**: 76 -> 74 missing links.
+**Blockers / follow-up**: Both capacitor terminals are connected in retained DRC; other connections on the broader net may remain open.
+
+### Codex/Astra — 2026-09-09 — session4 c46
+**Goal this attempt**: Repair C46 terminal connections after six-layer visual inspection.
+**What I tried / disposition**: Rejected. Six-layer close-up confirmed swapped GND/XTALI terminal paths. Replaced both using existing vias. The XTALI diagonal had only 0.1729 mm clearance to GND pad 1 against the required 0.20 mm. DRC identified one new clearance violation; immediately restored the pre-attempt board. Geometry evidence also records that collision.
+**Result** (actual CLI output):
+Before:
+```
+Found 335 violations
+Found 74 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\c44.json
+```
+Attempt:
+```
+Found 332 violations
+Found 72 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\c46.json
+```
+**Unrouted count before -> after trial**: 74 -> 72 missing links. Rejected trial was rolled back; retained count stayed 74.
+**Blockers / follow-up**: See the subsequent refined attempt and the preserved new-violation report.
+
+### Codex/Astra — 2026-09-09 — session4 c46-refined
+**Goal this attempt**: Repair C46 terminal connections after six-layer visual inspection.
+**What I tried / disposition**: Retained. Kept the corrected GND approach and moved XTALI's bend farther below the pads, using horizontal then vertical B.Cu segments to pad 2. No via added. All shape checks passed and DRC found zero new violation identities. XTALI still has an unrelated open connection elsewhere.
+**Result** (actual CLI output):
+Before:
+```
+Found 335 violations
+Found 74 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\c44.json
+```
+Attempt:
+```
+Found 331 violations
+Found 72 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session4\c46-refined.json
+```
+**Unrouted count before -> after trial**: 74 -> 72 missing links.
+**Blockers / follow-up**: Both capacitor terminals are connected in retained DRC; other connections on the broader net may remain open.
+
+### Codex/Astra — 2026-09-09 — session4 final verification
+**Result** (fresh final CLI output):
+```
+Found 331 violations
+Found 72 unconnected items
+Saved DRC Report to C:/Work/haven-board/routing-evidence/session4/final.json
+```
+**Before -> after**: 402 -> 331 violations; 90 -> 72 missing links; 45 -> 44 distinct open nets. Exactly one whole net closed: V_SD. All 18 requested capacitor terminal gaps closed; none of the nine target references appears among final unconnected endpoints. Zero new violation identities versus baseline.
+**Audit**: All 89 footprints and all 185 existing vias unchanged. Removed 50 specifically identified terminal/branch segments, added 44 replacement segments and two GND vias (C6 and C9). Remaining existing segments unchanged. Setup, layers, general properties, and antenna keepout unchanged; all new copper lies outside the keepout. Copper zones were refilled. Inspected the final bottom-layer montage and retained six-layer final renders.
+**Remaining work**: Board still has 331 pre-existing violations and 72 missing links across 44 nets. This session only repairs the specified capacitors; it does not establish full-board DRC cleanliness or power/crystal performance. `REMAINING_CONNECTIONS.md` and the older handoff contain historical entries; use `session4/final.json` for current connectivity. No placement changes, footprint-library updates, rule relaxation or autorouting.
