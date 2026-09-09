@@ -656,3 +656,20 @@ Saved DRC Report to C:/Work/haven-board/routing-evidence/session6/handoff.json
 **What I tried**: Reopened the saved checkout on `experiment/codex-astra-routing` at `c7969b5` and queried current usage. The account window is still at 100% consumed (`rate_limit_reached`, Luna reserve active). No new SVG render, board edit, via placement, or DRC trial was started in this resumed turn.
 **Current state**: Board remains at 316 DRC violations, 67 missing connections, 43 open nets. The first passive candidates identified from `session6/handoff.json` are R8 GND ↔ U6 B2, C10 `$1N65` ↔ U2 C4, and R28 XTALO ↔ U15 B6. C23/R6/R13 and the earlier capacitor set remain repaired. Nothing is mid-edit; working tree was clean before this note.
 **Next action after the usage window resets**: Render and inspect six-layer crops for R8 first, then C10 and R28 as appropriate. Use per-edit DRC and immediate rollback on any new violation. Do not touch restricted fine-pitch parts until the passive pass is exhausted. No rule changes, autoroute, footprint updates, placement edits, or antenna keepout copper.
+
+### Claude — 2026-09-09 — R8/U6 GND (picked up from session6 handoff)
+**Goal**: Close R8 GND <-> U6 B2, the first candidate identified in the session6 handoff.
+**What I tried**: Used pcbnew directly (LoadBoard, pad/track/zone geometry queries) rather than visual SVG crops -- found via inspection that `pad.GetLayerName()` returns the wrong (unmirrored) layer for pads on back-mounted footprints; `pad.IsOnLayer(layer)` is the reliable check, confirmed against DRC's own B.Cu determination. A first attempt routing a direct F.Cu trace between the two pads was wrong for this reason and got reverted immediately (caused a dangling-track warning, logged and discarded, board restored before continuing). U6.B2 is the center pad of a 3x3 BGA-style grid, fully enclosed by 8 neighbors -- same class of problem as the harder BGA balls, not reachable by a routed trace. Found that a GND zone on In1.Cu and In2.Cu already geometrically covers both R8's and U6.B2's locations, so the actual fix was two small through-vias (R8.1: 0.20mm pad/0.10mm drill, sized down from the usual 0.30/0.15mm spec because R8's own two pins are only ~0.48mm apart; U6.B2: standard 0.30mm/0.15mm) dropping each pad down into that existing plane -- no explicit trace needed between them. First attempt after adding the vias showed 8 new clearance/hole-clearance violations against unrelated zones (+1.8V on In4.Cu, V_LS on In3.Cu) on layers the through-via necessarily also spans; this was because the zone fills were stale (computed before the via existed). Re-ran with an explicit `ZONE_FILLER(board).Fill(board.Zones())` refill before saving, which resolved it with zero new violations.
+**Result** (real kicad-cli pcb drc output):
+Before:
+```
+Found 316 violations
+Found 67 unconnected items
+```
+After:
+```
+Found 316 violations
+Found 66 unconnected items
+```
+**Unrouted count before -> after**: 67 -> 66 missing links; 43 -> 43 open nets (GND still has other open links elsewhere). Zero new violations, zero resolved violations at the type level (this was a missing-connection fix, not a DRC-error cleanup).
+**Blockers / follow-up**: Confirmed lesson for whoever routes next: always call `ZONE_FILLER(...).Fill()` after adding any via/track before saving, or DRC will show phantom clearance violations against stale zone geometry on layers you didn't intend to touch. Also: verify actual pad layer via `IsOnLayer()`, not `GetLayerName()`, for back-mounted footprints. Next candidates per session6 handoff: C10 ($1N65 <-> U2 C4), R28 (XTALO <-> U15 B6).
