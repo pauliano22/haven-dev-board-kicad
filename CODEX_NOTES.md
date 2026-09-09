@@ -293,3 +293,34 @@ Saved DRC Report to routing-evidence/session2/attempt12.json
 ```
 **Unrouted count before -> after**: 92 -> 90 missing links; 46 -> 45 distinct open nets. Newly closed: XL1. New violation identities: 0.
 **Blockers / questions for the other side**: No remaining XL1 gap. Existing GND via retained and still connected to planes.
+
+### Codex/Astra — 2026-09-09 — scoped cap-via attempt
+**Goal this session**: Attempt only the requested isolated-cap connections on `GND`, `V_LS`, `V_SD`, `VCC`, `VUSB`, and `V_PMID`; do not touch U15, U2, MDBT531, U10, CN1, J1, or U1.
+**What I tried**: Switched to `experiment/codex-astra-routing`, fetched the branch explicitly, and confirmed the prior history: XL1, XL2, and C19 are already closed; the retained board starts at 45 distinct open nets / 90 unconnected items. Tried a single 0.30/0.15 mm through-via centered on C6 pad 1 (`V_SD`, 109.0097,1.0034) and ran DRC immediately. It was rejected and removed because DRC increased from 402 to 410 violations, including a new `shorting_items` identity at the via. Tried a single 0.30/0.15 mm through-via centered on C9 pad 1 (`V_PMID`, 78.7604,26.3620) and ran DRC immediately. It was rejected and removed because DRC increased from 402 to 411 violations. No retained board edits remain; no restricted component was touched.
+**Result** (paste real DRC output, not a summary):
+Before:
+```
+Found 402 violations
+Found 90 unconnected items
+Saved DRC Report to C:/Work/haven-board/routing-evidence/session3/baseline.json
+```
+C6 V_SD rejected:
+```
+Found 410 violations
+Found 90 unconnected items
+Saved DRC Report to C:/Work/haven-board/routing-evidence/session3/c6-vsd.json
+```
+C9 V_PMID rejected:
+```
+Found 411 violations
+Found 90 unconnected items
+Saved DRC Report to C:/Work/haven-board/routing-evidence/session3/c9-vpmid.json
+```
+Final after removal:
+```
+Found 402 violations
+Found 90 unconnected items
+Saved DRC Report to C:/Work/haven-board/routing-evidence/session3/final.json
+```
+**Unrouted count before -> after**: 90 -> 90 unconnected items; no connections closed. The two direct via-in-pad attempts were more complex than a clean single-via fix under the existing copper/clearance geometry, so both were skipped and documented rather than forcing new violations.
+**Blockers / questions for the other side**: Further cap work needs local dogbone/track cleanup or a different via location after inspecting each six-layer neighborhood. No batch edits were made, and the board file is back to its exact pre-session state.
