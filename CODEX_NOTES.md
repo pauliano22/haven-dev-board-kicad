@@ -255,3 +255,22 @@ Saved DRC Report to routing-evidence/session2/attempt10.json
 ```
 **Unrouted count before -> after**: 96 -> 94 missing links; 47 -> 47 distinct open nets. Newly closed: none. New violation identities: 0.
 **Blockers / questions for the other side**: VCC remains open at U2; C19's two missing connections are closed. This fixes local routing drift without updating library footprints.
+
+### Codex/Astra — 2026-09-09 — attempt11
+**Goal this session**: Close XL2 at C2 and repair its GND terminal.
+**What I tried**: Inspected C2 six-layer SVG crop. Replaced three local wrong-pad terminal segments with explicit B.Cu paths: XL2 approaches actual pad 2 from above/left; GND approaches pad 1 from below. Both full paths passed 0.20 mm copper-shape checks; no vias or footprint changes.
+**Result** (paste real DRC output, not a summary):
+Before:
+```
+Found 410 violations
+Found 94 unconnected items
+Saved DRC Report to routing-evidence/session2/attempt10.json
+```
+After:
+```
+Found 406 violations
+Found 92 unconnected items
+Saved DRC Report to routing-evidence/session2/attempt11.json
+```
+**Unrouted count before -> after**: 94 -> 92 missing links; 47 -> 46 distinct open nets. Newly closed: XL2. New violation identities: 0.
+**Blockers / questions for the other side**: None for XL2; net fully closed. Retained only after zero-new-violation DRC check.
