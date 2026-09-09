@@ -40,6 +40,13 @@ autorouter.
 
 ---
 
+### [Codex Agent Mode] — 2026-09-09
+**Goal this session**: Set up the Windows GUI routing experiment and begin manual escape routing.
+**What I tried**: Confirmed the host is Windows. Cloned this branch into `C:\Work\haven-board` after Controlled Folder Access blocked Documents. Read `CODEX_TASK_BRIEF.md`, `CODEX_NOTES.md`, `REMAINING_CONNECTIONS.md`, and the relevant hardware review section. No KiCad GUI routing was completed; no traces or vias were placed, and no board file was modified. KiCad 9.0.8 installation was started with `winget install --id KiCad.KiCad -e --version 9.0.8 --accept-source-agreements --accept-package-agreements --silent`; the download was still in progress when this handoff was made. No autorouter was run.
+**Result**: No post-change DRC was run. Starting DRC/unrouted counts were not captured before the urgent handoff. The board remains at the branch's original state with the documented remaining connections unchanged.
+**Unrouted count before -> after**: Not measured -> unchanged; no routing edits were made.
+**Blockers / questions for the other side**: Next session must verify KiCad 9.0.8 installation completed, launch the actual PCB Editor GUI, open `kicad/haven_dev_board.kicad_pcb`, and perform manual per-pad escape routing for U15, U2, MDBT531, U10, and CN1. Then save, run DRC, append real before/after DRC output, commit, and push. Do not run Update Footprint from Library, do not add copper/vias/tracks in the MDBT531 antenna keepout, and do not rerun autoroute.
+
 ## Entry template (copy this for each session)
 
 ### [who/tool] — [date]
