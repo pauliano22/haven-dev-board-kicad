@@ -123,3 +123,34 @@ Saved DRC Report to routing-evidence/attempt5-refined.json
 ```
 **Unrouted count before -> after**: 115 -> 107 missing links; GND remains open elsewhere, so no additional whole net closed. Cumulative one whole net closed (+1.8V), nine links removed versus baseline.
 **Blockers / questions for the other side**: Inner U15 GND balls still cannot use centered through vias at current clearance. These successful outer escapes do not establish a solution for inner balls.
+
+### Codex/Astra — 2026-09-09 — attempt 6 (V_LS, retained final)
+**Goal this session**: Escape V_LS on exposed U15 balls and U10/CN1.
+**What I tried**: Used inspected six-layer images plus KiCad GetEffectiveShape/Collide checks at 0.20 mm against existing copper on all shared layers. Explicit routes only. Straight candidates at U15 A2/E1/G2 and CN1 8 were blocked before insertion; tried staggered alternatives. Final retained U15 A2/D1/E1/G2 and U10 5. E1 shares D1's via to avoid same-net hole spacing failure. A2/G2 require short In3.Cu tracks to reach the V_LS fill beyond neighboring GND antipads. CN1 8 remains blocked by existing IO4/GND escapes outward and a mechanical pad inward; no route added there. Initial/refined/final full DRC files retained. Final violation identity comparison against attempt5-refined: no new violations.
+**Result** (paste real DRC output, not a summary):
+Before:
+```
+Found 415 violations
+Found 107 unconnected items
+Saved DRC Report to routing-evidence/attempt5-refined.json
+```
+Initial:
+```
+Found 415 violations
+Found 106 unconnected items
+Saved DRC Report to routing-evidence/attempt6.json
+```
+Refinement (rejected):
+```
+Found 417 violations
+Found 105 unconnected items
+Saved DRC Report to routing-evidence/attempt6-refined.json
+```
+Final:
+```
+Found 415 violations
+Found 103 unconnected items
+Saved DRC Report to routing-evidence/attempt6-final.json
+```
+**Unrouted count before -> after**: 107 -> 103 DRC links. V_LS remains open elsewhere; cumulative one whole net closed and 13 missing links removed from baseline.
+**Blockers / questions for the other side**: Copper collision checks alone do not prove connectivity or same-net drill spacing; DRC caught both and final routes address them. Inner BGA V_LS balls still need further work.
