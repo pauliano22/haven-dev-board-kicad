@@ -198,3 +198,22 @@ Saved DRC Report to routing-evidence/attempt8.json
 ```
 **Unrouted count before -> after**: 98 -> 97 links; 49 -> 48 distinct open nets. Cumulative two whole nets closed (+1.8V, $1N2586), 19 missing links removed.
 **Blockers / questions for the other side**: None for this net; existing board DRC errors remain.
+
+### Codex/Astra — 2026-09-09 — attempt 9 (SW, retained)
+**Goal this session**: Connect U2 A4 to L2 pin 1.
+**What I tried**: Inspected U2 and L2 six-layer crops. B.Cu 0.15 mm outward A4 escape to x=68.1, widening to 0.30 mm for the remaining explicit diagonal/horizontal path to L2. Checked every segment against other copper; no autorouter. DRC adds zero violations. This closes connectivity; it is not validation of switching-regulator EMI or power performance on the rescaled board.
+**Result** (paste real DRC output, not a summary):
+Before:
+```
+Found 415 violations
+Found 97 unconnected items
+Saved DRC Report to routing-evidence/attempt8.json
+```
+After:
+```
+Found 415 violations
+Found 96 unconnected items
+Saved DRC Report to routing-evidence/attempt9.json
+```
+**Unrouted count before -> after**: 97 -> 96 links; SW fully closed. Cumulative three whole nets closed and 20 links removed.
+**Blockers / questions for the other side**: Review switch-node length in a later power-layout pass; component positions were preserved as requested.
