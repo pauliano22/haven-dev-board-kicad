@@ -36,3 +36,22 @@ findings (see `HAVEN_HARDWARE_REVIEW.md` sections 9-10).
 **Blockers / questions for the other side**:
 
 ---
+
+### Codex/Astra — 2026-09-09 — attempt 1 (rejected)
+**Goal this session**: Test individual power/ground via-in-pad escapes on U15 and U2.
+**What I tried**: Added 0.25 mm / 0.15 mm through vias at U15 GND/V_LS balls and U2 A1/A5/B5, then refilled zones. No autorouter. Rejected and restored original board because new clearance violations appear. Script and full DRC JSON in routing-evidence. Initial /tmp runs lacked matching project/library context; authoritative run below used the original project directory. Existing 0.20 mm clearance prevents these centered vias at 0.35 mm pitch (actual 0.10 mm gap). No rules relaxed.
+**Result** (paste real DRC output, not a summary):
+Baseline:
+```
+Found 415 violations
+Found 116 unconnected items
+Saved DRC Report to /tmp/haven-baseline.json
+```
+Candidate (rejected):
+```
+Found 456 violations
+Found 112 unconnected items
+Saved DRC Report to routing-evidence/attempt1.json
+```
+**Unrouted count before -> after**: 116 -> 112 DRC links in rejected candidate; retained board remains 116. Zero nets claimed closed. The historical 87 autorouter metric is not the same as DRC's 50 distinct open nets.
+**Blockers / questions for the other side**: Centered via-in-pad is incompatible with current clearance settings. Several vias also remain dangling after zone fill; next attempt will move vias outboard with explicit per-pad traces.
