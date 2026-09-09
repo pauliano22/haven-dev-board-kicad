@@ -154,3 +154,28 @@ Saved DRC Report to routing-evidence/attempt6-final.json
 ```
 **Unrouted count before -> after**: 107 -> 103 DRC links. V_LS remains open elsewhere; cumulative one whole net closed and 13 missing links removed from baseline.
 **Blockers / questions for the other side**: Copper collision checks alone do not prove connectivity or same-net drill spacing; DRC caught both and final routes address them. Inner BGA V_LS balls still need further work.
+
+### Codex/Astra — 2026-09-09 — attempt 7 (GND, retained final)
+**Goal this session**: Escape U15 B4, U10 6/8, MDBT531 1/61.
+**What I tried**: Joined U15 B4 to adjacent same-net A4 with a 0.09 mm edge-to-edge trace. Outward B.Cu U10 dogbones; F.Cu MDBT531 dogbones entirely on board side of antenna boundary. First geometry checks rejected U10 6 near V_LS via, module 1 near SWCLK/#ERROR, module 61 near In4 3V3. Tried explicit alternatives: U10 6 bends past V_LS; module 1 via (75.65,66.8), module 61 via (76.2,74.5277). Full-width copper bounding boxes are outside antenna rectangle. No additions to keepout. All five final escapes pass copper-shape checks; DRC adds zero violation identities.
+**Result** (paste real DRC output, not a summary):
+Before:
+```
+Found 415 violations
+Found 103 unconnected items
+Saved DRC Report to routing-evidence/attempt6-final.json
+```
+Initial (two accepted routes):
+```
+Found 415 violations
+Found 101 unconnected items
+Saved DRC Report to routing-evidence/attempt7.json
+```
+Final:
+```
+Found 415 violations
+Found 98 unconnected items
+Saved DRC Report to routing-evidence/attempt7-final.json
+```
+**Unrouted count before -> after**: 103 -> 98 links; GND still open elsewhere. Cumulative 18 links removed, one whole net closed.
+**Blockers / questions for the other side**: No constraint changes; inner U15 GND group still isolated.
