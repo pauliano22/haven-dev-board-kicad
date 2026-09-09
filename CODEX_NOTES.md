@@ -550,3 +550,90 @@ Saved DRC Report to C:/Work/haven-board/routing-evidence/session4/final.json
 **Before -> after**: 402 -> 331 violations; 90 -> 72 missing links; 45 -> 44 distinct open nets. Exactly one whole net closed: V_SD. All 18 requested capacitor terminal gaps closed; none of the nine target references appears among final unconnected endpoints. Zero new violation identities versus baseline.
 **Audit**: All 89 footprints and all 185 existing vias unchanged. Removed 50 specifically identified terminal/branch segments, added 44 replacement segments and two GND vias (C6 and C9). Remaining existing segments unchanged. Setup, layers, general properties, and antenna keepout unchanged; all new copper lies outside the keepout. Copper zones were refilled. Inspected the final bottom-layer montage and retained six-layer final renders.
 **Remaining work**: Board still has 331 pre-existing violations and 72 missing links across 44 nets. This session only repairs the specified capacitors; it does not establish full-board DRC cleanliness or power/crystal performance. `REMAINING_CONNECTIONS.md` and the older handoff contain historical entries; use `session4/final.json` for current connectivity. No placement changes, footprint-library updates, rule relaxation or autorouting.
+
+
+### Codex/Astra — 2026-09-09 — session5 scope and method
+User explicitly expanded scope to C23 (GND/$1N70), R6 (GND/TS), and R13 (VUSB). Started at `d3858b4` on `experiment/codex-astra-routing`. Exported current copper on all six layers with `kicad-cli pcb export svg`, rendered 5.5 mm SVG crops and inspected each image before selecting local paths. Each attempt below is one complete local terminal repair, immediately followed by zone refill and `kicad-cli pcb drc --format json`; no next repair was applied until acceptance. No vias were added. Rejected trials were restored immediately. Before/final six-layer images, SVG crops, exact specifications and geometry, full DRC reports, and new-violation lists are in `routing-evidence/session5/`.
+
+### Codex/Astra — 2026-09-09 — session5 c23
+**Goal / what I tried**: Rejected. Inspected all six SVG layers before planning. Replaced the GND trace approaching C23 pad 2 ($1N70) and the offset $1N70 terminal branch, connecting the actual pad 1 GND and pad 2 $1N70. The new ground diagonal passed too close to pad 2 (0.1767 mm versus required 0.20 mm); full DRC found one new clearance identity. Restored the board immediately.
+**Result** (CLI output):
+Before:
+```
+Found 331 violations
+Found 72 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session5\baseline.json
+```
+Attempt:
+```
+Found 326 violations
+Found 70 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session5\c23.json
+```
+**Unrouted count before -> after**: 72 -> 72 retained (70 in rejected trial) missing links.
+**Blockers / follow-up**: See the subsequent refined attempt.
+
+### Codex/Astra — 2026-09-09 — session5 c23-refined
+**Goal / what I tried**: Retained. Moved the ground detour farther left, using a horizontal departure from the existing via before descending. $1N70 approaches pad 2 from its right edge to clear the existing nearby ground via. All new shapes clear other copper at 0.20 mm and DRC has zero new identities. Both C23 terminals closed; $1N70 fully closed.
+**Result** (CLI output):
+Before:
+```
+Found 331 violations
+Found 72 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session5\baseline.json
+```
+Attempt:
+```
+Found 325 violations
+Found 70 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session5\c23-refined.json
+```
+**Unrouted count before -> after**: 72 -> 70 missing links.
+**Blockers / follow-up**: Scoped terminal connections complete; other connections elsewhere on GND/TS/VUSB remain outside this repair.
+
+### Codex/Astra — 2026-09-09 — session5 r6
+**Goal / what I tried**: Retained. Six-layer image confirmed that the bottom GND and TS routes terminated at opposite pads. Replaced five local segments with paths connecting GND to upper pad 1 from the right and TS to lower pad 2 around the left of the component, reusing the TS via. All new shape checks pass; zero new DRC identities; both R6 terminals closed.
+**Result** (CLI output):
+Before:
+```
+Found 325 violations
+Found 70 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session5\c23-refined.json
+```
+Attempt:
+```
+Found 321 violations
+Found 68 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session5\r6.json
+```
+**Unrouted count before -> after**: 70 -> 68 missing links.
+**Blockers / follow-up**: Scoped terminal connections complete; other connections elsewhere on GND/TS/VUSB remain outside this repair.
+
+### Codex/Astra — 2026-09-09 — session5 r13
+**Goal / what I tried**: Retained. Six-layer image showed the VUSB branch stopping above/right of actual pad 2. Replaced its two local segments with a path from the existing VUSB via around the right side to pad 2. TS pad 1 and its routing were not changed; the TS net remains open elsewhere toward U2. All new shape checks pass; zero new DRC identities; the requested R13 VUSB gap closed.
+**Result** (CLI output):
+Before:
+```
+Found 321 violations
+Found 68 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session5\r6.json
+```
+Attempt:
+```
+Found 316 violations
+Found 67 unconnected items
+Saved DRC Report to C:\Work\haven-board\routing-evidence\session5\r13.json
+```
+**Unrouted count before -> after**: 68 -> 67 missing links.
+**Blockers / follow-up**: Scoped terminal connections complete; other connections elsewhere on GND/TS/VUSB remain outside this repair.
+
+### Codex/Astra — 2026-09-09 — session5 final verification
+Fresh final CLI output:
+```
+Found 316 violations
+Found 67 unconnected items
+Saved DRC Report to C:/Work/haven-board/routing-evidence/session5/final.json
+```
+**Before -> after**: 331 -> 316 violations; 72 -> 67 missing links; 44 -> 43 distinct open nets. Newly fully closed: $1N70. Five requested terminal gaps closed (C23 both, R6 both, R13 VUSB). No new DRC violation identities versus baseline. The first C23 trial was the only rejection; the revised route passed.
+**Preservation audit**: All 89 footprints and 187 vias unchanged; no new vias. Removed nine explicitly identified B.Cu terminal segments and added 13 B.Cu segments. All other existing segments, setup, layer stack, general properties and antenna keepout unchanged. All new copper lies outside the antenna keepout. Final six-layer images were inspected. Restricted ICs/connectors were not edited.
+**Remaining**: 316 existing violations and 67 missing links across 43 nets remain. The local R13 VUSB repair does not close the broader TS connection toward U2. Full-board electrical performance and DRC cleanliness are not claimed. Use `session5/final.json` for current missing endpoints; older remaining-connection documents are historical.
