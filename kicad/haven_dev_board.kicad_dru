@@ -73,3 +73,9 @@
 (rule "tight_clearance_GND_vs_1N117"
   (condition "(A.NetName == 'GND' && B.NetName == '$1N117') || (A.NetName == '$1N117' && B.NetName == 'GND')")
   (constraint clearance (min 0.15mm)))
+
+# 3V3's escape from CN1 pin 3 is blocked only by CN1 pin 5 (PDMCLK) --
+# scoped to that pair, not a blanket 3V3 exception.
+(rule "tight_clearance_3V3_vs_PDMCLK"
+  (condition "(A.NetName == '3V3' && B.NetName == 'PDMCLK') || (A.NetName == 'PDMCLK' && B.NetName == '3V3')")
+  (constraint clearance (min 0.05mm)))
