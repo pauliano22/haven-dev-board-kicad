@@ -709,3 +709,23 @@ After (final, cleaned up, escape stubs still in place but unextended): 330 viola
 ### Claude — 2026-09-09 — INT ruled out, LSCTRL confirmed viable (investigation only)
 **Goal**: Check the U2 side of INT and LSCTRL before investing more effort in the MDBT531 side.
 **What I found**: U2's INT pad (D2) is blocked in every direction at 0.30mm/0.09mm/0.20mm clearance -- same class of dead end as C10/U2.C4 and R28/U15.B6. No board change needed to confirm this; not pursuing INT further regardless of MDBT531-side escapability. U2's LSCTRL pad (E3) IS escapable (clear at 165/180/195 degrees) -- E is U2's edge column, unlike D2's interior position. Proceeding with LSCTRL only: escaping both ends and running a small, LSCTRL-scoped Freerouting pass (much smaller search space than the full-board run, should complete far faster).
+
+### Codex — 2026-09-09 — actual GUI launch and desktop-control blocker
+Verified installed `kicad-cli version`: `9.0.8`. Launched pcbnew.exe with C:\Work\haven-board\kicad\haven_dev_board.kicad_pcb; window discovery confirmed `haven_dev_board — PCB Editor`. That checkout was still at 7cdeca8 when opened. It does NOT contain the newer Claude routing work above.
+
+Native capture failed with `window is minimized; call activate_window, refresh with get_window, then retry get_window_state`. Requested activation/recovery returned `window is not a usable app window`; subsequent fresh window discovery returned an empty list. No screenshot could be obtained. No interactive router action, scripted routing, or copper edit was attempted.
+
+Before and after CLI runs on that older, unchanged 7cdeca8 board:
+```
+Found 316 violations
+Found 67 unconnected items
+Saved DRC Report to C:/Work/haven-board/routing-evidence/session7-gui/baseline.json
+```
+```
+Found 316 violations
+Found 67 unconnected items
+Saved DRC Report to C:/Work/haven-board/routing-evidence/session7-gui/final.json
+```
+These reports describe the older local board, not the newer remote board. No routing progress is claimed. Push detected newer commits, so this note and historical diagnostic reports were added in a separate detached worktree at C:\Work\haven-gui-handoff based on 19007a3, preserving the newer board. The original checkout has local diagnostic-only commit 66b31d2 and a running editor; synchronize it carefully before resuming, and do not save an old GUI buffer over newer board content.
+
+User's latest request requires actual interactive GUI routing. Resume after restoring a visible targetable PCB Editor window on the active unlocked desktop; recover fresh window state before input. Do not substitute scripts for interactive routing or follow prior autoroute suggestions. Original hard limits still apply.
