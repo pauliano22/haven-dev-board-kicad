@@ -727,3 +727,23 @@ After: 330 violations, 60 unconnected items, 41 open nets (LSCTRL's 2 nets... i.
 **Unrouted count before -> after**: 61 -> 60 missing links. LSCTRL fully connected (0 unconnected items, 0 new violations of any kind -- the 3 violations DRC still reports touching LSCTRL's U2 pads are pre-existing pad-to-pad clearance issues baked into U2's BGA pitch, identical before and after, confirmed by exact description-text match against the pre-session baseline). Two `track_dangling` warnings resolved (both LSCTRL stubs, now genuinely connected end to end).
 **Route summary**: MDBT531 pin27 escape stub (F.Cu) -> short F.Cu jog -> through-via to B.Cu -> 7-waypoint B.Cu run (~39mm) -> short B.Cu jog at 180 degrees off U2 pad E3.
 **Blockers / follow-up**: None for LSCTRL -- fully closed. The LSCTRL-scoped Freerouting background job from step 1 (PID 21071 at time of writing) may still be running; it's very likely to plateau at the same ~152-153 unrouted/66 violations as the earlier full-board run and can be safely killed once found, since it did not contribute to this fix and won't need to complete now that LSCTRL is closed by hand. Remaining unclosed items: INT (ruled out, needs a human decision same as C10/U2.C4 and R28/U15.B6), and 12 of the 14 escaped-but-unextended MDBT531 stubs (BCLK, CC_#CD, CC_#PG, DAC_ENABLE, DIN, DOUT, FLASH_RESET, IO5, SD_STATE, SPI_CLK, SPI_CS, SPI_CS_FLASH, SPI_MISO, SPI_MOSI) -- the same F.Cu-pocket-is-sealed / B.Cu-via-hop technique developed here for LSCTRL is a reasonable template to try on these next, since they're all escaping the same castellated module.
+
+### Codex — 2026-09-09 — actual GUI launch and desktop-control blocker
+Verified installed `kicad-cli version`: `9.0.8`. Launched pcbnew.exe with C:\Work\haven-board\kicad\haven_dev_board.kicad_pcb; window discovery confirmed `haven_dev_board — PCB Editor`. That checkout was still at 7cdeca8 when opened. It does NOT contain the newer Claude routing work above.
+
+Native capture failed with `window is minimized; call activate_window, refresh with get_window, then retry get_window_state`. Requested activation/recovery returned `window is not a usable app window`; subsequent fresh window discovery returned an empty list. No screenshot could be obtained. No interactive router action, scripted routing, or copper edit was attempted.
+
+Before and after CLI runs on that older, unchanged 7cdeca8 board:
+```
+Found 316 violations
+Found 67 unconnected items
+Saved DRC Report to C:/Work/haven-board/routing-evidence/session7-gui/baseline.json
+```
+```
+Found 316 violations
+Found 67 unconnected items
+Saved DRC Report to C:/Work/haven-board/routing-evidence/session7-gui/final.json
+```
+These reports describe the older local board, not the newer remote board. No routing progress is claimed. Push detected newer commits, so this note and historical diagnostic reports were added in a separate detached worktree at C:\Work\haven-gui-handoff based on 19007a3, preserving the newer board. The original checkout has local diagnostic-only commit 66b31d2 and a running editor; synchronize it carefully before resuming, and do not save an old GUI buffer over newer board content.
+
+User's latest request requires actual interactive GUI routing. Resume after restoring a visible targetable PCB Editor window on the active unlocked desktop; recover fresh window state before input. Do not substitute scripts for interactive routing or follow prior autoroute suggestions. Original hard limits still apply.
