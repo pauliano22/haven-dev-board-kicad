@@ -79,3 +79,18 @@
 (rule "tight_clearance_3V3_vs_PDMCLK"
   (condition "(A.NetName == '3V3' && B.NetName == 'PDMCLK') || (A.NetName == 'PDMCLK' && B.NetName == '3V3')")
   (constraint clearance (min 0.05mm)))
+
+# SCL2's escape from U1 pin 13 is blocked by U1's own neighbor pins
+# (V_LS pin 12, SDA2 pin 14) -- scoped to those two pairs only.
+(rule "tight_clearance_SCL2_vs_V_LS"
+  (condition "(A.NetName == 'SCL2' && B.NetName == 'V_LS') || (A.NetName == 'V_LS' && B.NetName == 'SCL2')")
+  (constraint clearance (min 0.10mm)))
+
+(rule "tight_clearance_SCL2_vs_SDA2"
+  (condition "(A.NetName == 'SCL2' && B.NetName == 'SDA2') || (A.NetName == 'SDA2' && B.NetName == 'SCL2')")
+  (constraint clearance (min 0.10mm)))
+
+# SCL2's escape from CN1 pin 9 is blocked by an existing IO5 track.
+(rule "tight_clearance_SCL2_vs_IO5"
+  (condition "(A.NetName == 'SCL2' && B.NetName == 'IO5') || (A.NetName == 'IO5' && B.NetName == 'SCL2')")
+  (constraint clearance (min 0.05mm)))
