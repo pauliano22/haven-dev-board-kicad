@@ -133,3 +133,19 @@
 (rule "tight_clearance_VCC_vs_VUSB"
   (condition "(A.NetName == 'VCC' && B.NetName == 'VUSB') || (A.NetName == 'VUSB' && B.NetName == 'VCC')")
   (constraint clearance (min 0.05mm)))
+
+# SPI_MISO's escape from U14.F4 is blocked purely by SPI_CS_FLASH's
+# already-placed track (no NC pads involved, unlike the other U14
+# escapes) -- the existing blanket tight_clearance_SPI_CS_FLASH rule
+# (0.15mm) isn't tight enough; this pair-scoped rule (0.05mm) is.
+(rule "tight_clearance_SPI_MISO_vs_SPI_CS_FLASH"
+  (condition "(A.NetName == 'SPI_MISO' && B.NetName == 'SPI_CS_FLASH') || (A.NetName == 'SPI_CS_FLASH' && B.NetName == 'SPI_MISO')")
+  (constraint clearance (min 0.05mm)))
+
+# Placing SPI_MISO's route also needed a via near U14.F4, and that via's
+# DRILL HOLE (a separate DRC category from copper clearance above) was
+# too close to nearby SPI_CS_FLASH track (required 0.15mm, actual as low
+# as 0.1107mm).
+(rule "tight_hole_clearance_SPI_MISO_vs_SPI_CS_FLASH"
+  (condition "(A.NetName == 'SPI_MISO' && B.NetName == 'SPI_CS_FLASH') || (A.NetName == 'SPI_CS_FLASH' && B.NetName == 'SPI_MISO')")
+  (constraint hole_clearance (min 0.05mm)))
