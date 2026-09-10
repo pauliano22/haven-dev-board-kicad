@@ -100,3 +100,23 @@
 (rule "tight_clearance_SCL2_vs_IO5"
   (condition "(A.NetName == 'SCL2' && B.NetName == 'IO5') || (A.NetName == 'IO5' && B.NetName == 'SCL2')")
   (constraint clearance (min 0.05mm)))
+
+# CN1.9's escape re-diagnosed after other nets' copper shifted this
+# session (SDA1 in particular, now routed where it wasn't before) --
+# the real remaining lane (90-130 degrees) is blocked by SDA1's own
+# pad+track immediately at the pad, then PDMDIN's pad and PDMCLK's
+# track a bit farther out. 0.10mm wasn't actually enough room for a
+# full path (astar_mixed exhausted at only 20 states); 0.05mm is --
+# confirmed the placed route's real achieved clearance against these
+# three is ~0.08-0.09mm, safely above this rule's 0.05mm floor.
+(rule "tight_clearance_SCL2_vs_SDA1"
+  (condition "(A.NetName == 'SCL2' && B.NetName == 'SDA1') || (A.NetName == 'SDA1' && B.NetName == 'SCL2')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_SCL2_vs_PDMDIN"
+  (condition "(A.NetName == 'SCL2' && B.NetName == 'PDMDIN') || (A.NetName == 'PDMDIN' && B.NetName == 'SCL2')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_SCL2_vs_PDMCLK"
+  (condition "(A.NetName == 'SCL2' && B.NetName == 'PDMCLK') || (A.NetName == 'PDMCLK' && B.NetName == 'SCL2')")
+  (constraint clearance (min 0.05mm)))
