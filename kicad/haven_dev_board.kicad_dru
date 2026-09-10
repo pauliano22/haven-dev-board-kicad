@@ -49,3 +49,19 @@
 (rule "tight_clearance_SPI_MOSI"
   (condition "A.NetName == 'SPI_MOSI' || B.NetName == 'SPI_MOSI'")
   (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_TCK"
+  (condition "A.NetName == 'TCK' || B.NetName == 'TCK'")
+  (constraint clearance (min 0.15mm)))
+
+(rule "tight_clearance_TDI"
+  (condition "A.NetName == 'TDI' || B.NetName == 'TDI'")
+  (constraint clearance (min 0.15mm)))
+
+(rule "tight_clearance_TDO"
+  (condition "A.NetName == 'TDO' || B.NetName == 'TDO'")
+  (constraint clearance (min 0.15mm)))
+
+(rule "tight_clearance_TMS"
+  (condition "A.NetName == 'TMS' || B.NetName == 'TMS'")
+  (constraint clearance (min 0.15mm)))
