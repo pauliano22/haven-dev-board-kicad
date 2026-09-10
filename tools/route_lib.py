@@ -411,3 +411,23 @@ def find_clear_via_near(board, orig, net_name, via_r=0.10):
             if ok:
                 return cand
     return None
+
+
+def refill_zones(board):
+    """Recompute every zone's filled-copper polygons in-memory. MUST be
+    called after adding any track/via and before board.Save() + the real
+    DRC check whenever a fillable copper-pour zone (e.g. a GND/power plane
+    on an inner layer) exists anywhere on the board -- confirmed on Haven's
+    SDA route attempt: two of the four inner layers are near-full-board GND
+    pours, and a new via always punches through every inner layer, so its
+    clearance is only ever correct once the pour's fill polygon is
+    regenerated around it. The stale fill (from before the new copper was
+    added) is NOT a real placement obstacle -- checking a candidate via
+    against it produces false "no via possible anywhere nearby" results
+    (every direction/distance looks blocked, because the whole pour reads
+    as one solid mass) even though a normal via there is completely
+    routine once refilled. Do not add filled-zone polygons to
+    collect_obstacles/via_clear's obstacle lists for this reason; refill
+    instead, then let real DRC be the judge."""
+    filler = pcbnew.ZONE_FILLER(board)
+    filler.Fill(board.Zones())
