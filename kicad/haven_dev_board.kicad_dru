@@ -149,3 +149,40 @@
 (rule "tight_hole_clearance_SPI_MISO_vs_SPI_CS_FLASH"
   (condition "(A.NetName == 'SPI_MISO' && B.NetName == 'SPI_CS_FLASH') || (A.NetName == 'SPI_CS_FLASH' && B.NetName == 'SPI_MISO')")
   (constraint hole_clearance (min 0.05mm)))
+
+# SPI_MOSI_SD (CARD1 to U10) runs alongside a genuine SPI bus corridor
+# (SPI_CLK, SPI_CLK_SD, SPI_CS_SD, SPI_MISO, SPI_MISO_SD all pass close
+# together here, same as any real multi-signal bus) plus one unrelated
+# net (USB_DM). Identified by finding the actual blanket-relaxed path
+# and checking which specific nets it ran close to at standard
+# clearance -- six scoped pairs, not a blanket SPI_MOSI_SD exception.
+(rule "tight_clearance_SPI_MOSI_SD_vs_SPI_CLK"
+  (condition "(A.NetName == 'SPI_MOSI_SD' && B.NetName == 'SPI_CLK') || (A.NetName == 'SPI_CLK' && B.NetName == 'SPI_MOSI_SD')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_SPI_MOSI_SD_vs_SPI_CLK_SD"
+  (condition "(A.NetName == 'SPI_MOSI_SD' && B.NetName == 'SPI_CLK_SD') || (A.NetName == 'SPI_CLK_SD' && B.NetName == 'SPI_MOSI_SD')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_SPI_MOSI_SD_vs_SPI_CS_SD"
+  (condition "(A.NetName == 'SPI_MOSI_SD' && B.NetName == 'SPI_CS_SD') || (A.NetName == 'SPI_CS_SD' && B.NetName == 'SPI_MOSI_SD')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_SPI_MOSI_SD_vs_SPI_MISO"
+  (condition "(A.NetName == 'SPI_MOSI_SD' && B.NetName == 'SPI_MISO') || (A.NetName == 'SPI_MISO' && B.NetName == 'SPI_MOSI_SD')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_SPI_MOSI_SD_vs_SPI_MISO_SD"
+  (condition "(A.NetName == 'SPI_MOSI_SD' && B.NetName == 'SPI_MISO_SD') || (A.NetName == 'SPI_MISO_SD' && B.NetName == 'SPI_MOSI_SD')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_SPI_MOSI_SD_vs_USB_DM"
+  (condition "(A.NetName == 'SPI_MOSI_SD' && B.NetName == 'USB_DM') || (A.NetName == 'USB_DM' && B.NetName == 'SPI_MOSI_SD')")
+  (constraint clearance (min 0.05mm)))
+
+# Same hole_clearance-is-a-separate-category lesson as SPI_MISO above --
+# one of this route's vias landed too close (hole-wise) to an SPI_MISO
+# track.
+(rule "tight_hole_clearance_SPI_MOSI_SD_vs_SPI_MISO"
+  (condition "(A.NetName == 'SPI_MOSI_SD' && B.NetName == 'SPI_MISO') || (A.NetName == 'SPI_MISO' && B.NetName == 'SPI_MOSI_SD')")
+  (constraint hole_clearance (min 0.05mm)))
