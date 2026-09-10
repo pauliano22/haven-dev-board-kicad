@@ -65,3 +65,11 @@
 (rule "tight_clearance_TMS"
   (condition "A.NetName == 'TMS' || B.NetName == 'TMS'")
   (constraint clearance (min 0.15mm)))
+
+# GND is a pervasive net -- a blanket exception for it would loosen
+# clearance everywhere on the board, so this is scoped to the exact
+# pair (GND's escape from Q2 pin 2 is blocked only by Q2's own pin 3,
+# net $1N117), not to GND in general.
+(rule "tight_clearance_GND_vs_1N117"
+  (condition "(A.NetName == 'GND' && B.NetName == '$1N117') || (A.NetName == '$1N117' && B.NetName == 'GND')")
+  (constraint clearance (min 0.15mm)))
