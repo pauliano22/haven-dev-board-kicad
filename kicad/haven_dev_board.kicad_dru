@@ -227,3 +227,22 @@
 (rule "tight_hole_clearance_TDI_vs_TDO"
   (condition "(A.NetName == 'TDI' && B.NetName == 'TDO') || (B.NetName == 'TDI' && A.NetName == 'TDO')")
   (constraint hole_clearance (min 0.05mm)))
+
+# GND/U14.E3 reopened using the same NetName=='' trick that fixed TDI --
+# a real lane exists at ~80 degrees once GND is relaxed vs the package's
+# own no-net pads, plus a few of U14's other named signals nearby.
+(rule "tight_clearance_GND_vs_noname"
+  (condition "(A.NetName == 'GND' && B.NetName == '') || (B.NetName == 'GND' && A.NetName == '')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_GND_vs_SPI_CS_FLASH"
+  (condition "(A.NetName == 'GND' && B.NetName == 'SPI_CS_FLASH') || (B.NetName == 'GND' && A.NetName == 'SPI_CS_FLASH')")
+  (constraint clearance (min 0.10mm)))
+
+(rule "tight_clearance_GND_vs_V_LS"
+  (condition "(A.NetName == 'GND' && B.NetName == 'V_LS') || (B.NetName == 'GND' && A.NetName == 'V_LS')")
+  (constraint clearance (min 0.10mm)))
+
+(rule "tight_hole_clearance_GND_vs_noname"
+  (condition "(A.NetName == 'GND' && B.NetName == '') || (B.NetName == 'GND' && A.NetName == '')")
+  (constraint hole_clearance (min 0.05mm)))
