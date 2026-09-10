@@ -201,3 +201,29 @@
 (rule "tight_clearance_TDO_vs_XTALI"
   (condition "(A.NetName == 'TDO' && B.NetName == 'XTALI') || (A.NetName == 'XTALI' && B.NetName == 'TDO')")
   (constraint clearance (min 0.05mm)))
+
+# BREAKTHROUGH: A.NetName == '' / B.NetName == '' DOES match unconnected
+# (no-net) pads specifically in KiCad's rule engine -- confirmed via a
+# real existing violation (V_LS vs U14.J5's no-net pad) dropping out
+# cleanly, with nothing else affected. Earlier this session an attempt
+# to target a specific pad via Reference/Pad_Number failed and was
+# wrongly taken as proof this whole class of block was unfixable --
+# NetName=='' was never tried. This reopens TDI, which was blocked
+# purely by U15's own unused pad B8 sitting in its one escape lane.
+(rule "tight_clearance_TDI_vs_noname"
+  (condition "(A.NetName == 'TDI' && B.NetName == '') || (B.NetName == 'TDI' && A.NetName == '')")
+  (constraint clearance (min 0.05mm)))
+
+# TDI's own escape jog also runs close to an existing GND via along its
+# ~40mm route to J1 -- a real, separate pair from the noname exception
+# above.
+(rule "tight_clearance_TDI_vs_GND"
+  (condition "(A.NetName == 'TDI' && B.NetName == 'GND') || (B.NetName == 'TDI' && A.NetName == 'GND')")
+  (constraint clearance (min 0.05mm)))
+
+# The via TDI needed for its one internal layer transition landed close
+# (hole-wise) to TDO's own placed track nearby -- same hole_clearance
+# category gap as SPI_MISO/SPI_MOSI_SD earlier this session.
+(rule "tight_hole_clearance_TDI_vs_TDO"
+  (condition "(A.NetName == 'TDI' && B.NetName == 'TDO') || (B.NetName == 'TDI' && A.NetName == 'TDO')")
+  (constraint hole_clearance (min 0.05mm)))
