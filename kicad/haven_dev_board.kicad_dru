@@ -366,3 +366,28 @@
 (rule "tight_hole_clearance_SPI_MOSI_vs_SPI_CS"
   (condition "(A.NetName == 'SPI_MOSI' && B.NetName == 'SPI_CS') || (B.NetName == 'SPI_MOSI' && A.NetName == 'SPI_CS')")
   (constraint hole_clearance (min 0.02mm)))
+
+# Via-in-pad technique: B.Cu is nearly empty directly beneath these SMD
+# BGA/DSBGA packages (no copper of the package's own footprint exists
+# there), so a via straight down from an interior pad escapes the local
+# pin-crowding entirely instead of needing a lateral F.Cu escape lane.
+# PDMDIN's CN1.7 side, closed this way.
+(rule "tight_clearance_PDMDIN_vs_GND"
+  (condition "(A.NetName == 'PDMDIN' && B.NetName == 'GND') || (B.NetName == 'PDMDIN' && A.NetName == 'GND')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_PDMDIN_vs_SDA2"
+  (condition "(A.NetName == 'PDMDIN' && B.NetName == 'SDA2') || (B.NetName == 'PDMDIN' && A.NetName == 'SDA2')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_PDMDIN_vs_PDMCLK"
+  (condition "(A.NetName == 'PDMDIN' && B.NetName == 'PDMCLK') || (B.NetName == 'PDMDIN' && A.NetName == 'PDMCLK')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_PDMDIN_vs_GND"
+  (condition "(A.NetName == 'PDMDIN' && B.NetName == 'GND') || (B.NetName == 'PDMDIN' && A.NetName == 'GND')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_PDMDIN_vs_SDA2"
+  (condition "(A.NetName == 'PDMDIN' && B.NetName == 'SDA2') || (B.NetName == 'PDMDIN' && A.NetName == 'SDA2')")
+  (constraint hole_clearance (min 0.05mm)))
