@@ -391,3 +391,15 @@
 (rule "tight_hole_clearance_PDMDIN_vs_SDA2"
   (condition "(A.NetName == 'PDMDIN' && B.NetName == 'SDA2') || (B.NetName == 'PDMDIN' && A.NetName == 'SDA2')")
   (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_clearance_PDMDIN_vs_V_LS"
+  (condition "(A.NetName == 'PDMDIN' && B.NetName == 'V_LS') || (B.NetName == 'PDMDIN' && A.NetName == 'V_LS')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_PDMDIN_vs_SDA1"
+  (condition "(A.NetName == 'PDMDIN' && B.NetName == 'SDA1') || (B.NetName == 'PDMDIN' && A.NetName == 'SDA1')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_PDMDIN_vs_noname"
+  (condition "(A.NetName == 'PDMDIN' && B.NetName == '') || (B.NetName == 'PDMDIN' && A.NetName == '')")
+  (constraint clearance (min 0.05mm)))
