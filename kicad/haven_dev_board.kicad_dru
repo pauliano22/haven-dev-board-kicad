@@ -296,3 +296,73 @@
 (rule "tight_clearance_V_LS_vs_noname"
   (condition "(A.NetName == 'V_LS' && B.NetName == '') || (B.NetName == 'V_LS' && A.NetName == '')")
   (constraint clearance (min 0.05mm)))
+
+# SPI_MOSI/U14.G3 (fully-interior WLCSP-22 pad) to the nearest existing
+# SPI_MOSI copper (~47.6mm away, at MDBT531). User explicitly approved
+# shipping this at 0.02mm despite it being far below the 0.05mm floor
+# used everywhere else in this file, and despite confirmed solder-mask-
+# bridge risk at several points along the route (binary-searched: the
+# escape from G3 needs <0.025mm, solder mask needs >=0.1mm -- no value
+# satisfies both, not a tuning gap). Accepted as a known, bounded,
+# bench-testable risk for a dev board, not shipped silently.
+# The blanket tight_clearance_SPI_MOSI rule above (0.05mm) does not
+# cover this specific route; these narrower, later-declared pair rules
+# take precedence for these specific net pairs.
+(rule "tight_clearance_SPI_MOSI_vs_IO4"
+  (condition "(A.NetName == 'SPI_MOSI' && B.NetName == 'IO4') || (B.NetName == 'SPI_MOSI' && A.NetName == 'IO4')")
+  (constraint clearance (min 0.02mm)))
+
+(rule "tight_clearance_SPI_MOSI_vs_IO5"
+  (condition "(A.NetName == 'SPI_MOSI' && B.NetName == 'IO5') || (B.NetName == 'SPI_MOSI' && A.NetName == 'IO5')")
+  (constraint clearance (min 0.02mm)))
+
+(rule "tight_clearance_SPI_MOSI_vs_LSCTRL"
+  (condition "(A.NetName == 'SPI_MOSI' && B.NetName == 'LSCTRL') || (B.NetName == 'SPI_MOSI' && A.NetName == 'LSCTRL')")
+  (constraint clearance (min 0.02mm)))
+
+(rule "tight_clearance_SPI_MOSI_vs_SCL"
+  (condition "(A.NetName == 'SPI_MOSI' && B.NetName == 'SCL') || (B.NetName == 'SPI_MOSI' && A.NetName == 'SCL')")
+  (constraint clearance (min 0.02mm)))
+
+(rule "tight_clearance_SPI_MOSI_vs_SDA1"
+  (condition "(A.NetName == 'SPI_MOSI' && B.NetName == 'SDA1') || (B.NetName == 'SPI_MOSI' && A.NetName == 'SDA1')")
+  (constraint clearance (min 0.02mm)))
+
+(rule "tight_clearance_SPI_MOSI_vs_SDA2"
+  (condition "(A.NetName == 'SPI_MOSI' && B.NetName == 'SDA2') || (B.NetName == 'SPI_MOSI' && A.NetName == 'SDA2')")
+  (constraint clearance (min 0.02mm)))
+
+(rule "tight_clearance_SPI_MOSI_vs_SD_STATE"
+  (condition "(A.NetName == 'SPI_MOSI' && B.NetName == 'SD_STATE') || (B.NetName == 'SPI_MOSI' && A.NetName == 'SD_STATE')")
+  (constraint clearance (min 0.02mm)))
+
+(rule "tight_clearance_SPI_MOSI_vs_SPI_CLK"
+  (condition "(A.NetName == 'SPI_MOSI' && B.NetName == 'SPI_CLK') || (B.NetName == 'SPI_MOSI' && A.NetName == 'SPI_CLK')")
+  (constraint clearance (min 0.02mm)))
+
+(rule "tight_clearance_SPI_MOSI_vs_SPI_CS"
+  (condition "(A.NetName == 'SPI_MOSI' && B.NetName == 'SPI_CS') || (B.NetName == 'SPI_MOSI' && A.NetName == 'SPI_CS')")
+  (constraint clearance (min 0.02mm)))
+
+(rule "tight_clearance_SPI_MOSI_vs_USB_DM"
+  (condition "(A.NetName == 'SPI_MOSI' && B.NetName == 'USB_D-') || (B.NetName == 'SPI_MOSI' && A.NetName == 'USB_D-')")
+  (constraint clearance (min 0.02mm)))
+
+(rule "tight_clearance_SPI_MOSI_vs_V_LS"
+  (condition "(A.NetName == 'SPI_MOSI' && B.NetName == 'V_LS') || (B.NetName == 'SPI_MOSI' && A.NetName == 'V_LS')")
+  (constraint clearance (min 0.02mm)))
+
+(rule "tight_clearance_SPI_MOSI_vs_noname"
+  (condition "(A.NetName == 'SPI_MOSI' && B.NetName == '') || (B.NetName == 'SPI_MOSI' && A.NetName == '')")
+  (constraint clearance (min 0.02mm)))
+
+# Same lesson as SPI_MISO/SPI_MOSI_SD earlier: hole_clearance is a
+# separate DRC category from clearance and needs its own rule. The
+# route passes close to existing SPI_CLK and SPI_CS vias.
+(rule "tight_hole_clearance_SPI_MOSI_vs_SPI_CLK"
+  (condition "(A.NetName == 'SPI_MOSI' && B.NetName == 'SPI_CLK') || (B.NetName == 'SPI_MOSI' && A.NetName == 'SPI_CLK')")
+  (constraint hole_clearance (min 0.02mm)))
+
+(rule "tight_hole_clearance_SPI_MOSI_vs_SPI_CS"
+  (condition "(A.NetName == 'SPI_MOSI' && B.NetName == 'SPI_CS') || (B.NetName == 'SPI_MOSI' && A.NetName == 'SPI_CS')")
+  (constraint hole_clearance (min 0.02mm)))
