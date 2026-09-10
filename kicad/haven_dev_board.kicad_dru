@@ -403,3 +403,11 @@
 (rule "tight_clearance_PDMDIN_vs_noname"
   (condition "(A.NetName == 'PDMDIN' && B.NetName == '') || (B.NetName == 'PDMDIN' && A.NetName == '')")
   (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_PDMCLK_vs_GND"
+  (condition "(A.NetName == 'PDMCLK' && B.NetName == 'GND') || (B.NetName == 'PDMCLK' && A.NetName == 'GND')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_PDMCLK_vs_noname"
+  (condition "(A.NetName == 'PDMCLK' && B.NetName == '') || (B.NetName == 'PDMCLK' && A.NetName == '')")
+  (constraint clearance (min 0.05mm)))
