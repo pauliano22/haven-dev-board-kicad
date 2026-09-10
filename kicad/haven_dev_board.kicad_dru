@@ -120,3 +120,16 @@
 (rule "tight_clearance_SCL2_vs_PDMCLK"
   (condition "(A.NetName == 'SCL2' && B.NetName == 'PDMCLK') || (A.NetName == 'PDMCLK' && B.NetName == 'SCL2')")
   (constraint clearance (min 0.05mm)))
+
+# VCC's B1/B2 pads (U2, same DSBGA-25 package) need a via to bridge to
+# F.Cu where the rest of this route runs -- a B.Cu flood-fill from
+# B1/B2 found only a 6-cell pocket at standard clearance (no via fits
+# anywhere in it), but 45 cells with 13 via-clear spots at 0.05mm.
+# Blocked by U2's own immediate neighbors A1 (GND) and A2 (VUSB).
+(rule "tight_clearance_VCC_vs_GND"
+  (condition "(A.NetName == 'VCC' && B.NetName == 'GND') || (A.NetName == 'GND' && B.NetName == 'VCC')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_VCC_vs_VUSB"
+  (condition "(A.NetName == 'VCC' && B.NetName == 'VUSB') || (A.NetName == 'VUSB' && B.NetName == 'VCC')")
+  (constraint clearance (min 0.05mm)))
