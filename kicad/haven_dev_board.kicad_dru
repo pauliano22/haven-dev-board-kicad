@@ -269,3 +269,15 @@
 (rule "tight_hole_clearance_1N151_vs_GND"
   (condition "(A.NetName == '$1N151' && B.NetName == 'GND') || (B.NetName == '$1N151' && A.NetName == 'GND')")
   (constraint hole_clearance (min 0.05mm)))
+
+# Two of U15's internal GND-to-GND pad pairs (E6-D6, D6-D7 -- both same
+# net, adjacent interior balls) just needed direct scoped exceptions
+# against SDA1 and SCL1 in addition to the noname/V_LS/SPI_CS_FLASH
+# ones already in place.
+(rule "tight_clearance_GND_vs_SDA1"
+  (condition "(A.NetName == 'GND' && B.NetName == 'SDA1') || (B.NetName == 'GND' && A.NetName == 'SDA1')")
+  (constraint clearance (min 0.10mm)))
+
+(rule "tight_clearance_GND_vs_SCL1"
+  (condition "(A.NetName == 'GND' && B.NetName == 'SCL1') || (B.NetName == 'GND' && A.NetName == 'SCL1')")
+  (constraint clearance (min 0.10mm)))
