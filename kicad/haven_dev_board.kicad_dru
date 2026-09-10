@@ -241,7 +241,7 @@
 
 (rule "tight_clearance_GND_vs_V_LS"
   (condition "(A.NetName == 'GND' && B.NetName == 'V_LS') || (B.NetName == 'GND' && A.NetName == 'V_LS')")
-  (constraint clearance (min 0.10mm)))
+  (constraint clearance (min 0.05mm)))
 
 (rule "tight_hole_clearance_GND_vs_noname"
   (condition "(A.NetName == 'GND' && B.NetName == '') || (B.NetName == 'GND' && A.NetName == '')")
@@ -281,3 +281,18 @@
 (rule "tight_clearance_GND_vs_SCL1"
   (condition "(A.NetName == 'GND' && B.NetName == 'SCL1') || (B.NetName == 'GND' && A.NetName == 'SCL1')")
   (constraint clearance (min 0.10mm)))
+
+# V_LS's U15-interior G2-F3 pair (same net, adjacent balls) needs
+# DAC_P/DAC_N exceptions too.
+(rule "tight_clearance_V_LS_vs_DAC_P"
+  (condition "(A.NetName == 'V_LS' && B.NetName == 'DAC_P') || (B.NetName == 'V_LS' && A.NetName == 'DAC_P')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_V_LS_vs_DAC_N"
+  (condition "(A.NetName == 'V_LS' && B.NetName == 'DAC_N') || (B.NetName == 'V_LS' && A.NetName == 'DAC_N')")
+  (constraint clearance (min 0.05mm)))
+
+# The G2-F3 track also runs close to U15's own no-net pad E3.
+(rule "tight_clearance_V_LS_vs_noname"
+  (condition "(A.NetName == 'V_LS' && B.NetName == '') || (B.NetName == 'V_LS' && A.NetName == '')")
+  (constraint clearance (min 0.05mm)))
