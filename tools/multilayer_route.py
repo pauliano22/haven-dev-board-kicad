@@ -28,12 +28,24 @@ def multilayer_astar(board, net, start, end, clearance_mm, cell=0.1, margin=2.0,
         for layer in ALL_VIA_LAYERS
     }
 
+    # Every existing via's position, regardless of net -- needed for
+    # hole-to-hole (mechanical) spacing, which applies even between
+    # same-net vias and so is never covered by via_obs_by_layer (that only
+    # holds OTHER-net obstacles). Confirmed missing the hard way: a via
+    # placed 0.023mm from an existing same-net via passed via_clear_fast's
+    # electrical check but failed real DRC's hole_to_hole constraint.
+    all_via_positions = [pcbnew.ToMM(t.GetPosition()) for t in board.GetTracks() if isinstance(t, pcbnew.PCB_VIA)]
+
     def via_clear_fast(pt):
         probe = pcbnew.SHAPE_CIRCLE(pcbnew.VECTOR2I(pcbnew.FromMM(pt[0]), pcbnew.FromMM(pt[1])), pcbnew.FromMM(VIA_R_MM))
         for layer in ALL_VIA_LAYERS:
             for shape in via_obs_by_layer[layer]:
                 if shape.Collide(probe, rl.CLEARANCE_IU):
                     return False
+        for vpos in all_via_positions:
+            center_dist = math.hypot(vpos[0] - pt[0], vpos[1] - pt[1])
+            if center_dist - 2 * rl.VIA_DRILL_R_MM < rl.MIN_HOLE_EDGE_MM:
+                return False
         return True
 
     def to_cell(pt):
@@ -158,12 +170,18 @@ def multilayer_astar_mixed(board, net, start, end, exceptions, default_clearance
         for layer in ALL_VIA_LAYERS
     }
 
+    all_via_positions = [pcbnew.ToMM(t.GetPosition()) for t in board.GetTracks() if isinstance(t, pcbnew.PCB_VIA)]
+
     def via_clear_mixed_fast(pt):
         probe = pcbnew.SHAPE_CIRCLE(pcbnew.VECTOR2I(pcbnew.FromMM(pt[0]), pcbnew.FromMM(pt[1])), pcbnew.FromMM(VIA_R_MM))
         for layer in ALL_VIA_LAYERS:
             for shape, clr_iu in via_obs_by_layer[layer]:
                 if shape.Collide(probe, clr_iu):
                     return False
+        for vpos in all_via_positions:
+            center_dist = math.hypot(vpos[0] - pt[0], vpos[1] - pt[1])
+            if center_dist - 2 * rl.VIA_DRILL_R_MM < rl.MIN_HOLE_EDGE_MM:
+                return False
         return True
 
     def to_cell(pt):

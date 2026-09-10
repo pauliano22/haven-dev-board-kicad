@@ -376,6 +376,31 @@ def find_route_on_layer(board, layer, net_name, start, end, cell=0.1):
     return simplified, 'ok', obstacles
 
 
+VIA_DRILL_R_MM = 0.05  # matches SetDrill(FromMM(0.10)) used everywhere a via is placed
+MIN_HOLE_EDGE_MM = 0.1995  # this board's actual board-setup hole-to-hole constraint
+
+
+def hole_to_hole_ok(board, pos, drill_r_mm=VIA_DRILL_R_MM, min_edge_mm=MIN_HOLE_EDGE_MM):
+    """Mechanical drill-to-drill spacing against EVERY existing via,
+    regardless of net -- via_clear() deliberately skips same-net copper
+    (correct for electrical clearance: two same-net features touching is
+    fine), but a drilled hole needs physical separation from every other
+    hole on the board no matter whose net it's on. Confirmed missing the
+    hard way: a new via placed 0.023mm from a pre-existing same-net via
+    passed every check in this file, then failed real DRC with
+    hole_to_hole (required ~0.1995mm edge-to-edge, actual 0.0000mm).
+    Call this ALONGSIDE via_clear() before placing any new via -- neither
+    one substitutes for the other."""
+    for t in board.GetTracks():
+        if not isinstance(t, pcbnew.PCB_VIA):
+            continue
+        vpos = pcbnew.ToMM(t.GetPosition())
+        center_dist = math.hypot(vpos[0] - pos[0], vpos[1] - pos[1])
+        if center_dist - 2 * drill_r_mm < min_edge_mm:
+            return False
+    return True
+
+
 def via_clear(board, pos, net_name, via_r=0.10):
     for layer in VIA_LAYERS:
         probe = pcbnew.SHAPE_CIRCLE(pcbnew.VECTOR2I(pcbnew.FromMM(pos[0]), pcbnew.FromMM(pos[1])), pcbnew.FromMM(via_r))
@@ -401,14 +426,19 @@ def via_clear(board, pos, net_name, via_r=0.10):
 
 
 def find_clear_via_near(board, orig, net_name, via_r=0.10):
-    if via_clear(board, orig, net_name, via_r)[0]:
+    """Finds a position that is BOTH electrically clear (via_clear, against
+    other nets) AND mechanically clear (hole_to_hole_ok, against every
+    existing via regardless of net) -- a candidate passing only the first
+    check can still fail real DRC's hole-to-hole constraint."""
+    def ok_at(pt):
+        return via_clear(board, pt, net_name, via_r)[0] and hole_to_hole_ok(board, pt)
+    if ok_at(orig):
         return orig
     for dist in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.5]:
         for ang_deg in range(0, 360, 10):
             ang = math.radians(ang_deg)
             cand = (orig[0] + dist * math.cos(ang), orig[1] + dist * math.sin(ang))
-            ok, _ = via_clear(board, cand, net_name, via_r)
-            if ok:
+            if ok_at(cand):
                 return cand
     return None
 
