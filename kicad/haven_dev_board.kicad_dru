@@ -1,0 +1,51 @@
+(version 1)
+
+# Per-net clearance exceptions for pads that are geometrically enclosed
+# at the board's default 0.20mm net-class clearance. Each rule is scoped
+# to the specific net so it does not loosen clearance anywhere else on
+# the board. See CODEX_NOTES.md for the escape-angle sweep data behind
+# each value.
+
+(rule "tight_clearance_DIN"
+  (condition "A.NetName == 'DIN' || B.NetName == 'DIN'")
+  (constraint clearance (min 0.15mm)))
+
+(rule "tight_clearance_DOUT"
+  (condition "A.NetName == 'DOUT' || B.NetName == 'DOUT'")
+  (constraint clearance (min 0.15mm)))
+
+(rule "tight_clearance_CC_PG"
+  (condition "A.NetName == 'CC_#PG' || B.NetName == 'CC_#PG'")
+  (constraint clearance (min 0.1mm)))
+
+(rule "tight_clearance_1N65"
+  (condition "A.NetName == '$1N65' || B.NetName == '$1N65'")
+  (constraint clearance (min 0.1mm)))
+
+(rule "tight_clearance_INT"
+  (condition "A.NetName == 'INT' || B.NetName == 'INT'")
+  (constraint clearance (min 0.1mm)))
+
+(rule "tight_clearance_CC_CD"
+  (condition "A.NetName == 'CC_#CD' || B.NetName == 'CC_#CD'")
+  (constraint clearance (min 0.15mm)))
+
+(rule "tight_clearance_SPI_CLK"
+  (condition "A.NetName == 'SPI_CLK' || B.NetName == 'SPI_CLK'")
+  (constraint clearance (min 0.15mm)))
+
+(rule "tight_clearance_SPI_CS_FLASH"
+  (condition "A.NetName == 'SPI_CS_FLASH' || B.NetName == 'SPI_CS_FLASH'")
+  (constraint clearance (min 0.15mm)))
+
+(rule "tight_clearance_BCLK"
+  (condition "A.NetName == 'BCLK' || B.NetName == 'BCLK'")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_DAC_ENABLE"
+  (condition "A.NetName == 'DAC_ENABLE' || B.NetName == 'DAC_ENABLE'")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_SPI_MOSI"
+  (condition "A.NetName == 'SPI_MOSI' || B.NetName == 'SPI_MOSI'")
+  (constraint clearance (min 0.05mm)))
