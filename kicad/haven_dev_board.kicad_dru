@@ -80,6 +80,12 @@
   (condition "(A.NetName == '3V3' && B.NetName == 'PDMCLK') || (A.NetName == 'PDMCLK' && B.NetName == '3V3')")
   (constraint clearance (min 0.05mm)))
 
+# 3V3's connecting route to CN1.3 also passes close to an unrelated
+# SDA2 via (0.1022mm actual, confirmed) -- scoped to that pair only.
+(rule "tight_clearance_3V3_vs_SDA2"
+  (condition "(A.NetName == '3V3' && B.NetName == 'SDA2') || (A.NetName == 'SDA2' && B.NetName == '3V3')")
+  (constraint clearance (min 0.10mm)))
+
 # SCL2's escape from U1 pin 13 is blocked by U1's own neighbor pins
 # (V_LS pin 12, SDA2 pin 14) -- scoped to those two pairs only.
 (rule "tight_clearance_SCL2_vs_V_LS"
