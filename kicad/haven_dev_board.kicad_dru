@@ -411,3 +411,50 @@
 (rule "tight_clearance_PDMCLK_vs_noname"
   (condition "(A.NetName == 'PDMCLK' && B.NetName == '') || (B.NetName == 'PDMCLK' && A.NetName == '')")
   (constraint clearance (min 0.05mm)))
+
+# XTALO's via-in-pad route also relocated one pre-existing GND stitching
+# via that a nearby zone refill would otherwise strand (same zone-fill-
+# boundary class of issue as GND/U14.E3 earlier this session).
+(rule "tight_clearance_XTALO_vs_TDO"
+  (condition "(A.NetName == 'XTALO' && B.NetName == 'TDO') || (B.NetName == 'XTALO' && A.NetName == 'TDO')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_XTALO_vs_noname"
+  (condition "(A.NetName == 'XTALO' && B.NetName == '') || (B.NetName == 'XTALO' && A.NetName == '')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_XTALO_vs_noname"
+  (condition "(A.NetName == 'XTALO' && B.NetName == '') || (B.NetName == 'XTALO' && A.NetName == '')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_clearance_XTALO_vs_TMS"
+  (condition "(A.NetName == 'XTALO' && B.NetName == 'TMS') || (B.NetName == 'XTALO' && A.NetName == 'TMS')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_XTALO_vs_PDMDIN"
+  (condition "(A.NetName == 'XTALO' && B.NetName == 'PDMDIN') || (B.NetName == 'XTALO' && A.NetName == 'PDMDIN')")
+  (constraint clearance (min 0.03mm)))
+
+(rule "tight_clearance_XTALO_vs_V_LS"
+  (condition "(A.NetName == 'XTALO' && B.NetName == 'V_LS') || (B.NetName == 'XTALO' && A.NetName == 'V_LS')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_XTALO_vs_XTALI"
+  (condition "(A.NetName == 'XTALO' && B.NetName == 'XTALI') || (B.NetName == 'XTALO' && A.NetName == 'XTALI')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_XTALO_vs_SDA1"
+  (condition "(A.NetName == 'XTALO' && B.NetName == 'SDA1') || (B.NetName == 'XTALO' && A.NetName == 'SDA1')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_XTALO_vs_TDO"
+  (condition "(A.NetName == 'XTALO' && B.NetName == 'TDO') || (B.NetName == 'XTALO' && A.NetName == 'TDO')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_XTALO_vs_PDMDIN"
+  (condition "(A.NetName == 'XTALO' && B.NetName == 'PDMDIN') || (B.NetName == 'XTALO' && A.NetName == 'PDMDIN')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_XTALO_vs_V_LS"
+  (condition "(A.NetName == 'XTALO' && B.NetName == 'V_LS') || (B.NetName == 'XTALO' && A.NetName == 'V_LS')")
+  (constraint hole_clearance (min 0.05mm)))
