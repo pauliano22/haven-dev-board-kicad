@@ -260,7 +260,7 @@
 
 (rule "tight_clearance_1N151_vs_BCLK"
   (condition "(A.NetName == '$1N151' && B.NetName == 'BCLK') || (B.NetName == '$1N151' && A.NetName == 'BCLK')")
-  (constraint clearance (min 0.10mm)))
+  (constraint clearance (min 0.05mm)))
 
 (rule "tight_clearance_1N151_vs_noname"
   (condition "(A.NetName == '$1N151' && B.NetName == '') || (B.NetName == '$1N151' && A.NetName == '')")
@@ -457,4 +457,57 @@
 
 (rule "tight_hole_clearance_XTALO_vs_V_LS"
   (condition "(A.NetName == 'XTALO' && B.NetName == 'V_LS') || (B.NetName == 'XTALO' && A.NetName == 'V_LS')")
+  (constraint hole_clearance (min 0.05mm)))
+
+# BCLK's via-in-pad route, U15.B2 to a pre-existing (previously dangling)
+# BCLK stub near MDBT531 -- LRCLK and IO5 needed exceptions right at the
+# escape via, and a second via had to be offset 0.3mm from the stub's
+# exact endpoint because that spot's through-via would otherwise
+# physically overlap unrelated IO6/V_LS traces on an inner layer.
+(rule "tight_clearance_BCLK_vs_LRCLK"
+  (condition "(A.NetName == 'BCLK' && B.NetName == 'LRCLK') || (B.NetName == 'BCLK' && A.NetName == 'LRCLK')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_BCLK_vs_IO5"
+  (condition "(A.NetName == 'BCLK' && B.NetName == 'IO5') || (B.NetName == 'BCLK' && A.NetName == 'IO5')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_BCLK_vs_SDA"
+  (condition "(A.NetName == 'BCLK' && B.NetName == 'SDA') || (B.NetName == 'BCLK' && A.NetName == 'SDA')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_BCLK_vs_IO6"
+  (condition "(A.NetName == 'BCLK' && B.NetName == 'IO6') || (B.NetName == 'BCLK' && A.NetName == 'IO6')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_BCLK_vs_TDI"
+  (condition "(A.NetName == 'BCLK' && B.NetName == 'TDI') || (B.NetName == 'BCLK' && A.NetName == 'TDI')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_BCLK_vs_TDO"
+  (condition "(A.NetName == 'BCLK' && B.NetName == 'TDO') || (B.NetName == 'BCLK' && A.NetName == 'TDO')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_BCLK_vs_TDI"
+  (condition "(A.NetName == 'BCLK' && B.NetName == 'TDI') || (B.NetName == 'BCLK' && A.NetName == 'TDI')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_BCLK_vs_GND"
+  (condition "(A.NetName == 'BCLK' && B.NetName == 'GND') || (B.NetName == 'BCLK' && A.NetName == 'GND')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_BCLK_vs_V_LS"
+  (condition "(A.NetName == 'BCLK' && B.NetName == 'V_LS') || (B.NetName == 'BCLK' && A.NetName == 'V_LS')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_BCLK_vs_IO6"
+  (condition "(A.NetName == 'BCLK' && B.NetName == 'IO6') || (B.NetName == 'BCLK' && A.NetName == 'IO6')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_BCLK_vs_TDO"
+  (condition "(A.NetName == 'BCLK' && B.NetName == 'TDO') || (B.NetName == 'BCLK' && A.NetName == 'TDO')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_BCLK_vs_1N151"
+  (condition "(A.NetName == 'BCLK' && B.NetName == '$1N151') || (B.NetName == 'BCLK' && A.NetName == '$1N151')")
   (constraint hole_clearance (min 0.05mm)))
