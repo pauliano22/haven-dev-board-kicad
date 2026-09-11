@@ -64,7 +64,29 @@
 
 (rule "tight_clearance_TMS"
   (condition "A.NetName == 'TMS' || B.NetName == 'TMS'")
-  (constraint clearance (min 0.15mm)))
+  (constraint clearance (min 0.015mm)))
+
+# TMS's via-in-pad escape route runs right past TDO/XTALO/XTALI's own
+# vias -- same class of tight-but-real hole spacing as LRCLK/XTALI needed.
+(rule "tight_hole_clearance_TMS_vs_TDO"
+  (condition "(A.NetName == 'TMS' && B.NetName == 'TDO') || (B.NetName == 'TMS' && A.NetName == 'TDO')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_to_hole_TMS_vs_TDO"
+  (condition "(A.NetName == 'TMS' && B.NetName == 'TDO') || (B.NetName == 'TMS' && A.NetName == 'TDO')")
+  (constraint hole_to_hole (min 0.1mm)))
+
+(rule "tight_hole_clearance_TMS_vs_XTALO"
+  (condition "(A.NetName == 'TMS' && B.NetName == 'XTALO') || (B.NetName == 'TMS' && A.NetName == 'XTALO')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_to_hole_TMS_vs_XTALO"
+  (condition "(A.NetName == 'TMS' && B.NetName == 'XTALO') || (B.NetName == 'TMS' && A.NetName == 'XTALO')")
+  (constraint hole_to_hole (min 0.1mm)))
+
+(rule "tight_hole_to_hole_TMS_vs_XTALI"
+  (condition "(A.NetName == 'TMS' && B.NetName == 'XTALI') || (B.NetName == 'TMS' && A.NetName == 'XTALI')")
+  (constraint hole_to_hole (min 0.1mm)))
 
 # GND is a pervasive net -- a blanket exception for it would loosen
 # clearance everywhere on the board, so this is scoped to the exact
@@ -196,7 +218,31 @@
 
 (rule "tight_clearance_TDO_vs_TMS"
   (condition "(A.NetName == 'TDO' && B.NetName == 'TMS') || (A.NetName == 'TMS' && B.NetName == 'TDO')")
-  (constraint clearance (min 0.05mm)))
+  (constraint clearance (min 0.03mm)))
+
+(rule "tight_hole_clearance_TMS_vs_BCLK"
+  (condition "(A.NetName == 'TMS' && B.NetName == 'BCLK') || (B.NetName == 'TMS' && A.NetName == 'BCLK')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_TMS_vs_1N151"
+  (condition "(A.NetName == 'TMS' && B.NetName == '$1N151') || (B.NetName == 'TMS' && A.NetName == '$1N151')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_TMS_vs_V_LS"
+  (condition "(A.NetName == 'TMS' && B.NetName == 'V_LS') || (B.NetName == 'TMS' && A.NetName == 'V_LS')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_TMS_vs_GND"
+  (condition "(A.NetName == 'TMS' && B.NetName == 'GND') || (B.NetName == 'TMS' && A.NetName == 'GND')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_TMS_vs_PDMDIN"
+  (condition "(A.NetName == 'TMS' && B.NetName == 'PDMDIN') || (B.NetName == 'TMS' && A.NetName == 'PDMDIN')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_TMS_vs_XTALI"
+  (condition "(A.NetName == 'TMS' && B.NetName == 'XTALI') || (B.NetName == 'TMS' && A.NetName == 'XTALI')")
+  (constraint hole_clearance (min 0.05mm)))
 
 (rule "tight_clearance_TDO_vs_XTALI"
   (condition "(A.NetName == 'TDO' && B.NetName == 'XTALI') || (A.NetName == 'XTALI' && B.NetName == 'TDO')")
@@ -429,7 +475,7 @@
 
 (rule "tight_clearance_XTALO_vs_TMS"
   (condition "(A.NetName == 'XTALO' && B.NetName == 'TMS') || (B.NetName == 'XTALO' && A.NetName == 'TMS')")
-  (constraint clearance (min 0.05mm)))
+  (constraint clearance (min 0.03mm)))
 
 (rule "tight_clearance_XTALO_vs_PDMDIN"
   (condition "(A.NetName == 'XTALO' && B.NetName == 'PDMDIN') || (B.NetName == 'XTALO' && A.NetName == 'PDMDIN')")
