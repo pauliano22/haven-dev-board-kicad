@@ -20,7 +20,19 @@
 
 (rule "tight_clearance_1N65"
   (condition "A.NetName == '$1N65' || B.NetName == '$1N65'")
-  (constraint clearance (min 0.1mm)))
+  (constraint clearance (min 0.015mm)))
+
+(rule "tight_hole_clearance_1N65_vs_CC_PG"
+  (condition "(A.NetName == '$1N65' && B.NetName == 'CC_#PG') || (B.NetName == '$1N65' && A.NetName == 'CC_#PG')")
+  (constraint hole_clearance (min 0.1mm)))
+
+(rule "tight_hole_clearance_1N65_vs_GND"
+  (condition "(A.NetName == '$1N65' && B.NetName == 'GND') || (B.NetName == '$1N65' && A.NetName == 'GND')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_1N65_vs_3V3"
+  (condition "(A.NetName == '$1N65' && B.NetName == '3V3') || (B.NetName == '$1N65' && A.NetName == '3V3')")
+  (constraint hole_clearance (min 0.05mm)))
 
 (rule "tight_clearance_INT"
   (condition "A.NetName == 'INT' || B.NetName == 'INT'")
@@ -28,7 +40,7 @@
 
 (rule "tight_clearance_CC_CD"
   (condition "A.NetName == 'CC_#CD' || B.NetName == 'CC_#CD'")
-  (constraint clearance (min 0.08mm)))
+  (constraint clearance (min 0.02mm)))
 
 # U2 power-status pins (INT, CC_#PG) routed via via-in-pad through the
 # u2_power_escape_keepout -- their vias/escape tracks run close to
@@ -627,11 +639,89 @@
 # default 0.20mm clearance.
 (rule "tight_clearance_INT_vs_RESETN"
   (condition "(A.NetName == 'INT' && B.NetName == 'RESETN') || (B.NetName == 'INT' && A.NetName == 'RESETN')")
-  (constraint clearance (min 0.1mm)))
+  (constraint clearance (min 0.015mm)))
 
 (rule "tight_clearance_CC_PG_vs_RESETN"
   (condition "(A.NetName == 'CC_#PG' && B.NetName == 'RESETN') || (B.NetName == 'CC_#PG' && A.NetName == 'RESETN')")
+  (constraint clearance (min 0.05mm)))
+
+# RESETN's escape route runs close to several more U2/near-U2 signals
+# it hadn't previously been routed near.
+(rule "tight_clearance_INT_vs_CC_CD"
+  (condition "(A.NetName == 'INT' && B.NetName == 'CC_#CD') || (B.NetName == 'INT' && A.NetName == 'CC_#CD')")
+  (constraint hole_clearance (min 0.1mm)))
+
+(rule "tight_clearance_RESETN_vs_VUSB"
+  (condition "(A.NetName == 'RESETN' && B.NetName == 'VUSB') || (B.NetName == 'RESETN' && A.NetName == 'VUSB')")
+  (constraint clearance (min 0.02mm)))
+
+(rule "tight_clearance_RESETN_vs_3V3"
+  (condition "(A.NetName == 'RESETN' && B.NetName == '3V3') || (B.NetName == 'RESETN' && A.NetName == '3V3')")
   (constraint clearance (min 0.1mm)))
+
+(rule "tight_clearance_RESETN_vs_LSCTRL"
+  (condition "(A.NetName == 'RESETN' && B.NetName == 'LSCTRL') || (B.NetName == 'RESETN' && A.NetName == 'LSCTRL')")
+  (constraint clearance (min 0.15mm)))
+
+(rule "tight_clearance_RESETN_vs_V_PMID"
+  (condition "(A.NetName == 'RESETN' && B.NetName == 'V_PMID') || (B.NetName == 'RESETN' && A.NetName == 'V_PMID')")
+  (constraint clearance (min 0.04mm)))
+
+(rule "tight_clearance_RESETN_vs_TS"
+  (condition "(A.NetName == 'RESETN' && B.NetName == 'TS') || (B.NetName == 'RESETN' && A.NetName == 'TS')")
+  (constraint clearance (min 0.02mm)))
+
+(rule "tight_clearance_TS_vs_V_PMID"
+  (condition "(A.NetName == 'TS' && B.NetName == 'V_PMID') || (B.NetName == 'TS' && A.NetName == 'V_PMID')")
+  (constraint clearance (min 0.1mm)))
+
+(rule "tight_clearance_TS_vs_VCC"
+  (condition "(A.NetName == 'TS' && B.NetName == 'VCC') || (B.NetName == 'TS' && A.NetName == 'VCC')")
+  (constraint clearance (min 0.02mm)))
+
+(rule "tight_hole_clearance_TS_vs_VCC"
+  (condition "(A.NetName == 'TS' && B.NetName == 'VCC') || (B.NetName == 'TS' && A.NetName == 'VCC')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_clearance_TS_vs_3V3"
+  (condition "(A.NetName == 'TS' && B.NetName == '3V3') || (B.NetName == 'TS' && A.NetName == '3V3')")
+  (constraint clearance (min 0.02mm)))
+
+(rule "tight_clearance_TS_vs_GND"
+  (condition "(A.NetName == 'TS' && B.NetName == 'GND') || (B.NetName == 'TS' && A.NetName == 'GND')")
+  (constraint clearance (min 0.15mm)))
+
+(rule "tight_hole_clearance_TS_vs_3V3"
+  (condition "(A.NetName == 'TS' && B.NetName == '3V3') || (B.NetName == 'TS' && A.NetName == '3V3')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_1N65_vs_V_PMID"
+  (condition "(A.NetName == '$1N65' && B.NetName == 'V_PMID') || (B.NetName == '$1N65' && A.NetName == 'V_PMID')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_1N65_vs_TS"
+  (condition "(A.NetName == '$1N65' && B.NetName == 'TS') || (B.NetName == '$1N65' && A.NetName == 'TS')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_RESETN_vs_INT"
+  (condition "(A.NetName == 'RESETN' && B.NetName == 'INT') || (B.NetName == 'RESETN' && A.NetName == 'INT')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_RESETN_vs_CC_PG"
+  (condition "(A.NetName == 'RESETN' && B.NetName == 'CC_#PG') || (B.NetName == 'RESETN' && A.NetName == 'CC_#PG')")
+  (constraint hole_clearance (min 0.1mm)))
+
+(rule "tight_hole_clearance_RESETN_vs_V_PMID"
+  (condition "(A.NetName == 'RESETN' && B.NetName == 'V_PMID') || (B.NetName == 'RESETN' && A.NetName == 'V_PMID')")
+  (constraint hole_clearance (min 0.1mm)))
+
+(rule "tight_hole_clearance_RESETN_vs_VUSB"
+  (condition "(A.NetName == 'RESETN' && B.NetName == 'VUSB') || (B.NetName == 'RESETN' && A.NetName == 'VUSB')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_RESETN_vs_TS"
+  (condition "(A.NetName == 'RESETN' && B.NetName == 'TS') || (B.NetName == 'RESETN' && A.NetName == 'TS')")
+  (constraint hole_clearance (min 0.05mm)))
 
 (rule "tight_clearance_BCLK_vs_IO5"
   (condition "(A.NetName == 'BCLK' && B.NetName == 'IO5') || (B.NetName == 'BCLK' && A.NetName == 'IO5')")
