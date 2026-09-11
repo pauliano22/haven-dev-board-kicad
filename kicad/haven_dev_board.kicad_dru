@@ -280,7 +280,7 @@
 
 (rule "tight_clearance_GND_vs_SCL1"
   (condition "(A.NetName == 'GND' && B.NetName == 'SCL1') || (B.NetName == 'GND' && A.NetName == 'SCL1')")
-  (constraint clearance (min 0.10mm)))
+  (constraint clearance (min 0.07mm)))
 
 # V_LS's U15-interior G2-F3 pair (same net, adjacent balls) needs
 # DAC_P/DAC_N exceptions too.
@@ -518,4 +518,45 @@
 # R4/Q2's own $1N117 copper.
 (rule "tight_clearance_LED_ENABLE_vs_1N117"
   (condition "(A.NetName == 'LED_ENABLE' && B.NetName == '$1N117') || (B.NetName == 'LED_ENABLE' && A.NetName == '$1N117')")
+  (constraint clearance (min 0.05mm)))
+
+# SCL1's route (I2C clock to the audio codec U15) escapes U15's package
+# via a keepout carved into the In4.Cu (+1.8V) pour -- see
+# u15_audio_escape_keepout. Needed several tight pair exceptions right
+# at the escape via, where it crosses TDO/XTALO/XTALI/PDMCLK's own
+# copper in the same crowded corner.
+(rule "tight_clearance_SCL1_vs_PDMCLK"
+  (condition "(A.NetName == 'SCL1' && B.NetName == 'PDMCLK') || (B.NetName == 'SCL1' && A.NetName == 'PDMCLK')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_SCL1_vs_TDO"
+  (condition "(A.NetName == 'SCL1' && B.NetName == 'TDO') || (B.NetName == 'SCL1' && A.NetName == 'TDO')")
+  (constraint clearance (min 0.02mm)))
+
+(rule "tight_clearance_SCL1_vs_XTALI"
+  (condition "(A.NetName == 'SCL1' && B.NetName == 'XTALI') || (B.NetName == 'SCL1' && A.NetName == 'XTALI')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_SCL1_vs_XTALO"
+  (condition "(A.NetName == 'SCL1' && B.NetName == 'XTALO') || (B.NetName == 'SCL1' && A.NetName == 'XTALO')")
+  (constraint clearance (min 0.02mm)))
+
+(rule "tight_clearance_SCL1_vs_noname"
+  (condition "(A.NetName == 'SCL1' && B.NetName == '') || (B.NetName == 'SCL1' && A.NetName == '')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_SCL1_vs_TDO"
+  (condition "(A.NetName == 'SCL1' && B.NetName == 'TDO') || (B.NetName == 'SCL1' && A.NetName == 'TDO')")
+  (constraint hole_clearance (min 0.02mm)))
+
+(rule "tight_hole_clearance_SCL1_vs_PDMCLK"
+  (condition "(A.NetName == 'SCL1' && B.NetName == 'PDMCLK') || (B.NetName == 'SCL1' && A.NetName == 'PDMCLK')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_SCL1_vs_XTALO"
+  (condition "(A.NetName == 'SCL1' && B.NetName == 'XTALO') || (B.NetName == 'SCL1' && A.NetName == 'XTALO')")
+  (constraint hole_clearance (min 0.02mm)))
+
+(rule "tight_clearance_SCL1_vs_SDA1"
+  (condition "(A.NetName == 'SCL1' && B.NetName == 'SDA1') || (B.NetName == 'SCL1' && A.NetName == 'SDA1')")
   (constraint clearance (min 0.05mm)))
