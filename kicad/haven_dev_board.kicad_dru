@@ -511,3 +511,11 @@
 (rule "tight_hole_clearance_BCLK_vs_1N151"
   (condition "(A.NetName == 'BCLK' && B.NetName == '$1N151') || (B.NetName == 'BCLK' && A.NetName == '$1N151')")
   (constraint hole_clearance (min 0.05mm)))
+
+# LED_ENABLE (formerly the broken "#ERROR" net, renamed after tracing it
+# to MDBT531 pin 3 / P1.08 -- see CODEX_NOTES.md) needed a short new
+# connection from Q2's gate to the rest of the net, which runs close to
+# R4/Q2's own $1N117 copper.
+(rule "tight_clearance_LED_ENABLE_vs_1N117"
+  (condition "(A.NetName == 'LED_ENABLE' && B.NetName == '$1N117') || (B.NetName == 'LED_ENABLE' && A.NetName == '$1N117')")
+  (constraint clearance (min 0.05mm)))
