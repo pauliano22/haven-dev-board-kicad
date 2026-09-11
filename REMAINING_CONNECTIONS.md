@@ -1,4 +1,15 @@
 # Remaining connections needing manual completion
+
+**STALE — superseded.** This snapshot predates an extensive manual
+completion pass (see `CODEX_NOTES.md`) that closed the large majority
+of what's listed below, including `$1N151` and the `#ERROR` net (now
+named `LED_ENABLE`, fully routed). For the current, accurate list of
+what's actually still unrouted, see `fab_output/UNROUTED_NETS.md`
+(15 items remain, all individually confirmed genuinely blocked, not
+just untried) rather than anything below this line.
+
+---
+
 Generated from KiCad DRC's `unconnected_items` report on the current board
 (after autorouting + copper pour fill, antenna keepout added). This is the
 **authoritative** list — it reflects actual remaining gaps after the

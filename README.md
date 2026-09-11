@@ -141,19 +141,23 @@ strategy just removes it as a second, compounding source of risk.
   silently dropped; they're just left unconnected in the generated files
   rather than fabricating a connection.
 
-## A genuine anomaly in the *original* stock design (not introduced here)
+## A genuine anomaly in the *original* stock design — now resolved
 
-One net in the real board data is literally named `#ERROR` by EasyEDA
-itself — it ties together MDBT531 pin 3 (`P1.08`, a GPIO), Q2 pin 1 (a
-small MOSFET, `CSD13380F3T`), and U8 pin 1 (a 1MΩ 0201 resistor, despite
-the "U" designator). The three pins are genuinely electrically connected
-in the source data; EasyEDA just never resolved a human-readable name for
-this net, most likely because whatever label it depended on was deleted or
-renamed at some point in the original design's history. Worth a look if
-this circuit (looks like some kind of gated pull-up/sense line, possibly
-battery- or fault-related) turns out to matter — it's ported through
-faithfully under that literal name (`#ERROR`) in both the schematic and
-PCB so it isn't lost.
+One net in the real board data was literally named `#ERROR` by EasyEDA
+itself (confirmed present in `extracted/netlist.json`'s raw source, not
+introduced during this port) — it tied together MDBT531 pin 3 (`P1.08`,
+a GPIO), Q2 pin 1 (a small MOSFET, `CSD13380F3T`), and U8 pin 1 (a 1MΩ
+0201 resistor, despite the "U" designator). EasyEDA just never resolved
+a human-readable name for this net.
+
+Traced further and renamed to **`LED_ENABLE`**: R4 (510Ω) and U4 (a real
+0201 LED, `XL-0201SURC`, per `HAVEN_BOM.csv`) are also on this net —
+3V3 → U4 (LED) → R4 (current-limit) → Q2 (low-side switch to GND), gated
+by U8 (1MΩ pulldown, default-off) and driven directly by MDBT531 P1.08.
+A straightforward GPIO-controlled indicator LED. Pure rename in both the
+schematic and PCB — zero electrical change, verified via DRC diff. The
+net also had a genuine small routing gap (Q2's gate pad wasn't
+connected to the rest of the net); that's now routed too.
 
 ## File layout
 
@@ -178,7 +182,7 @@ extracted/                      all extraction/generation scripts + intermediate
    pins, mostly clustered here) against the real datasheet.
 3. Review U2 (BQ25120A charger) and U6 (BQ27220 fuel gauge) — both have a
    meaningful number of unmatched pins too.
-4. Decide whether the `#ERROR` net circuit needs a real name/investigation.
+4. ~~Decide whether the `#ERROR` net circuit needs a real name/investigation.~~ Done — see above, now `LED_ENABLE`.
 5. If this is meant to diverge from stock OpenEarable (per the earlier
    Gemini-assisted cleanup pass on the user's live EasyEDA project), diff
    this port against that pass and carry over the same changes here.
