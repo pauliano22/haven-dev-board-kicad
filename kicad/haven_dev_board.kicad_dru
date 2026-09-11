@@ -596,3 +596,18 @@
 (rule "tight_hole_clearance_SDA1_vs_V_LS"
   (condition "(A.NetName == 'SDA1' && B.NetName == 'V_LS') || (B.NetName == 'SDA1' && A.NetName == 'V_LS')")
   (constraint hole_clearance (min 0.05mm)))
+
+# DAC_ENABLE's route (audio codec DAC enable line) needed the same
+# In4.Cu keepout escape, then a ~46mm long-haul that runs close to
+# TDI and BCLK's own copper.
+(rule "tight_clearance_DAC_ENABLE_vs_TDI"
+  (condition "(A.NetName == 'DAC_ENABLE' && B.NetName == 'TDI') || (B.NetName == 'DAC_ENABLE' && A.NetName == 'TDI')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_DAC_ENABLE_vs_BCLK"
+  (condition "(A.NetName == 'DAC_ENABLE' && B.NetName == 'BCLK') || (B.NetName == 'DAC_ENABLE' && A.NetName == 'BCLK')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_DAC_ENABLE_vs_TDI"
+  (condition "(A.NetName == 'DAC_ENABLE' && B.NetName == 'TDI') || (B.NetName == 'DAC_ENABLE' && A.NetName == 'TDI')")
+  (constraint hole_clearance (min 0.05mm)))
