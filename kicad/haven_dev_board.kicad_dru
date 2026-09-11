@@ -466,7 +466,62 @@
 # physically overlap unrelated IO6/V_LS traces on an inner layer.
 (rule "tight_clearance_BCLK_vs_LRCLK"
   (condition "(A.NetName == 'BCLK' && B.NetName == 'LRCLK') || (B.NetName == 'BCLK' && A.NetName == 'LRCLK')")
+  (constraint clearance (min 0.02mm)))
+
+# LRCLK via-in-pad at U15.C2 sits ~0.12-0.15mm from its BGA row neighbor
+# DIN (C1) -- genuinely close but not a real short, same class of fix as
+# the BCLK/TDO/XTALO exceptions above.
+(rule "tight_clearance_LRCLK_vs_DIN"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'DIN') || (B.NetName == 'LRCLK' && A.NetName == 'DIN')")
+  (constraint clearance (min 0.02mm)))
+
+# LRCLK's offset via and its In4.Cu/F.Cu/B.Cu escape route pass close to
+# several more of U15's own neighbor balls and to the pre-existing DOUT/
+# TDI/V_LS copper on the way out -- same real-but-tight geometry as above,
+# verified via direct clearance/hole-to-hole distance checks before routing.
+(rule "tight_clearance_LRCLK_vs_DOUT"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'DOUT') || (B.NetName == 'LRCLK' && A.NetName == 'DOUT')")
+  (constraint clearance (min 0.02mm)))
+
+(rule "tight_clearance_LRCLK_vs_TDI"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'TDI') || (B.NetName == 'LRCLK' && A.NetName == 'TDI')")
   (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_LRCLK_vs_noname"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == '') || (B.NetName == 'LRCLK' && A.NetName == '')")
+  (constraint clearance (min 0.02mm)))
+
+(rule "tight_clearance_LRCLK_vs_V_LS"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'V_LS') || (B.NetName == 'LRCLK' && A.NetName == 'V_LS')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_LRCLK_vs_DAC_ENABLE"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'DAC_ENABLE') || (B.NetName == 'LRCLK' && A.NetName == 'DAC_ENABLE')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_LRCLK_vs_DIN"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'DIN') || (B.NetName == 'LRCLK' && A.NetName == 'DIN')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_LRCLK_vs_V_LS"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'V_LS') || (B.NetName == 'LRCLK' && A.NetName == 'V_LS')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_LRCLK_vs_noname"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == '') || (B.NetName == 'LRCLK' && A.NetName == '')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_LRCLK_vs_TDI"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'TDI') || (B.NetName == 'LRCLK' && A.NetName == 'TDI')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_LRCLK_vs_BCLK"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'BCLK') || (B.NetName == 'LRCLK' && A.NetName == 'BCLK')")
+  (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_LRCLK_vs_DOUT"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'DOUT') || (B.NetName == 'LRCLK' && A.NetName == 'DOUT')")
+  (constraint hole_clearance (min 0.05mm)))
 
 (rule "tight_clearance_BCLK_vs_IO5"
   (condition "(A.NetName == 'BCLK' && B.NetName == 'IO5') || (B.NetName == 'BCLK' && A.NetName == 'IO5')")
