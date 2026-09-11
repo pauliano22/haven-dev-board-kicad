@@ -13,6 +13,160 @@ code path), `extracted/audit_schematic.py`, `extracted/audit_pcb.py`.
 
 ---
 
+## 0. Cross-check against upstream OpenEarable firmware (2026-09-10)
+
+Several of the questions this review left open turn out to be answered by a
+source that was in the workspace all along: the upstream
+[`OpenEarable/open-earable-2`](https://github.com/OpenEarable/open-earable-2)
+firmware, which drives this exact codec on this exact board (Haven's KiCad
+port is of the stock OpenEarable main PCB, so upstream's devicetree and
+driver *are* ground truth for how these nets are actually used). Everything
+below is **sourced from upstream code**, not from the ADAU1860 datasheet —
+the datasheet PDF was not fetchable in the environment this cross-check was
+done in, so nothing here is "datasheet-verified"; it's "matches firmware
+that ships on this hardware". File references are into a clone of upstream
+at its 2026-09 `main`.
+
+### 0.1 The codec's register map is public and already transcribed
+
+The premise in `haven-zephyr-app` that "there is no public ADAU1860
+register map" is wrong. Upstream's `src/drivers/ADAU1860.h` carries the
+full map (~350 named registers, `VENDOR_ID = 0x4000C000` through
+`DAC_NOISE_CTRL1 = 0x4000CC12`), and `src/drivers/ADAU1860.cpp` is a
+working bring-up sequence for it. Two consequences for this board's
+firmware, both firmware-side rather than layout-side, but recorded here
+because the review's §1 was reasoning about them:
+
+- **Control-port addressing is 32-bit**, not the 16-bit big-endian
+  framing used by older SigmaDSP parts (`ADAU1860.cpp:512-517` builds a
+  4-byte address for every read, `:544-549` for every write). A 16-bit
+  framing simply addresses nothing on this chip.
+- **The DSP program is a raw memory image**, not a SigmaStudio `ADISIGM`
+  blob: `Lark-fdsp.c` ("Lark" is ADI's codename for the ADAU1860) is
+  plain `uint32_t` arrays written straight to `FDSP_PROG_MEM = 0x40008000`
+  and the three parameter banks (`ADAU1860.cpp:335-341`). The design tool
+  for this chip is ADI's **Lark Studio**, not SigmaStudio+ — per the
+  EVAL-ADAU1860 user guide (UG-2017), its "Download to Target" writes
+  exactly these parameter + command words into FastDSP memory, and the
+  FastDSP input source is chosen in its drag-and-drop schematic.
+
+### 0.2 §1 resolved: DIN/DOUT direction, and I2S master/slave
+
+**DIN/DOUT — the flagged discrepancy was real, and the overlay comment was
+the backwards one.** Upstream's pinctrl
+(`boards/teco/openearable_v2/openearable_v2_nrf5340_cpuapp_common-pinctrl.dtsi:14-17`)
+puts `I2S_SDOUT` on P0.28 and `I2S_SDIN` on P0.31. This review's §1 table
+has net `DIN` on MDBT531 pin 60 = P0.28 and `DOUT` on pin 56 = P0.31. So:
+
+| Net | nRF pin | nRF role (upstream pinctrl) | ADAU1860 pin (this port) | Direction |
+|---|---|---|---|---|
+| `DIN`  | P0.28 | `I2S_SDOUT` | C1 `SDATAI_0` | **nRF → codec** |
+| `DOUT` | P0.31 | `I2S_SDIN`  | B1 `SDATAO_0` | **codec → nRF** |
+
+The net names are from the *codec's* point of view, and the ADAU1860's own
+pin names (`SDATAI` = input, `SDATAO` = output) were telling the truth
+after all. The `haven-zephyr-app` overlay's "DIN (ADAU1860->nRF)" comment
+is inverted; see the ADAU1860 driver PR on `haven-zephyr-app` for the fix.
+
+**Master/slave — the overlay's 2026-08-25 inference ("codec has its own
+24.576 MHz crystal, therefore codec is I2S master, nRF is slave") reaches
+the wrong conclusion.** Upstream runs the **nRF5340 as I2S master**:
+`I2S_SCK_M` on P1.10 and `I2S_LRCK_M` on P0.30 (pinctrl `:14-15`, the `_M`
+suffix is Nordic's master-mode pin function), with an `I2S_MCK` output on
+P1.14 (`:10`) and `hfclkaudio-frequency = <12288000>` in the board DTS
+(`openearable_v2_nrf5340_cpuapp_common.dts:51`). The codec is the slave.
+The crystal doesn't contradict this: the ADAU1860 has asynchronous
+sample-rate converters precisely so its internal clock domain can run off
+its own crystal while its serial port follows an external bit clock —
+upstream enables them (`ASRC_PWR`, `ASRCI_*`/`ASRCO_*` routing,
+`ADAU1860.cpp:164-209`). §1's "the schematic genuinely cannot settle
+master/slave" stands as a statement about the schematic; upstream's
+firmware settles it.
+
+### 0.3 §3.5 checklist items, revisited
+
+- **Item 2 (DIN/DOUT):** resolved above.
+- **Item 3 (AGND/DGND split):** still a real layout question, but its
+  urgency is lower than §3.1 implies — the unified `GND` pour is exactly
+  what the stock OpenEarable board ships with, and that board produces
+  usable audio in the field. Treat as "improve on rev 2", not "blocks rev 1".
+- **Item 6 (unused second serial port / `DMIC23`):** upstream leaves
+  `SPT1_*` unused as well and only drives `DMIC01` (`ADAU1860.cpp:168-169`
+  powers DMIC channels 0 & 1 only), so the dangling `_1` port and `DMIC23`
+  pins match the working reference. Whether they need a defined pull is
+  still a datasheet question, but the stock board evidently gets away
+  without one.
+- **Power sequencing the codec actually needs** (not on the original
+  checklist, added because the port's netlist confirms the wiring):
+  `DAC_ENABLE` — MDBT531 pin 37 → U15 E4 — is the codec's enable/PD pin,
+  driven as `enable-gpios = <&gpio0 4>` in upstream's DTS (`:130`) and
+  asserted at `ADAU1860.cpp:58`; `V_LS` is a load-switched rail
+  (`load_switch`, `enable-gpios = <&gpio1 11>`, DTS `:26-28`); upstream
+  then waits 35 ms for common-mode rise (`:71`), bypasses/configures the
+  PLL (`CLK_CTRL13`, `:88-117`) and polls `STATUS2` bit 7 for power-up
+  (`:95-105`). I2C address `0x64` is confirmed by upstream's DTS (`:127`).
+- **The mic path never touches the nRF.** `U13` (`SPH0641LU4H-1`) is a
+  **PDM** mic; the netlist has it on `PDMCLK`/`PDMDIN` → U15 C4/C5 (the
+  codec's DMIC pins), also brought out on the flex connector `CN1` pins
+  5/7. So mic audio goes mic → codec → (FastDSP) → DAC → `DAC_P`/`DAC_N`
+  → speaker, entirely inside the codec, and the nRF only ever writes
+  coefficients over `SDA1`/`SCL1`. Note for `haven-hardware`: the
+  `SPH0645LM4H-B` in `haven_dev_board/component_libraries/` is an **I2S**
+  mic — the wrong interface class for this topology; the stripped-down
+  board wants a PDM part like the `SPH0641LU4H-1` that's actually here.
+
+### 0.4 §3.4 HPVDD / HPVDD_L — still unresolved
+
+Nothing in upstream's DTS or driver mentions an `HPVDD` net either; the
+codec's headphone supply is configured in registers (`HP_LVMODE_CTRL*`,
+`HPLDO_CTRL`, `ADAU1860.cpp:255-266`), which suggests the callout may have
+referred to a supply/trace *inside* the codec's own power arrangement or to
+a note on the live EasyEDA schematic. Still needs whoever read it off the
+live schematic to point at the net.
+
+### 0.5 §8 (U1: BMX160 vs BMI160) — a second data point, not a reversal
+
+Upstream's devicetree declares the IMU as `bmx160: bmx160@68`
+(`openearable_v2_nrf5340_cpuapp_common.dts:175`) and ships a BMX160 driver
+(`src/SensorManager/BMX160/DFRobot_BMX160.{h,cpp}`) — i.e. the reference
+firmware believes a 9-axis BMX160 is on the board. That is in tension with
+§8's wiring-based argument for BMI160. Both are real evidence; neither is a
+part number read off a chip. Recording this rather than flipping the BOM
+back: **check the physical part marking on an assembled board (or ask the
+OpenEarable team) before any production order.** Irrelevant to audio
+either way — nothing in Haven's firmware touches the IMU.
+
+### 0.6 Two practical consequences
+
+- **Hardware before this board is fabricated (neither option is cheap):**
+  (a) an nRF5340 DK plus ADI's EVAL-ADAU1860EBZ (~$485 at Newark, ~$535
+  total) — the eval board brings the codec's DMIC input out on header P44
+  and serial port 0 on header P2, so it wires to the DK with this board's
+  exact topology, and it carries the USB interface Lark Studio uses; or
+  (b) a stock OpenEarable 2.0 unit (Developer Starter Bundle: €2,348 at
+  shop.openwearables.com), which *is* this board and takes Haven firmware
+  via J-Link + OpenEarable's debug breakout per upstream's README. Either
+  takes the PCB fab off the critical path; fab this port only after §3.2
+  and a real ERC/DRC pass.
+- **The DSP-side work that remains** is not a SigmaStudio blob or a
+  parameter-RAM map: upstream's FastDSP program already has five biquad
+  slots with hardware safeload (`FDSP_SL_ADDR`/`FDSP_SL_P*`/
+  `FDSP_SL_UPDATE`, `ADAU1860.h:181-202`, used at `ADAU1860.cpp:407-425`),
+  coefficients in Q5.27 (`src/audio/Equalizer.cpp:10-11`; cross-checked
+  against RBJ math — the 150 Hz peaking row matches to five decimals).
+  What's missing is a program variant whose *input* is the DMIC rather
+  than the I2S port (upstream's takes I2S from the phone) — in Lark
+  Studio that's an input-source choice in the FastDSP schematic (UG-2017
+  pp. 6-7 route `AIN1`/`ASRCI0` in their example). One caveat that matters
+  for this board: upstream frame-clocks FastDSP from the **192 kHz** DMIC
+  stream (`ADAU1860.cpp:343`, `FDSP_CTRL4 = 2`), and UG-2017 says the
+  filter fs must equal the FastDSP source rate (`FDSP_RATE_SOURCE`), so
+  coefficient math must use whichever rate the program actually runs at.
+  UG-2017 also confirms `EQ_ROUTE` selects the hardware EQ engine's input
+  ("set fs to be same as the equalizer source, EQ_ROUTE").
+
+---
+
 ## 1. Firmware cross-check: does the port's netlist match the current overlay?
 
 Read `haven_workspace/firmware/haven_zephyr_app/boards/nrf5340dk_nrf5340_cpuapp.overlay`
@@ -288,14 +442,17 @@ roughly in priority order:
 | Finding | Confidence |
 |---|---|
 | I2C1/I2S net names & pin numbers match overlay | Tool-verified |
-| DIN/DOUT direction discrepancy vs. overlay | Tool-verified data, inference-level conclusion (genuinely needs datasheet/register check) |
-| No analog/digital ground split | Tool-verified |
+| DIN/DOUT direction discrepancy vs. overlay | **Resolved (§0.2)** — `DIN` is nRF→codec, overlay comment was backwards; matches upstream OpenEarable pinctrl |
+| nRF5340 is I2S master, codec is slave | **Resolved (§0.2)** — from upstream pinctrl/DTS; overlay's slave-mode inference was wrong |
+| Codec power sequencing (`DAC_ENABLE`, `V_LS` load switch) | Netlist + upstream driver (§0.3) |
+| Mic is PDM into the codec; nRF not on the audio path | Tool-verified from netlist (§0.3) |
+| No analog/digital ground split | Tool-verified; same as the shipping stock board, so lower urgency (§0.3) |
 | Antenna keepout guidance (Raytac quote) | Sourced from real datasheet search — exact mm dimension NOT obtained (PDF unrenderable here) |
 | Antenna keepout not implemented in this port | Tool-verified (point-in-polygon against real pour data) |
 | Decoupling cap distances | Tool-verified (measured from real placement data) |
-| HPVDD/HPVDD_L identity | Unresolved — genuinely could not locate in parsed data |
+| HPVDD/HPVDD_L identity | Unresolved — not in parsed data, not in upstream firmware either (§0.4) |
 | "No ground pad" = antenna keepout, not an exposed-pad note | High-confidence inference, not certain |
-| U1 (IMU) is actually BMI160, not BMX160 | Resolved by wiring inspection — see §8 below |
+| U1 (IMU) is actually BMI160, not BMX160 | Wiring inspection says BMI160 (§8); upstream firmware says BMX160 (§0.5) — **check the physical part before ordering** |
 
 ---
 
