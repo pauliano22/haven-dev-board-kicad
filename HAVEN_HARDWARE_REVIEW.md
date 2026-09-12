@@ -186,11 +186,13 @@ be millimetres long, and the rescale stretched every one of them:
 | CRYSTAL1 (24.576 MHz) ↔ U15 `XTALI`/`XTALO` | adjacent | **13.8 mm** | The codec's entire clock domain. If it doesn't oscillate there is no audio at all; the driver's `wait_status2("power-up complete")` will time out — that is the symptom to expect. |
 | CRYSTAL1 ↔ C45 / C46 (33 pF) | adjacent | 8.1 / 9.7 mm | Same failure mode. |
 | U15 ↔ C33 (V_LS 10 µF) | 2.0 mm | 10.0 mm | Bare BGA with 7 supply balls and no cap within 10 mm: expect the digital-noise / ASRC-lock trouble §3.3 already warned about, worse. |
-| U15 ↔ C1 (+1.8 V 1 µF) | 5.2–5.9 mm | 29.5 mm | (The MDBT53 module carries its own decoupling, so the nRF side is less exposed than the codec.) |
+| MDBT531 ↔ C1 (+1.8 V 1 µF) | 5.2–5.9 mm | 25.9 mm | Module-side rail cap (U15 has no +1.8 V ball — an earlier draft of this row mis-paired it with the codec; corrected per the netlist in PR #5). The MDBT53 module carries some decoupling of its own, so the nRF side is less exposed than the codec. |
 | U2 (BQ25120A) ↔ C16 / C18 / C22 | 2.2–2.7 mm | 10.7–13.3 mm | Charger input/output caps; ripple and EMI rather than outright failure. |
 | U2 ↔ L2 (2.2 µH buck inductor) | adjacent | 12.9 mm | The switching node. TI's layout guidance wants L and the PMID cap tight to the IC; a 13 mm loop radiates and can destabilise the converter. |
 | U6 (BQ27220) ↔ C21 | 1.65 mm | 8.3 mm | Fuel gauge; tolerant. |
-| U14 (flash) ↔ C31 | — | 50.7 mm | QSPI flash with effectively no local decoupling. |
+| U15 ↔ C31 (`$1N151`, codec balls A3/B3) | — | 12.0 mm (pad→ball) | Codec supply/reference cap, not the flash's — corrected per the netlist in PR #5. (U14, the QSPI flash, has **no** decoupling cap on the BOM at all; worth adding on any respin.) |
+
+**Status (2026-09-12):** implemented in PR #5 (`fix/crystal-decoupling-placement`) — every pair above is now 0.9–2.5 mm except the 24.576 MHz crystal, which stops at ~6 mm pad-to-ball because its escape vias sit in a B.Cu pocket bounded by TDO/SDA1/DOUT; DRC 219/2 → 219/2, identical by type. U6 ↔ C21 (8.3 mm) was left alone.
 
 **What to do (placement-only, before PCBA):** move both crystals *and* their
 load caps back against their pins (X1 + C2/C14 to `XL1`/`XL2`; CRYSTAL1 +
