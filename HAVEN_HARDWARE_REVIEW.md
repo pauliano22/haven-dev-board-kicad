@@ -472,3 +472,36 @@ rotate-footprint tool (which correctly sets the placement angle instead
 of the raw pad coordinates) before any library sync. Until then, this is
 safe to leave as-is — it doesn't affect fabrication, assembly, or the
 current routing.
+
+---
+
+## 11. Placement fix — crystals and decoupling back next to their chips (2026-09-12)
+
+Follow-up to §0.7 / issue #4 (the 5× rescale left both crystals and every
+decoupling cap 8–50 mm from the part they serve). Nine placement-only,
+DRC-gated stages on branch `fix/crystal-decoupling-placement`; details,
+per-stage DRC reports and the tooling defects found are in
+`routing-evidence/placement-fix/README.md`.
+
+**Tool-verified (kicad-cli 9.0.8):** 219 violations / 2 unconnected before
+and after, identical by type+description; file header unchanged.
+
+| connection (pad → pin) | before | after |
+|---|---|---|
+| X1 (32.768 kHz) → MDBT531 XL1/XL2 | 23.8 / 24.0 mm | 2.4 / 2.5 mm |
+| CRYSTAL1 (24.576 MHz) → U15 XTALI (B7) | 13.6 mm | 6.0 mm — fan-out-limited, see below |
+| R28 → U15 XTALO (B6) | 21.1 mm | 4.5 mm |
+| load caps → their crystal | 8–11 mm | 1.7–2.1 mm |
+| C33 (V_LS) → U15 | 8.8 mm | 1.5 mm |
+| C31 (`$1N151`) → U15 A3 | 12.0 mm | 1.4 mm |
+| C1 (+1.8V) → MDBT531 pin 38 | 23.5 mm | 1.0 mm |
+| C22 / C16 / C18 / L2 → U2 | 10–14 mm | 0.9–2.2 mm |
+
+**Two corrections to §0.7's own pairings:** C31 is not U14's decoupling
+(its net is `$1N151` = U15 A3/B3; U14 has no dedicated cap on the BOM), and
+U15 has no +1.8V ball — C1 is the module's cap. **Limit reached:** the codec
+crystal cannot get closer than ~6 mm of XTALI pad-to-ball without re-doing
+the BGA escape, because the kept escape vias sit in a B.Cu pocket bounded by
+the TDO/SDA1/DOUT diagonals (each crystal net hops over TDO on F.Cu with one
+new via). Load caps are tight to the crystal, which is the part of the
+loop that matters most. **Not done:** U6 ↔ C21 (8.3 mm).
