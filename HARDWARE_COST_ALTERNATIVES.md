@@ -8,13 +8,22 @@ a concrete way to avoid all three without changing what the product does.**
 
 ## The actual cost driver
 
-Three parts on the current board use fine-pitch BGA/DSBGA packages:
+Three parts on the current board use fine-pitch BGA/DSBGA packages —
+confirmed by directly measuring real pad-to-pad pitch in the KiCad file
+(not read off a datasheet summary):
 
-| Part | Function | Package | Pitch |
+| Part | Function | Pad count | Measured pitch |
 |---|---|---|---|
-| ADAU1860 (U15) | Audio DSP/codec | BGA-56 region | 0.35mm |
-| BQ25120A (U2) | Battery charger | DSBGA-25 | 0.40mm |
-| BQ27220 (U6) | Fuel gauge | DSBGA-9 | 0.50mm |
+| ADAU1860 (U15) | Audio DSP/codec | 56 | **0.35mm** |
+| BQ25120A (U2) | Battery charger | 25 | **0.40mm** |
+| BQ27220 (U6) | Fuel gauge | 9 | **0.50mm** |
+
+**The MDBT53-1M radio module (65 pads) measures 0.65mm pitch** — comfortably
+standard, not a cost driver at all. This corrects an earlier assumption in
+this document (and in my own reasoning) that the radio module would remain
+a fine-pitch part even after fixing the other three; it doesn't need to.
+**All three of the actual problem parts are removable without touching the
+radio module.**
 
 These three parts are why the board needs 6 layers (BGA-56 escape routing
 needs internal layers regardless of board size), why it needs laser-drilled
@@ -87,12 +96,10 @@ requirement.
 If all three fine-pitch parts are swapped for QFN equivalents: the board
 plausibly drops to 2-4 layers, standard (not laser) via drilling, and a
 standard (not "Advanced") fab tier — landing in a cost range much closer to
-a Teensy/Nordic-DK-style prototype board than the current ~$500 quote. The
-MDBT53-1M radio module would likely remain the one moderately fine-pitch
-part (LGA/BGA-like, ~0.35mm pitch per its own datasheet) since a small
-integrated BLE module is hard to avoid at this size — but one fine-pitch
-part instead of three is a meaningfully different (and meaningfully
-cheaper) manufacturing story.
+a Teensy/Nordic-DK-style prototype board than the current ~$500 quote.
+Since the radio module itself is confirmed 0.65mm pitch (fine on its own),
+fixing these three parts plausibly removes the fine-pitch requirement from
+the board **entirely**, not just partially.
 
 ## Not yet done / needs a real decision
 
