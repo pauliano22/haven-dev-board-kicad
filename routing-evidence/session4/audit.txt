@@ -1,0 +1,18 @@
+Audit against 5fd8faa (run with audit.py):
+footprint original 89 added 0 removed 0 changed 0
+via original 185 added 2 removed 0 changed 0
+segment original 1048 added 44 removed 50 changed 0
+All footprints, existing vias, setup, layers, general and antenna keepout unchanged.
+All new copper outside antenna keepout.
+Violations 402 -> 331 no new identities
+Missing links 90 -> 72
+Open nets 45 -> 44 closed: ['V_SD']
+C6 remaining DRC endpoints 0
+C8 remaining DRC endpoints 0
+C9 remaining DRC endpoints 0
+C13 remaining DRC endpoints 0
+C22 remaining DRC endpoints 0
+C34 remaining DRC endpoints 0
+C38 remaining DRC endpoints 0
+C44 remaining DRC endpoints 0
+C46 remaining DRC endpoints 0

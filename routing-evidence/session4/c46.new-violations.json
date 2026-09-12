@@ -1,0 +1,25 @@
+[
+  {
+    "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1729 mm)",
+    "items": [
+      {
+        "description": "Pad 1 [GND] of C46 on B.Cu",
+        "pos": {
+          "x": 64.7476,
+          "y": 117.0602
+        },
+        "uuid": "30c435fc-fe45-4004-8bdc-8054497be2d4"
+      },
+      {
+        "description": "Track [XTALI] on B.Cu, length 0.7758 mm",
+        "pos": {
+          "x": 64.7476,
+          "y": 117.757
+        },
+        "uuid": "613be5e0-d1e1-4d93-8d75-49bcb5c1d946"
+      }
+    ],
+    "severity": "error",
+    "type": "clearance"
+  }
+]

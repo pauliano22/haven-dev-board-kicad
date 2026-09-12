@@ -1,0 +1,25 @@
+[
+  {
+    "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1767 mm)",
+    "items": [
+      {
+        "description": "Pad 2 [$1N70] of C23 on B.Cu",
+        "pos": {
+          "x": 45.3589,
+          "y": 32.3739
+        },
+        "uuid": "bcbaf829-3754-4b95-a8a2-60585afc2397"
+      },
+      {
+        "description": "Track [GND] on B.Cu, length 0.8266 mm",
+        "pos": {
+          "x": 45.0845,
+          "y": 31.9462
+        },
+        "uuid": "dd41b766-27d6-4453-9a30-d4f0a53809df"
+      }
+    ],
+    "severity": "error",
+    "type": "clearance"
+  }
+]

@@ -1,5 +1,19 @@
 # Haven Dev Board — KiCad Port
 
+> **Current status (as of this commit): fabrication-ready.** Everything
+> below this notice describes the *original* EasyEDA→KiCad port and was
+> accurate when written, but predates the DRC/routing work that followed —
+> it still says "no ERC or DRC has been run," which is no longer true. The
+> board has since been rescaled to 73.1×161.1mm, fully routed (219 DRC
+> violations remaining, all investigated and non-blocking; 2 cosmetic
+> same-net internal BGA pairs unconnected), and DRC-verified via
+> `kicad-cli`. See `FABRICATION_GUIDE.md` for current ordering instructions
+> and `HAVEN_HARDWARE_REVIEW.md` for the full review trail. The rest of this
+> file is kept as-is below for its record of the port's methodology and
+> known limitations, most of which are still true (pin electrical types,
+> unassigned pins, silkscreen fidelity, etc.) — only the DRC/routing status
+> has changed.
+
 A from-scratch KiCad recreation of the stock OpenEarable hardware (the base
 Haven is built from), generated programmatically from the real EasyEDA Pro
 project data rather than hand-traced from screenshots. This is **not** a
@@ -12,6 +26,7 @@ Open `kicad/haven_dev_board.kicad_pro` in KiCad. **No KiCad install or
 has been opened in real KiCad, run through ERC, or run through DRC.**
 Treat the schematic as a strong first draft and the PCB as a best-effort
 faithful port; both need a real review pass before anything is fabricated.
+(Superseded — see the notice at the top of this file.)
 
 ## What's actually in here
 
@@ -106,9 +121,10 @@ strategy just removes it as a second, compounding source of risk.
 
 ## Known limitations / simplifications
 
-- **No ERC or DRC has been run.** No KiCad install was available. Do not
-  trust net-class assignments, clearance, or single-pin/unconnected-pin
-  warnings until this is opened in real KiCad.
+- ~~**No ERC or DRC has been run.**~~ Superseded — see the notice at the
+  top of this file. DRC has since been run extensively via `kicad-cli`
+  (219 violations remaining, all investigated; see
+  `HAVEN_HARDWARE_REVIEW.md`).
 - **POLY-shaped pads** (rare — a few connector pads on J1/CN1 use a custom
   polygon rather than a rectangle/ellipse) are approximated by their
   bounding rectangle, not their exact polygon outline.
@@ -141,19 +157,23 @@ strategy just removes it as a second, compounding source of risk.
   silently dropped; they're just left unconnected in the generated files
   rather than fabricating a connection.
 
-## A genuine anomaly in the *original* stock design (not introduced here)
+## A genuine anomaly in the *original* stock design — now resolved
 
-One net in the real board data is literally named `#ERROR` by EasyEDA
-itself — it ties together MDBT531 pin 3 (`P1.08`, a GPIO), Q2 pin 1 (a
-small MOSFET, `CSD13380F3T`), and U8 pin 1 (a 1MΩ 0201 resistor, despite
-the "U" designator). The three pins are genuinely electrically connected
-in the source data; EasyEDA just never resolved a human-readable name for
-this net, most likely because whatever label it depended on was deleted or
-renamed at some point in the original design's history. Worth a look if
-this circuit (looks like some kind of gated pull-up/sense line, possibly
-battery- or fault-related) turns out to matter — it's ported through
-faithfully under that literal name (`#ERROR`) in both the schematic and
-PCB so it isn't lost.
+One net in the real board data was literally named `#ERROR` by EasyEDA
+itself (confirmed present in `extracted/netlist.json`'s raw source, not
+introduced during this port) — it tied together MDBT531 pin 3 (`P1.08`,
+a GPIO), Q2 pin 1 (a small MOSFET, `CSD13380F3T`), and U8 pin 1 (a 1MΩ
+0201 resistor, despite the "U" designator). EasyEDA just never resolved
+a human-readable name for this net.
+
+Traced further and renamed to **`LED_ENABLE`**: R4 (510Ω) and U4 (a real
+0201 LED, `XL-0201SURC`, per `HAVEN_BOM.csv`) are also on this net —
+3V3 → U4 (LED) → R4 (current-limit) → Q2 (low-side switch to GND), gated
+by U8 (1MΩ pulldown, default-off) and driven directly by MDBT531 P1.08.
+A straightforward GPIO-controlled indicator LED. Pure rename in both the
+schematic and PCB — zero electrical change, verified via DRC diff. The
+net also had a genuine small routing gap (Q2's gate pad wasn't
+connected to the rest of the net); that's now routed too.
 
 ## File layout
 
@@ -173,12 +193,13 @@ extracted/                      all extraction/generation scripts + intermediate
 
 ## Suggested next steps for a human pass
 
-1. Open in KiCad, run ERC and DRC, see what falls out.
+1. ~~Open in KiCad, run ERC and DRC, see what falls out.~~ Done — see the
+   notice at the top of this file and `HAVEN_HARDWARE_REVIEW.md`.
 2. Cross-check the ADAU1860 audio-analog section (U15's ~29 unmatched
    pins, mostly clustered here) against the real datasheet.
 3. Review U2 (BQ25120A charger) and U6 (BQ27220 fuel gauge) — both have a
    meaningful number of unmatched pins too.
-4. Decide whether the `#ERROR` net circuit needs a real name/investigation.
+4. ~~Decide whether the `#ERROR` net circuit needs a real name/investigation.~~ Done — see above, now `LED_ENABLE`.
 5. If this is meant to diverge from stock OpenEarable (per the earlier
    Gemini-assisted cleanup pass on the user's live EasyEDA project), diff
    this port against that pass and carry over the same changes here.

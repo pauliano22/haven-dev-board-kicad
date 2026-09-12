@@ -1,0 +1,17 @@
+[
+  {
+    "description": "Track has unconnected end",
+    "items": [
+      {
+        "description": "Track [GND] on B.Cu, length 2.4705 mm",
+        "pos": {
+          "x": 104.4599,
+          "y": 2.5609
+        },
+        "uuid": "28c7088c-ad2d-4e1b-9752-405a83096f01"
+      }
+    ],
+    "severity": "warning",
+    "type": "track_dangling"
+  }
+]

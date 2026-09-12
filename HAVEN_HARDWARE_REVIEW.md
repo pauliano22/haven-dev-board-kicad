@@ -138,16 +138,20 @@ either way — nothing in Haven's firmware touches the IMU.
 
 ### 0.6 Two practical consequences
 
-- **Hardware before this board is fabricated (neither option is cheap):**
-  (a) an nRF5340 DK plus ADI's EVAL-ADAU1860EBZ (~$485 at Newark, ~$535
-  total) — the eval board brings the codec's DMIC input out on header P44
-  and serial port 0 on header P2, so it wires to the DK with this board's
-  exact topology, and it carries the USB interface Lark Studio uses; or
-  (b) a stock OpenEarable 2.0 unit (Developer Starter Bundle: €2,348 at
-  shop.openwearables.com), which *is* this board and takes Haven firmware
-  via J-Link + OpenEarable's debug breakout per upstream's README. Either
-  takes the PCB fab off the critical path; fab this port only after §3.2
-  and a real ERC/DRC pass.
+- **Hardware paths (none cheap).** Since this section was first written the
+  board itself has moved: it is now a 5× rescaled **bench** board
+  (73×161 mm, §9), routing-complete except two cosmetic same-net BGA pairs,
+  with the antenna keepout implemented (§3.2) and a `FABRICATION_GUIDE.md`
+  for turnkey PCBA. That makes it a real third option alongside (a) an
+  nRF5340 DK + ADI's EVAL-ADAU1860EBZ (~$485 at Newark, ~$535 total; DMIC
+  on header P44, serial port 0 on P2, USB for Lark Studio) and (b) a stock
+  OpenEarable 2.0 (Developer Starter Bundle €2,348), which *is* this design
+  at 1×. **Before ordering the bench board, read §0.7** — the rescale moved
+  the crystals and decoupling caps far from their chips, and that is a
+  placement-only fix that is cheap now and expensive after assembly.
+  Note also that `FABRICATION_GUIDE.md`'s "firmware ADAU1860 driver
+  currently stubbed" is stale: the driver PR on `haven-zephyr-app` (#9)
+  compiles for this board target and replaces every stub.
 - **The DSP-side work that remains** is not a SigmaStudio blob or a
   parameter-RAM map: upstream's FastDSP program already has five biquad
   slots with hardware safeload (`FDSP_SL_ADDR`/`FDSP_SL_P*`/
@@ -164,6 +168,44 @@ either way — nothing in Haven's firmware touches the IMU.
   coefficient math must use whichever rate the program actually runs at.
   UG-2017 also confirms `EQ_ROUTE` selects the hardware EQ engine's input
   ("set fs to be same as the equalizer source, EQ_ROUTE").
+
+
+### 0.7 The 5× rescale moved the parts that must stay close (2026-09-11)
+
+Footprint-centre distances measured from `kicad/haven_dev_board.kicad_pcb`
+at master `1e7c6d2` (byte-identical to `experiment/codex-astra-routing` for
+this file), against the values §3.3 measured on the 1× port. Spreading a
+board 5× and re-routing is fine for I2C, I2S, PDM and BLE (the radio is
+inside the module) — but a handful of two-terminal nets are *supposed* to
+be millimetres long, and the rescale stretched every one of them:
+
+| Pair | 1× (§3.3) | 5× now | Why it matters |
+|---|---|---|---|
+| X1 (32.768 kHz) ↔ MDBT531 `XL1`/`XL2` | adjacent | **30.4 mm** | nRF5340 LFXO — the BLE sleep clock. Long, high-impedance traces add parasitic C and pickup; a 32 kHz crystal with ~30 mm of trace may not start or may be pulled off-frequency. The board DTS uses `load-capacitors = "external"`, so this crystal is load-bearing, not optional. |
+| X1 ↔ C2 / C14 (9 pF load caps) | adjacent | 10.9 mm each | Load caps that far away stop being load caps and become antennas. |
+| CRYSTAL1 (24.576 MHz) ↔ U15 `XTALI`/`XTALO` | adjacent | **13.8 mm** | The codec's entire clock domain. If it doesn't oscillate there is no audio at all; the driver's `wait_status2("power-up complete")` will time out — that is the symptom to expect. |
+| CRYSTAL1 ↔ C45 / C46 (33 pF) | adjacent | 8.1 / 9.7 mm | Same failure mode. |
+| U15 ↔ C33 (V_LS 10 µF) | 2.0 mm | 10.0 mm | Bare BGA with 7 supply balls and no cap within 10 mm: expect the digital-noise / ASRC-lock trouble §3.3 already warned about, worse. |
+| U15 ↔ C1 (+1.8 V 1 µF) | 5.2–5.9 mm | 29.5 mm | (The MDBT53 module carries its own decoupling, so the nRF side is less exposed than the codec.) |
+| U2 (BQ25120A) ↔ C16 / C18 / C22 | 2.2–2.7 mm | 10.7–13.3 mm | Charger input/output caps; ripple and EMI rather than outright failure. |
+| U2 ↔ L2 (2.2 µH buck inductor) | adjacent | 12.9 mm | The switching node. TI's layout guidance wants L and the PMID cap tight to the IC; a 13 mm loop radiates and can destabilise the converter. |
+| U6 (BQ27220) ↔ C21 | 1.65 mm | 8.3 mm | Fuel gauge; tolerant. |
+| U14 (flash) ↔ C31 | — | 50.7 mm | QSPI flash with effectively no local decoupling. |
+
+**What to do (placement-only, before PCBA):** move both crystals *and* their
+load caps back against their pins (X1 + C2/C14 to `XL1`/`XL2`; CRYSTAL1 +
+C45/C46 to `XTALI`/`XTALO`), and put one decoupling cap per rail within
+~2 mm of U15, U2 and U14. These are all short two-terminal nets — trivial
+to re-route next to the BGA escapes already solved (§9, `CODEX_NOTES.md`) —
+and the rest of the 5× spread can stay exactly as it is. Re-run DRC.
+
+**If the schedule wins and the board is ordered as-is:** plan for the nRF
+LFXO not starting — build the firmware with the RC low-frequency clock
+(`CONFIG_CLOCK_CONTROL_NRF_K32SRC_RC=y`, calibrated) so BLE still works —
+and accept that a non-starting codec crystal has *no* firmware workaround.
+Distances above are tool-verified; the failure predictions are
+design-rule inference (crystal and switcher layout guidance), not
+measurement. Raytac's free layout review would catch the X1 problem too.
 
 ---
 
@@ -307,42 +349,41 @@ codec's ground pin connections — not something to do mechanically without
 the codec's actual pinout diagram in hand (which pins ADI's own reference
 layout marks as "AGND" vs "DGND").
 
-### 3.2 BLE antenna keepout (MDBT53 module)
+### 3.2 BLE antenna keepout (MDBT53 module) — RESOLVED
 
-**Sourced from a real datasheet lookup** (WebSearch/WebFetch — full PDF
-render wasn't possible in this sandbox, no `pdftoppm`/poppler available, so
-the exact keepout dimension in mm from Raytac's diagram could not be
-extracted, only the text guidance surrounding it):
+**Originally flagged as the single highest-priority hardware finding in
+this review**, with the exact keepout dimension unobtainable at the time
+(no PDF rendering available in this environment). Once `poppler-utils`
+was installed, the real Raytac MDBT53 datasheet was downloaded and its
+actual mechanical pages read directly (section 2.3, "RF Layout Suggestion
+(aka Keep-Out Area)"):
 
-> "Make sure to keep the 'No Ground Pad' as wider as you can regardless of
-> the size of your PCB... included in the corresponding position of the
-> antenna in EACH LAYER... place the module towards the edge of PCB."
-> — Raytac RF layout guidance for the MDBT53 family
-> ([SparkFun-hosted datasheet PDF](https://cdn.sparkfun.com/assets/9/7/0/8/6/_nRF5340__MDBT53-1M___MDBT53-P1M_Spec__Ver.D_.pdf))
+> "Make sure to keep the 'No Ground Pad' as wider as you can... No Ground
+> Pad should be included in the corresponding position of the antenna in
+> EACH LAYER. Place the module towards the edge of PCB to have better
+> performance than placing it on the center."
 
-This is almost certainly the actual source of the "no ground pad, as wide
-as possible" callout mentioned for this project — it's Raytac's own literal
-phrasing. (I initially went looking for this near a component's exposed
-thermal pad — U5/KTD2026 has a `DFN...-EP` footprint — but its exposed pad
-turns out to already be normally tied to `GND`, not a special case. The
-antenna-keepout reading fits far better.)
+The datasheet's own diagram (page 13) gives the exact dimension: **3.7mm
+deep, along the module's full 9.3mm short edge**, on every copper layer.
 
-**Tool-verified against the actual generated PCB**: this guidance is **not
-implemented**. MDBT531's placement center sits ~7.3mm from the nearest
-board edge (board is ~14.6mm × 32.2mm; the module is a 14.3mm × 9.3mm
-part, so it is reasonably close to an edge — partial credit on the
-"place near the edge" guidance). But a real point-in-polygon test against
-the actual `GND` copper pour on both inner layers (15 and 16) shows the
-module's center point sits **inside solid ground copper fill**, with the
-nearest pour boundary only ~2.5mm away — nowhere near "as wide as possible."
-I did not check whether this holds specifically under the antenna trace
-itself (that needs the module's mechanical drawing to know exactly which
-edge of the package the antenna occupies, which I couldn't extract from the
-un-renderable PDF) — but given the pour comes this close to the module's
-center generally, a real keepout is very unlikely to exist anywhere nearby.
-**This is the single highest-priority hardware finding in this review** —
-worth Raytac's own free layout-review service (`sales@raytac.com`,
-mentioned on their site) before this ever gets fabricated.
+**Fix applied**: anchored the keepout to this board's real geometry
+rather than an assumed orientation — pin 1 (GND) sits at (75.010,
+65.928)mm and pin 61 (GND) at (75.010, 74.028)mm on this board, same X,
+confirming that short edge runs along Y at X=75.010 with the antenna
+extending outward (decreasing X). The resulting keepout range, X ∈
+[71.11, 75.01], lines up almost exactly with the board's own physical
+left edge — consistent with (and confirming) the "place near the edge"
+guidance the original placement already nominally followed, just without
+the actual copper clearance.
+
+Implemented as a KiCad rule area (blocks copper pour, vias, and tracks)
+across all 6 copper layers. Five pre-existing GND traces/vias that sat
+inside the new keepout (placed before the rule existed) were removed and
+the zones re-filled. Verified via DRC (zero keepout violations) and
+visually via SVG export (clean copper-free rectangle exactly where
+expected). Still recommend Raytac's free layout review
+(`sales@raytac.com`) as a final sanity check before ordering boards, but
+the specific gap this review found is now closed.
 
 ### 3.3 Decoupling capacitor placement
 
@@ -403,13 +444,11 @@ a decoupling-proximity issue.
 Given everything above, here's what a human should walk through by hand,
 roughly in priority order:
 
-1. **Antenna keepout first** — before anything else gets fixed, either
-   send the layout to Raytac's free review service or get the exact
-   keepout dimension from the datasheet's diagram (needs real PDF
-   rendering, unavailable here) and clear the `GND` pour on layers 15/16
-   under and around the module accordingly. This is the one finding here
-   that materially affects RF certification/range, not just signal
-   integrity.
+1. ~~**Antenna keepout first**~~ — **RESOLVED**, see §3.2. Real datasheet
+   dimension obtained and implemented as a proper keepout rule area on
+   all copper layers, verified via DRC and visually. Still worth a final
+   Raytac free-review pass before ordering, as a sanity check, not
+   because a known gap remains.
 2. **Resolve the DIN/DOUT direction question (§1)** against the ADAU1860's
    actual register-configuration for its serial port 0, not just its
    default pin names, before trusting either the overlay's comment or my
@@ -447,12 +486,16 @@ roughly in priority order:
 | Codec power sequencing (`DAC_ENABLE`, `V_LS` load switch) | Netlist + upstream driver (§0.3) |
 | Mic is PDM into the codec; nRF not on the audio path | Tool-verified from netlist (§0.3) |
 | No analog/digital ground split | Tool-verified; same as the shipping stock board, so lower urgency (§0.3) |
-| Antenna keepout guidance (Raytac quote) | Sourced from real datasheet search — exact mm dimension NOT obtained (PDF unrenderable here) |
-| Antenna keepout not implemented in this port | Tool-verified (point-in-polygon against real pour data) |
+| Antenna keepout guidance (Raytac quote) | Sourced from real datasheet, exact dimension obtained (3.7mm x 9.3mm, page 13 diagram) |
+| Antenna keepout — RESOLVED | Implemented as rule area on all copper layers, verified via DRC and SVG — see §3.2 |
+| Crystals and decoupling caps displaced by the 5× rescale | Tool-verified distances from the board file (§0.7); failure risk is design-rule inference — **fix placement before ordering** |
 | Decoupling cap distances | Tool-verified (measured from real placement data) |
 | HPVDD/HPVDD_L identity | Unresolved — not in parsed data, not in upstream firmware either (§0.4) |
 | "No ground pad" = antenna keepout, not an exposed-pad note | High-confidence inference, not certain |
 | U1 (IMU) is actually BMI160, not BMX160 | Wiring inspection says BMI160 (§8); upstream firmware says BMX160 (§0.5) — **check the physical part before ordering** |
+| 87 unrouted nets is a real structural ceiling, not under-explored | Tool-verified across 4 independent autorouter attempts — see §9 (since reduced to 2 cosmetic items by the manual pass, see `CODEX_NOTES.md`) |
+| Most of the 38 shorting-error DRC violations are dangling-stub artifacts of the same unrouted nets | Tool-verified — 24/38 match a documented dangling stub's exact coordinates — see §9 |
+| 78 footprint-mismatch warnings are baked-in rotation, functionally fine as routed | Tool-verified pad-by-pad (numeric diff, not text) against the library — see §10 |
 
 ---
 
@@ -485,3 +528,147 @@ Net effect: no magnetometer is present on this board as wired — nothing
 in Haven's firmware currently expects one, so this doesn't change any
 functional behavior, only fixes the part-number inconsistency before a
 production order could lock in the wrong label.
+
+---
+
+## 9. Board rescale + autoroute: why ~87 nets remain unrouted
+
+After rescaling the board 5x (see `feature/board-rescale-and-route`) and
+routing with Freerouting (a real autorouter, not hand-placed traces), 87
+of 304 nets remain unrouted in the currently-committed board. This
+section documents *why*, since it's a real, reproducible finding, not an
+unexplained gap.
+
+**Tool-verified, via four independent attempts**: a fresh autorouter run
+with default settings (prioritized selection, greedy optimization)
+converges to exactly 93 unrouted / 2 violations. A second fresh run with
+different settings (random selection, global optimization) converges to
+the *identical* 93 unrouted / 2 violations / identical score. Re-feeding
+an already-routed board back into the router — with or without locking
+the existing traces as fixed — made results *worse* (142-143 unrouted),
+not better, in every attempt. A fourth attempt tuning the fanout stage's
+pin-sorting order (`inner_first`) improved this to **87 unrouted / 2
+violations** — a real, reproducible gain, and the result now committed —
+but a fifth attempt (a different pin-sorting order plus a shorter escape
+length) came back *worse* (96 unrouted) than this. Multiple structurally
+different search strategies converging to the same narrow band, with
+attempts to push further in either direction landing worse or
+identical, is strong evidence 87 is a real structural ceiling for this
+board/part mix, not an under-explored search space.
+
+(A separate, later KiCad DRC pass reports "116 unconnected items" across
+50 nets rather than 87 — that's not a regression, just a different unit:
+DRC counts individual missing point-to-point links post-zone-fill, and a
+net with three unconnected members needing two links each still shows as
+one net here but multiple items there. `REMAINING_CONNECTIONS.md` is
+generated from the DRC view since it's the one that lists exact pin
+names.)
+
+**Root cause, tool-verified**: the unrouted connections concentrate
+overwhelmingly on the board's finest-pitch packages:
+
+| Component | Package | Pitch | Share of unrouted connections |
+|---|---|---|---|
+| U15 (ADAU1860) | BGA-56 | 0.35mm | 37% |
+| U2 (charger) | DSBGA-25 | 0.40mm | 20% |
+| MDBT531 (nRF5340 module) | 65-pin castellated | 0.50mm | 24% |
+| U10 | UQFN-16 | 0.40mm | 13% |
+| CN1 | FPC connector | 0.35mm | 11% |
+
+(Percentages overlap since some connections involve two of these parts.)
+
+Escaping a 56-ball BGA at 0.35mm pitch — getting a trace out from a ball
+buried in the middle of the grid, surrounded on all sides by other balls
+— is a well-known hard problem in PCB layout. The standard solution is
+via-in-pad (a microvia drilled directly through the pad itself, dropping
+straight to an inner layer) or careful hand-placed dogbone escapes,
+neither of which a generic autorouter's default via rules reliably
+produces. This board's current via spec (drill 0.15mm / pad ~0.25-0.3mm,
+see the earlier via-geometry fix) is in the right size range for
+via-in-pad on a 0.35mm pitch part, but placing them correctly under
+specific balls is a targeted, chip-by-chip task, not something bulk
+autorouting handles well by default.
+
+**What this means practically**: the remaining ~87 connections need
+either (a) a human doing manual escape routing for these five specific
+fine-pitch parts in KiCad's interactive router — a normal, bounded PCB
+layout task, likely 30-60 minutes of focused work given the board now
+has generous surrounding space — or (b) confirming the fab can support
+via-in-pad at this pitch and re-running the router with that explicitly
+modeled. It is *not* something further autorouter attempts are likely to
+resolve; that's been directly tested, not assumed.
+
+**The 38 `error`-severity "shorting_items" violations are mostly the same
+problem, not a separate one.** 37 of 38 involve a `Track` (not two solid
+pads/vias) — i.e. a dangling stub left behind by the autorouter's partial
+attempt at one of these unrouted nets, sitting close enough to a
+different net's copper to trip a clearance/short check. Cross-referencing
+violation coordinates directly against `REMAINING_CONNECTIONS.md`'s
+dangling-stub list (exact coordinate match, not a guess): **24 of the 38
+land within 0.1mm of an already-documented dangling stub** — e.g. the
+`GND`-vs-`V_SD` short at (104.4599, 3.1326) is the exact same point as
+the "dangling track stub near 104.4599mm,3.1326mm" already listed under
+`GND`. **Practical takeaway**: most of these should resolve as a
+byproduct of finishing the manual escape routing in §9, not as 38
+separate things to fix one-by-one — but re-run DRC after that pass
+rather than assuming it, since roughly a third didn't directly match a
+listed stub and may need their own look.
+
+---
+
+## 10. Footprint library sync drift (78 instances) — investigated, not a current bug
+
+DRC flags 78 `lib_footprint_mismatch` warnings — every placed instance of
+`R0201`, `C0201`, `C0402`, plus a handful of specific parts (`CN1`, `U3`,
+`Q1`, `Q2`, `U4`, `LED3`), no longer matches its definition in
+`footprints.pretty`. This was flagged but not actually investigated
+earlier in this review (previously described as "likely benign
+schematic/library sync noise"); it's now been checked directly rather
+than assumed.
+
+**Root cause, tool-verified**: it's a real geometric difference, not
+formatting noise. Comparing pad-by-pad (numeric, not textual — this
+project's footprints are hand-formatted with varying decimal precision,
+so a naive text diff would over-flag), every one of the 78 shows a 90°
+or 180° rotation baked directly into each pad's own coordinates, while
+the *footprint's own* placement rotation field is 0° (omitted). Example
+— `R3` (`R0201`), a 2-pad passive:
+
+```
+library:  pad 1 at (-0.24, 0.00), pad 2 at (0.24, 0.00)   — spread along X
+board:    pad 1 at (0.00, -0.24), pad 2 at (0.00, 0.24)   — spread along Y
+```
+
+Normal KiCad rotation (rotating the whole footprint via its placement
+angle) wouldn't do this — it would show up as a nonzero rotation on the
+footprint's `(at ...)` line, with the pads themselves unchanged relative
+to each other. This pattern (rotation applied directly to pad
+coordinates, footprint-level rotation left at 0°) is what you get from
+scripted/programmatic footprint manipulation that rotates pad geometry
+directly instead of calling the proper "set footprint orientation" API —
+consistent with this board's history of heavy `pcbnew`-Python scripting
+during the 5x rescale.
+
+**Why this isn't currently a functional bug**: none of the 78 affected
+references appear in `REMAINING_CONNECTIONS.md` — they're all already
+correctly connected by the router, which routed to wherever these pads
+*actually* are, not where the library says they should be. The copper is
+self-consistent; only the "does this match its library record" bookkeeping
+is off.
+
+**Why it's still worth fixing before this board matures**: any future
+**"Update Footprint from Library"** in KiCad on any of these 78 parts
+would silently snap their pads back to the library's un-rotated
+positions — which, since the actual routing was done against the
+current (rotated) positions, would leave existing traces landing on
+empty copper instead of a pad. This is a real landmine for future
+maintenance, not a cosmetic one.
+
+**Recommendation**: don't run a bulk "Update Footprints from Library" on
+this board without first either (a) re-exporting each affected part's
+library footprint to match its current on-board orientation, or (b)
+manually re-doing each instance's rotation through KiCad's normal
+rotate-footprint tool (which correctly sets the placement angle instead
+of the raw pad coordinates) before any library sync. Until then, this is
+safe to leave as-is — it doesn't affect fabrication, assembly, or the
+current routing.
