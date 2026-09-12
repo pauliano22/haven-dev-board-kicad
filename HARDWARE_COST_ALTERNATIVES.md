@@ -91,6 +91,14 @@ telemetry the current combo provides. Worth deciding whether that telemetry
 is actually used by the app/firmware today before treating it as a hard
 requirement.
 
+**Sourcing confirmed, not just datasheet-plausible:** TLV320AIC3104IRHBR
+and TLV320AIC3254IRHBR are both real, in-stock, catalog parts on JLCPCB's
+own parts library ($1.33 and $3.03 respectively per unit) — meaning they'd
+source through the same turnkey PCBA flow already being used, no separate
+sourcing headache. BQ24032A is a real distributed TI part (~$3-5/unit at
+low quantity per Digikey) though not confirmed in JLC's catalog specifically
+yet — worth checking before committing to it.
+
 ## What this would mean
 
 If all three fine-pitch parts are swapped for QFN equivalents: the board
