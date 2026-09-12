@@ -91,6 +91,16 @@ telemetry the current combo provides. Worth deciding whether that telemetry
 is actually used by the app/firmware today before treating it as a hard
 requirement.
 
+**TLV320AIC3253 is a particularly strong match, confirmed from its own
+datasheet:** it accepts a PDM microphone input directly (the exact same
+signal format SPH0641LU4H-1 already outputs — no mic change needed),
+outputs standard I2S to the host MCU (same bus type the nRF5340 already
+uses toward the ADAU1860), and is controlled over I2C (the same control
+scheme the firmware already uses for the current codec). That's a real
+drop-in-shaped replacement at the hardware-interface level — the firmware
+would need a new register map for this chip, not a new control
+architecture.
+
 **Sourcing confirmed, not just datasheet-plausible:** TLV320AIC3104IRHBR
 and TLV320AIC3254IRHBR are both real, in-stock, catalog parts on JLCPCB's
 own parts library ($1.33 and $3.03 respectively per unit) — meaning they'd
