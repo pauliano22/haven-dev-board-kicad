@@ -85,11 +85,27 @@ in an easy QFN package. Real candidates found:
 - NXP/Freescale SGTL5000 — the exact chip the Teensy prototype used, QFN
 
 **Charger/fuel-gauge:** BQ25120A/BQ27220 (DSBGA) could similarly be swapped
-for QFN alternatives — TI BQ24032A (3.5x4.5mm QFN, single-cell, dynamic
-power path) is a real candidate, though it trades away I2C fuel-gauge
-telemetry the current combo provides. Worth deciding whether that telemetry
-is actually used by the app/firmware today before treating it as a hard
-requirement.
+for QFN alternatives, in increasing order of feature retention vs. cost:
+- **TP4056** (SOP-8) — confirmed a genuine JLCPCB "basic part," qualifying
+  for their $0 feeder-loading fee in Economic PCBA (their cheapest
+  assembly tier). Extremely common in the hobbyist ecosystem. No I2C, no
+  programmable LDO/buck, no ship-mode, no fuel-gauge telemetry at all —
+  just a basic constant-current/constant-voltage charger. Cheapest and
+  simplest possible option, if the app/firmware doesn't actually depend on
+  BQ25120A/BQ27220's I2C monitoring today.
+- **MCP73831** (TDFN-8, also basic-parts-tier and extremely cheap) —
+  similar simplicity/cost tradeoff to TP4056, another hugely common choice.
+- **BQ24072** (TI, QFN-16) or **BQ24032A** (QFN) — real ICs, moderate
+  price, more charge-current/power-path control than TP4056/MCP73831 but
+  still no I2C.
+**Checked directly: nothing does.** Searched both `haven_zephyr_app/src`
+and `haven_custom_app/src` for any reference to the fuel gauge, battery
+level, or state-of-charge — zero matches in either. The BQ27220 fuel
+gauge is on the schematic but nothing in the current software reads it.
+That makes this an easy call: there's no real feature to preserve, so
+**TP4056 (or MCP73831) is the correct answer, not just the cheapest one**
+— dropping the fuel gauge entirely rather than finding a QFN equivalent
+for a chip nothing uses.
 
 **TLV320AIC3253 is a particularly strong match, confirmed from its own
 datasheet:** it accepts a PDM microphone input directly (the exact same
