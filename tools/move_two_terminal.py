@@ -26,9 +26,16 @@ ap.add_argument('--budget',type=float,default=420); ap.add_argument('--max-cands
 A=ap.parse_args()
 LAYNAME={0:'F.Cu',1:'B.Cu'}; W=0.09; EXC={}
 def d(a,c): return math.hypot(a[0]-c[0],a[1]-c[1])
+mr.VIA_PENALTY_MM=1.5   # discourage via hops: a decoupling route should stay on one layer where it can
+MIN_VIA_SPACING=0.45    # two of the path's own vias closer than this would fail hole_to_hole (0.1995 mm edge + 2*0.05 drill)
 def route_ml(b,net,a,c,end_layer,margin=1.5,iters=150000):
     path,st=mr.multilayer_astar_mixed(b,net,a,c,EXC,0.20,cell=0.1,margin=margin,max_iters=iters)
     if st!='ok' or path[-1]['layer']!=end_layer: return None
+    vias=[p0['pt'] for p0,p1 in zip(path,path[1:]) if p0['layer']!=p1['layer']]
+    for u,v in zip(vias,vias[1:]):
+        if d(u,v)<MIN_VIA_SPACING: return None   # the A* only checks new vias against pre-existing holes, not against each other
+    for u in vias:
+        if not hole_ok_real(b,u): return None
     return path
 def simplify_ml(b,net,path):
     out=[]; i=0
@@ -69,13 +76,22 @@ def anchors(b,net,near,reach):
                 dd=d(q,near)
                 if dd<reach: out.append((dd,2,(q,t.GetLayer())))
     out.sort(); return [(q if not isinstance(q,tuple) or not isinstance(q[1],int) else q) for _,_,q in out]
+def hole_ok_real(b,pos,drill_mm=0.10,min_edge=0.1995+0.01):
+    """hole-to-hole against every existing via using its REAL drill (route_lib's
+    hole_to_hole_ok assumes 0.10 mm everywhere; the board also has 0.15 mm drills,
+    which produced a 0.1806 mm DRC miss in stage D's first attempt)"""
+    for t in b.GetTracks():
+        if isinstance(t,pcbnew.PCB_VIA):
+            q=pcbnew.ToMM(t.GetPosition()); dr=pcbnew.ToMM(t.GetDrillValue())/2.0
+            if d(q,pos)-dr-drill_mm/2.0<min_edge: return False
+    return True
 def gnd_via(b,padpt,away,lay_idx):
     dx,dy=padpt[0]-away[0],padpt[1]-away[1]; base=math.atan2(dy,dx)
     for dist in (0.45,0.6,0.75,0.9,1.1,1.3):
         for ang in (0,30,-30,60,-60,90,-90,120,-120):
             a=base+math.radians(ang); cand=(round(padpt[0]+math.cos(a)*dist,3),round(padpt[1]+math.sin(a)*dist,3))
             v=rl.find_clear_via_near(b,cand,'GND',via_r=0.10)
-            if not v: continue
+            if not v or not hole_ok_real(b,v): continue
             r=route_ml(b,'GND',padpt,v,lay_idx,margin=1.0,iters=40000)
             if r: return v,r
     return None,None
