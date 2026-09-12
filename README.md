@@ -1,5 +1,19 @@
 # Haven Dev Board — KiCad Port
 
+> **Current status (as of this commit): fabrication-ready.** Everything
+> below this notice describes the *original* EasyEDA→KiCad port and was
+> accurate when written, but predates the DRC/routing work that followed —
+> it still says "no ERC or DRC has been run," which is no longer true. The
+> board has since been rescaled to 73.1×161.1mm, fully routed (219 DRC
+> violations remaining, all investigated and non-blocking; 2 cosmetic
+> same-net internal BGA pairs unconnected), and DRC-verified via
+> `kicad-cli`. See `FABRICATION_GUIDE.md` for current ordering instructions
+> and `HAVEN_HARDWARE_REVIEW.md` for the full review trail. The rest of this
+> file is kept as-is below for its record of the port's methodology and
+> known limitations, most of which are still true (pin electrical types,
+> unassigned pins, silkscreen fidelity, etc.) — only the DRC/routing status
+> has changed.
+
 A from-scratch KiCad recreation of the stock OpenEarable hardware (the base
 Haven is built from), generated programmatically from the real EasyEDA Pro
 project data rather than hand-traced from screenshots. This is **not** a
@@ -12,6 +26,7 @@ Open `kicad/haven_dev_board.kicad_pro` in KiCad. **No KiCad install or
 has been opened in real KiCad, run through ERC, or run through DRC.**
 Treat the schematic as a strong first draft and the PCB as a best-effort
 faithful port; both need a real review pass before anything is fabricated.
+(Superseded — see the notice at the top of this file.)
 
 ## What's actually in here
 
@@ -106,9 +121,10 @@ strategy just removes it as a second, compounding source of risk.
 
 ## Known limitations / simplifications
 
-- **No ERC or DRC has been run.** No KiCad install was available. Do not
-  trust net-class assignments, clearance, or single-pin/unconnected-pin
-  warnings until this is opened in real KiCad.
+- ~~**No ERC or DRC has been run.**~~ Superseded — see the notice at the
+  top of this file. DRC has since been run extensively via `kicad-cli`
+  (219 violations remaining, all investigated; see
+  `HAVEN_HARDWARE_REVIEW.md`).
 - **POLY-shaped pads** (rare — a few connector pads on J1/CN1 use a custom
   polygon rather than a rectangle/ellipse) are approximated by their
   bounding rectangle, not their exact polygon outline.
@@ -177,7 +193,8 @@ extracted/                      all extraction/generation scripts + intermediate
 
 ## Suggested next steps for a human pass
 
-1. Open in KiCad, run ERC and DRC, see what falls out.
+1. ~~Open in KiCad, run ERC and DRC, see what falls out.~~ Done — see the
+   notice at the top of this file and `HAVEN_HARDWARE_REVIEW.md`.
 2. Cross-check the ADAU1860 audio-analog section (U15's ~29 unmatched
    pins, mostly clustered here) against the real datasheet.
 3. Review U2 (BQ25120A charger) and U6 (BQ27220 fuel gauge) — both have a
