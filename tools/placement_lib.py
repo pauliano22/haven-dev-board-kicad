@@ -51,7 +51,14 @@ def fp_collisions(board, fp, layer, obstacles, clearance_mm=0.20, courtyard_mm=0
 def find_spot(board, ref, layer_name, anchor, radius=3.0, step=0.1, rots=(0, 90, 180, 270), exclude_refs=(), exclude_nets=(), limit=8):
     layer = layer_id(layer_name)
     fp = board.FindFootprintByReference(ref)
-    orig_pos, orig_rot = fp.GetPosition(), fp.GetOrientationDegrees()
+    orig_pos, orig_rot, orig_layer = fp.GetPosition(), fp.GetOrientationDegrees(), fp.GetLayerName()
+    # Test the candidate on the layer it will actually be placed on: move() flips
+    # the footprint when the layer changes, which mirrors the pad positions, so a
+    # collision check done un-flipped evaluates a different geometry than the
+    # final placement (caught by DRC: a pad landed 0.193 mm from a via that the
+    # un-flipped check had cleared).
+    if orig_layer != layer_name:
+        fp.Flip(fp.GetPosition(), False)
     obstacles = other_copper(board, layer, exclude_refs=set(exclude_refs) | {ref}, exclude_nets=set(exclude_nets))
     edge = board.GetBoardEdgesBoundingBox()
     cands = []
@@ -70,6 +77,8 @@ def find_spot(board, ref, layer_name, anchor, radius=3.0, step=0.1, rots=(0, 90,
                     continue
                 if not fp_collisions(board, fp, layer, obstacles):
                     cands.append((round(d, 3), round(x, 3), round(y, 3), rot))
+    if fp.GetLayerName() != orig_layer:
+        fp.Flip(fp.GetPosition(), False)
     fp.SetPosition(orig_pos); fp.SetOrientationDegrees(orig_rot)
     cands.sort()
     return cands[:limit], len(cands)

@@ -22,14 +22,34 @@ ap=argparse.ArgumentParser()
 ap.add_argument('--ref',required=True); ap.add_argument('--ic',required=True); ap.add_argument('--start',required=True)
 ap.add_argument('--out',default='haven_dev_board.kicad_pcb'); ap.add_argument('--layer',default=None)
 ap.add_argument('--radius',type=float,default=3.0); ap.add_argument('--reach',type=float,default=4.0)
-ap.add_argument('--budget',type=float,default=420); ap.add_argument('--max-cands',type=int,default=60)
+ap.add_argument('--budget',type=float,default=420); ap.add_argument('--max-cands',type=int,default=60); ap.add_argument('--verbose',action='store_true'); ap.add_argument('--clearance',type=float,default=0.215,help='routing clearance; a hair over the 0.20 rule absorbs 0.1 mm grid + simplification rounding')
 A=ap.parse_args()
-LAYNAME={0:'F.Cu',1:'B.Cu'}; W=0.09; EXC={}
+LAYNAME={0:'F.Cu',1:'B.Cu'}; W=0.09
+import re as _re
+def load_dru_exceptions(path='haven_dev_board.kicad_dru'):
+    """{net: {other_net: min_clearance_mm}} from every `clearance (min X)` rule
+    whose condition is the usual (A.NetName == 'X' && B.NetName == 'Y') pair --
+    i.e. route new copper under exactly the exceptions the board already grants,
+    never looser. hole_clearance / hole_to_hole rules are ignored here (no new
+    vias are placed inside those escape fields)."""
+    exc={}
+    try: txt=open(path).read()
+    except FileNotFoundError: return exc
+    for m in _re.finditer(r"\(rule\s+\"[^\"]+\"\s*\(condition\s+\"([^\"]+)\"\)\s*\(constraint\s+clearance\s+\(min\s+([\d.]+)mm\)\)", txt, _re.S):
+        cond,val=m.group(1),float(m.group(2))
+        nets=_re.findall(r"NetName\s*==\s*'([^']*)'",cond)
+        if len(nets)>=2:
+            a,b_=nets[0],nets[1]
+            exc.setdefault(a,{}); exc.setdefault(b_,{})
+            exc[a][b_]=min(exc[a].get(b_,9),val); exc[b_][a]=min(exc[b_].get(a,9),val)
+    return exc
+EXC_BY_NET=load_dru_exceptions()
+def EXCF(net): return EXC_BY_NET.get(net,{})
 def d(a,c): return math.hypot(a[0]-c[0],a[1]-c[1])
 mr.VIA_PENALTY_MM=1.5   # discourage via hops: a decoupling route should stay on one layer where it can
 MIN_VIA_SPACING=0.45    # two of the path's own vias closer than this would fail hole_to_hole (0.1995 mm edge + 2*0.05 drill)
 def route_ml(b,net,a,c,end_layer,margin=1.5,iters=150000):
-    path,st=mr.multilayer_astar_mixed(b,net,a,c,EXC,0.20,cell=0.1,margin=margin,max_iters=iters)
+    path,st=mr.multilayer_astar_mixed(b,net,a,c,EXCF(net),A.clearance,cell=0.1,margin=margin,max_iters=iters)
     if st!='ok' or path[-1]['layer']!=end_layer: return None
     vias=[p0['pt'] for p0,p1 in zip(path,path[1:]) if p0['layer']!=p1['layer']]
     for u,v in zip(vias,vias[1:]):
@@ -44,7 +64,7 @@ def simplify_ml(b,net,path):
         while j+1<len(path) and path[j+1]['layer']==path[i]['layer']: j+=1
         run=path[i:j+1]; layer=[pcbnew.F_Cu,pcbnew.B_Cu][run[0]['layer']]
         xs=[q['pt'][0] for q in run]; ys=[q['pt'][1] for q in run]
-        obs=rl.collect_obstacles_mixed(b,layer,net,min(xs),max(xs),min(ys),max(ys),EXC,0.20)
+        obs=rl.collect_obstacles_mixed(b,layer,net,min(xs),max(xs),min(ys),max(ys),EXCF(net),A.clearance)
         k=0; keep=[run[0]]
         while k<len(run)-1:
             m=len(run)-1
@@ -58,24 +78,38 @@ def lay_ml(b,net,path):
         if p0['layer']!=p1['layer']: pl.add_via(b,net,p0['pt'],0.20,0.10)
         elif d(p0['pt'],p1['pt'])>0.01: pl.add_seg(b,net,LAYNAME[p0['layer']],p0['pt'],p1['pt'],W)
 def anchors(b,net,near,reach):
-    """same-net targets sorted by distance: IC pads first, then vias, then track ends"""
+    """same-net targets sorted by distance, each as (point, required_start_layer):
+    IC pads (their own layer -- U2 is a B.Cu part, so a route to its pad must
+    start on B.Cu; the first stage-F attempt laid F.Cu copper from a B.Cu pad
+    and connected nothing), through-vias (either layer), outer-layer track ends."""
     out=[]
     for p in b.FindFootprintByReference(A.ic).Pads():
-        if p.GetNetname()==net: q=pcbnew.ToMM(p.GetPosition()); out.append((d(q,near),0,q))
+        if p.GetNetname()==net:
+            q=pcbnew.ToMM(p.GetPosition()); pl_=0 if p.IsOnLayer(pcbnew.F_Cu) else 1
+            out.append((d(q,near),0,(q,pl_)))
     for t in b.GetTracks():
         if t.GetNetname()!=net: continue
         if isinstance(t,pcbnew.PCB_VIA):
             q=pcbnew.ToMM(t.GetPosition()); dd=d(q,near)
-            if dd<reach: out.append((dd,1,q))
+            if dd<reach: out.append((dd,1,(q,None)))
         else:
-            # only OUTER-layer track ends are usable anchors -- an inner-layer
-            # end point has no copper on F/B.Cu to land on (caught the hard
-            # way: a route to an In3.Cu end looked "routed" and connected nothing)
-            if t.GetLayer() not in (pcbnew.F_Cu,pcbnew.B_Cu): continue
+            if t.GetLayer() not in (pcbnew.F_Cu,pcbnew.B_Cu):
+                # inner-layer run of this net: sample it -- a NEW through-via
+                # stitched onto it is a legal attachment point away from the
+                # BGA escape field (where pads and escape vias are hemmed in)
+                sp=pcbnew.ToMM(t.GetStart()); ep=pcbnew.ToMM(t.GetEnd()); L=d(sp,ep); n=max(1,int(L/0.3))
+                bb=b.FindFootprintByReference(A.ic).GetBoundingBox(False,False); m=pcbnew.FromMM(0.6)
+                for k in range(n+1):
+                    q=(sp[0]+(ep[0]-sp[0])*k/n, sp[1]+(ep[1]-sp[1])*k/n); dd=d(q,near)
+                    qi=pcbnew.VECTOR2I(pcbnew.FromMM(q[0]),pcbnew.FromMM(q[1]))
+                    if bb.GetLeft()-m<=qi.x<=bb.GetRight()+m and bb.GetTop()-m<=qi.y<=bb.GetBottom()+m: continue  # under/next to the BGA: no room for a via
+                    if 0.6<dd<reach: out.append((dd+0.5,3,(q,'stitch')))   # slight penalty vs direct anchors
+                continue
+            tl=0 if t.GetLayer()==pcbnew.F_Cu else 1
             for q in (pcbnew.ToMM(t.GetStart()),pcbnew.ToMM(t.GetEnd())):
                 dd=d(q,near)
-                if dd<reach: out.append((dd,2,(q,t.GetLayer())))
-    out.sort(); return [(q if not isinstance(q,tuple) or not isinstance(q[1],int) else q) for _,_,q in out]
+                if dd<reach: out.append((dd,2,(q,tl)))
+    out.sort(); return [x for _,_,x in out]
 def hole_ok_real(b,pos,drill_mm=0.10,min_edge=0.1995+0.01):
     """hole-to-hole against every existing via using its REAL drill (route_lib's
     hole_to_hole_ok assumes 0.10 mm everywhere; the board also has 0.15 mm drills,
@@ -92,7 +126,7 @@ def gnd_via(b,padpt,away,lay_idx):
             a=base+math.radians(ang); cand=(round(padpt[0]+math.cos(a)*dist,3),round(padpt[1]+math.sin(a)*dist,3))
             v=rl.find_clear_via_near(b,cand,'GND',via_r=0.10)
             if not v or not hole_ok_real(b,v): continue
-            r=route_ml(b,'GND',padpt,v,lay_idx,margin=1.0,iters=40000)
+            r=route_ml(b,'GND',v,padpt,lay_idx,margin=1.0,iters=40000)   # via end free, pad end on the part's layer
             if r: return v,r
     return None,None
 b0=pcbnew.LoadBoard(A.start); part=b0.FindFootprintByReference(A.ref)
@@ -109,31 +143,49 @@ cands=[]
 for L in layers:
     c,_=pl.find_spot(b0,A.ref,L,anchor,radius=A.radius,step=0.2,rots=(0,90,180,270),limit=A.max_cands)
     cands+=[(dist,x,y,rot,L) for dist,x,y,rot in c]
-cands.sort(); print(f'{A.ref}: {len(cands)} candidate spots around {A.ic} pads {rail_nets} anchor {tuple(round(v,2) for v in anchor)}'); del b0
+cands.sort(); print(f'{A.ref}: dru exceptions for {rail_nets}: {[EXCF(n) for n in rail_nets]}'); print(f'{A.ref}: {len(cands)} candidate spots around {A.ic} pads {rail_nets} anchor {tuple(round(v,2) for v in anchor)}'); del b0
 t0=time.time(); ok=False
 for i,(dist,cx,cy,rot,L) in enumerate(cands):
     if time.time()-t0>A.budget: print('budget exhausted at',i); break
     shutil.copy(A.start,A.out); b=pcbnew.LoadBoard(A.out); pl.move(b,A.ref,cx,cy,rot,L); li=0 if L=='F.Cu' else 1
+    pre_vias={str(t.m_Uuid.AsString())[:8] for t in b.GetTracks() if isinstance(t,pcbnew.PCB_VIA)}
     good=True
     for num,net in pads:
         pp=pl.pad_center(b,A.ref,num)
         if net=='GND':
             other=pl.pad_center(b,A.ref,[n for n,_ in pads if n!=num][0])
             v,r=gnd_via(b,pp,other,li)
-            if not v: good=False; break
+            if not v:
+                if A.verbose: print(f'  cand {i} ({cx},{cy},{rot},{L}): GND via/route failed for pad {num}')
+                good=False; break
             pl.add_via(b,'GND',v,0.20,0.10); lay_ml(b,'GND',r)
         else:
             routed=False
-            for tgt in anchors(b,net,pp,A.reach)[:6]:
-                start_layer=None
-                if isinstance(tgt[1],int): tgt,tl=tgt; start_layer=0 if tl==pcbnew.F_Cu else 1
-                # route target -> pad so the forced end layer is the pad's; for a
-                # track-end anchor the path must also START on that track's layer
+            tried=[]
+            for tgt,start_layer in anchors(b,net,pp,A.reach)[:30]:
+                if start_layer=='stitch':
+                    rl.set_clearance(A.clearance)
+                    okc,why=rl.via_clear(b,tgt,net,via_r=0.10)
+                    if not okc or not hole_ok_real(b,tgt): tried.append(('stitch',tuple(round(v,2) for v in tgt),'via blocked',str(why)[:40])); continue
+                    r=route_ml(b,net,tgt,pp,li,margin=1.5,iters=120000)
+                    if not r: tried.append(('stitch',tuple(round(v,2) for v in tgt),'no route')); continue
+                    pl.add_via(b,net,tgt,0.20,0.10); lay_ml(b,net,r); routed=True; break
                 r=route_ml(b,net,tgt,pp,li,margin=1.5,iters=120000)
-                if r and start_layer is not None and r[0]['layer']!=start_layer: r=None
+                if r and start_layer is not None and r[0]['layer']!=start_layer: tried.append((start_layer,tuple(round(v,2) for v in tgt),'wrong start layer')); r=None
+                elif not r: tried.append((start_layer,tuple(round(v,2) for v in tgt),'no route'))
                 if r: lay_ml(b,net,r); routed=True; break
+            if not routed and A.verbose: print(f'  cand {i} ({cx},{cy},{rot},{L}): {net} pad {num} unrouted; tried {tried}')
             if not routed: good=False; break
     if not good: continue
+    # re-verify every via this candidate added against the FINAL board (part placed,
+    # all routes laid): electrical clearance on every layer + real hole spacing
+    rl.set_clearance(A.clearance); bad=False
+    for t in list(b.GetTracks()):
+        if isinstance(t,pcbnew.PCB_VIA) and str(t.m_Uuid.AsString())[:8] not in pre_vias:
+            q=pcbnew.ToMM(t.GetPosition())
+            okc,_=rl.via_clear(b,q,t.GetNetname(),via_r=0.10)
+            if not okc: bad=True; break
+    if bad: print(f'cand {i}: a new via fails final clearance re-check'); continue
     q=pcbnew.ToMM(b.FindFootprintByReference(A.ref).GetPosition())
     print(f'SOLUTION cand {i}: {A.ref} -> ({q[0]:.3f},{q[1]:.3f}) rot {rot} {L}; dist to anchor {dist:.2f} mm; {time.time()-t0:.0f}s')
     rl.refill_zones(b); b.Save(A.out); ok=True; break
