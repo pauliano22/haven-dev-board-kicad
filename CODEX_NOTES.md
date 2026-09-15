@@ -1072,3 +1072,49 @@ Final state after all 6: 222 -> 219 violations (net improvement over the session
 **Session total for tonight's `/loop` run**: unconnected items 12 -> 2, and the 2 remaining are the same cosmetic same-net internal U15 BGA pairs (GND, V_LS) already documented and confirmed harmless in earlier sessions -- every functionally significant net on this board (audio codec I2C + DAC + clock domain, full JTAG, all U2 power-status signals) is now routed and DRC-verified. Total violations went from 222 at the start of tonight's session to 219 -- a net *improvement*, not just a wash, despite closing 10 more nets. Regenerated `fab_output/` and rewrote `UNROUTED_NETS.md` accordingly.
 
 **Recurring lesson reconfirmed three times tonight, worth internalizing**: a diagnostic or placement script's `via_clear_mixed`-style exception dict is only as good as its neighbor list. Every "genuinely blocked" conclusion this session that turned out to be wrong (LRCLK, XTALI) was wrong because the exception dict was missing a real neighbor, not because the underlying geometry was actually impossible. Before trusting a "blocked" result, check whether the exception dict enumerates *every* pad within ~0.5mm of the candidate point, not just the ones assumed relevant.
+
+### Claude (victorzhu443 fork) — 2026-09-12 — placement fix: crystals + decoupling back next to their chips (issue #4)
+
+**Goal this session**: the 5× rescale left X1, CRYSTAL1 and every decoupling cap 8–50 mm from their ICs (`HAVEN_HARDWARE_REVIEW.md` §0.7, issue #4). Move them back, placement-only, zero new DRC identities per stage.
+
+**What I tried**: nine DRC-gated stages (`tools/stage.sh`), each: `find_spot` → route with `multilayer_astar_mixed` under the net's own `.kicad_dru` exceptions → GND via → `clean_dangling.sh` on the old position → `drc_diff.py` → commit or restore. Crystal group needed its own script (`routing-evidence/placement-fix/group_b_crystal.py`): the XTALI/XTALO escape vias sit in a B.Cu pocket walled off by TDO/SDA1/DOUT, so both nets hop over TDO on F.Cu with one new via each. The previous session's group-B attempt failed because it routed at a flat 0.20 mm — the XTALO escape legitimately hugs TDO at 0.11 mm under `tight_clearance_XTALO_vs_TDO`, so the via start read as blocked.
+
+**Result** (kicad-cli 9.0.8 `pcb drc --severity-all --all-track-errors`, real output):
+```
+master 1e7c6d2 : Found 219 violations / Found 2 unconnected items
+after stage i  : Found 219 violations / Found 2 unconnected items
+drc_diff.py baseline.json after_i.json -> NEW violation identities: 0, NEW unconnected: 0
+by type, both: clearance 99, lib_footprint_mismatch 78, solder_mask_bridge 33, track_dangling 9
+```
+Pad-to-pin: X1→XL1/XL2 23.8→2.4 mm; CRYSTAL1→XTALI 13.6→6.0 mm (fan-out-limited); R28→XTALO 21.1→4.5; C33→V_LS 8.8→1.5; C31→A3 12.0→1.4; C1→pin38 23.5→1.0; C22→A2 10.2→0.9; C16→A3 13.6→1.5; C18→B5 12.8→1.1; L2→A4 11.7→2.2. Full tables in `routing-evidence/placement-fix/README.md`.
+
+**Unrouted count before -> after**: 2 -> 2 (same two cosmetic U15 pairs).
+
+**Blockers / questions for the other side**:
+- C31 is on `$1N151` (U15 balls A3/B3), not U14 — U14 has no decoupling cap on the BOM at all. Consider adding one next revision.
+- U6 ↔ C21 (8.3 mm) left as-is; dense corner, lowest risk.
+- Tooling lessons recorded in the README's "defects found" list — the biggest: `find_spot` must flip to the target layer before testing, inner-layer track ends are never routing anchors, hole-to-hole must use each via's real drill (board mixes 0.10 and 0.15).
+- `fab_output/` regenerated? Not tracked; regenerate before ordering (commands in README).
+
+### Claude (BOARD-3) — 2026-09-14 — codec crystal escape re-done (6.0 → 0.98 mm), C27 found and moved
+
+**Goal this session**: finish §11's one open item — CRYSTAL1 ≤ 3 mm pad-to-ball — by re-doing the XTALI/XTALO escape; propose the flash decoupling cap.
+
+**What I tried**: kept only the two via-in-pads at U15 B6/B7 and stripped every other XTALI/XTALO/`$1N16368` item plus the crystal group's GND stubs/vias (37 items). Diagnosed why 6 mm was the wall: on B.Cu TDO's escape runs 0.17 mm east of the XTALI via; on In4 SCL1's escape diagonal crosses the same corridor. In2 (GND plane) has only the via field there, and XTALI/XTALO already have the pair exceptions for those vias — so each net now runs ball → via-in-pad → short In2 leg → new exit via → B.Cu stub → pad. First placement search (0°/90° only) found no legal crystal spot; the pocket is a 3.5 mm diagonal band between SDA1's and PDMDIN's slope-1 escapes, and the 1.9 × 2.3 mm crystal only fits rotated 45° along it. Search over 45° multiples ranked by XTALI-pad→B7 distance; each new via/segment pre-checked against copper clearance (net's own exceptions, never looser), hole clearance (0.15 default / pair rules) and hole-to-hole (0.20 edge, real drills); real DRC gate after. Script: `routing-evidence/crystal-escape/group_c_crystal_escape.py` (two phases — strip/place — because pcbnew 9 returns an unusable board after Remove+Save+LoadBoard in one process). Then `move_two_terminal.py --ref C27 --ic U14` + `clean_dangling.sh` (two windows; the old GND feed to C27 was 3.5 mm long and started outside the first window).
+
+**Result** (kicad-cli 9.0.8, `pcb drc --format json --severity-all --all-track-errors`):
+```
+baseline (PR #5 tip 77b8ee2): Found 219 violations / Found 2 unconnected items
+after_c (crystal escape):      Found 219 violations / Found 2 unconnected items   drc_diff: 0 new identities, 0 new unconnected
+after_d (C27 under U14):       Found 219 violations / Found 2 unconnected items   drc_diff: 0 new identities, 0 new unconnected
+```
+Pad-to-pin: CRYSTAL1.1→B7 6.01→**0.98** mm; R28.2→B6 4.47→3.26; C46→crystal 1.10→1.03; C45→crystal 0.98→1.08; C27.V_LS→U14 D2 9.78→**0.21**. XTALI copper 9.02→2.84 mm (3→2 vias); XTALO 5.09→4.48 (3→2). Header `version 20241229` / `generator_version "9.0"` unchanged.
+
+**Unrouted count before -> after**: 2 -> 2 (the same cosmetic U15 same-net pairs).
+
+**Blockers / questions for the other side**:
+- **Refill zones only from the project directory.** Refilling the *untouched* board from a /tmp copy produced 5 phantom `track_dangling`/`via_dangling` and 4 phantom unconnected (U15 GND/V_LS balls; a GND via pair at (79,130), 20 mm away). Same board refilled from `kicad/` → baseline exactly. This is the zone-fill face of the "/tmp copies lose design rules" warning above; the script now copies its snapshot into the project before the final refill.
+- XTALO leg is 3.3 mm to R28 (XTALI got the short leg on purpose — it is the high-impedance node). Balancing both (135°/315°) costs XTALI ~1.1 mm.
+- Two ~1.5 mm In2 GND-pour slots under the BGA corner, through the already-perforated via field; DRC shows no connectivity change. If someone objects to slotting a plane, In1 is the alternative (same via field, same exceptions).
+- §11's "U14 has no decoupling cap" was wrong: it is C27 (drawn beside U14 on the schematic). Moved, not added — no BOM change. A bulk 1 µF for the flash would be a BOM decision for the owner.
+- U6 ↔ C21 (8.3 mm) still untouched. `fab_output/` not regenerated (untracked).
