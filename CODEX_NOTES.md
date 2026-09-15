@@ -1095,3 +1095,26 @@ Pad-to-pin: X1→XL1/XL2 23.8→2.4 mm; CRYSTAL1→XTALI 13.6→6.0 mm (fan-out-
 - U6 ↔ C21 (8.3 mm) left as-is; dense corner, lowest risk.
 - Tooling lessons recorded in the README's "defects found" list — the biggest: `find_spot` must flip to the target layer before testing, inner-layer track ends are never routing anchors, hole-to-hole must use each via's real drill (board mixes 0.10 and 0.15).
 - `fab_output/` regenerated? Not tracked; regenerate before ordering (commands in README).
+
+### Claude (BOARD-3) — 2026-09-14 — codec crystal escape re-done (6.0 → 0.98 mm), C27 found and moved
+
+**Goal this session**: finish §11's one open item — CRYSTAL1 ≤ 3 mm pad-to-ball — by re-doing the XTALI/XTALO escape; propose the flash decoupling cap.
+
+**What I tried**: kept only the two via-in-pads at U15 B6/B7 and stripped every other XTALI/XTALO/`$1N16368` item plus the crystal group's GND stubs/vias (37 items). Diagnosed why 6 mm was the wall: on B.Cu TDO's escape runs 0.17 mm east of the XTALI via; on In4 SCL1's escape diagonal crosses the same corridor. In2 (GND plane) has only the via field there, and XTALI/XTALO already have the pair exceptions for those vias — so each net now runs ball → via-in-pad → short In2 leg → new exit via → B.Cu stub → pad. First placement search (0°/90° only) found no legal crystal spot; the pocket is a 3.5 mm diagonal band between SDA1's and PDMDIN's slope-1 escapes, and the 1.9 × 2.3 mm crystal only fits rotated 45° along it. Search over 45° multiples ranked by XTALI-pad→B7 distance; each new via/segment pre-checked against copper clearance (net's own exceptions, never looser), hole clearance (0.15 default / pair rules) and hole-to-hole (0.20 edge, real drills); real DRC gate after. Script: `routing-evidence/crystal-escape/group_c_crystal_escape.py` (two phases — strip/place — because pcbnew 9 returns an unusable board after Remove+Save+LoadBoard in one process). Then `move_two_terminal.py --ref C27 --ic U14` + `clean_dangling.sh` (two windows; the old GND feed to C27 was 3.5 mm long and started outside the first window).
+
+**Result** (kicad-cli 9.0.8, `pcb drc --format json --severity-all --all-track-errors`):
+```
+baseline (PR #5 tip 77b8ee2): Found 219 violations / Found 2 unconnected items
+after_c (crystal escape):      Found 219 violations / Found 2 unconnected items   drc_diff: 0 new identities, 0 new unconnected
+after_d (C27 under U14):       Found 219 violations / Found 2 unconnected items   drc_diff: 0 new identities, 0 new unconnected
+```
+Pad-to-pin: CRYSTAL1.1→B7 6.01→**0.98** mm; R28.2→B6 4.47→3.26; C46→crystal 1.10→1.03; C45→crystal 0.98→1.08; C27.V_LS→U14 D2 9.78→**0.21**. XTALI copper 9.02→2.84 mm (3→2 vias); XTALO 5.09→4.48 (3→2). Header `version 20241229` / `generator_version "9.0"` unchanged.
+
+**Unrouted count before -> after**: 2 -> 2 (the same cosmetic U15 same-net pairs).
+
+**Blockers / questions for the other side**:
+- **Refill zones only from the project directory.** Refilling the *untouched* board from a /tmp copy produced 5 phantom `track_dangling`/`via_dangling` and 4 phantom unconnected (U15 GND/V_LS balls; a GND via pair at (79,130), 20 mm away). Same board refilled from `kicad/` → baseline exactly. This is the zone-fill face of the "/tmp copies lose design rules" warning above; the script now copies its snapshot into the project before the final refill.
+- XTALO leg is 3.3 mm to R28 (XTALI got the short leg on purpose — it is the high-impedance node). Balancing both (135°/315°) costs XTALI ~1.1 mm.
+- Two ~1.5 mm In2 GND-pour slots under the BGA corner, through the already-perforated via field; DRC shows no connectivity change. If someone objects to slotting a plane, In1 is the alternative (same via field, same exceptions).
+- §11's "U14 has no decoupling cap" was wrong: it is C27 (drawn beside U14 on the schematic). Moved, not added — no BOM change. A bulk 1 µF for the flash would be a BOM decision for the owner.
+- U6 ↔ C21 (8.3 mm) still untouched. `fab_output/` not regenerated (untracked).

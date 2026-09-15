@@ -75,9 +75,10 @@ this directory.
 - **32.768 kHz crystal: 2.4 mm to the module pins**, caps 1.8 mm. Done.
 - **C31 is a codec cap, not U14's.** The §0.7 table listed U14 ↔ C31; the
   netlist puts C31 on `$1N151` = U15 balls A3/B3. It is now 1.4 mm from A3.
-  U14 (QSPI flash, V_LS balls D2/H4) has **no dedicated decoupling cap on
-  this BOM** — worth adding on the next revision; not something placement can
-  fix.
+  U14 (QSPI flash, V_LS balls D2/H4) — *correction (crystal-escape stage):*
+  it **does** have a cap, **C27** (100 nF, V_LS/GND), drawn beside U14 on
+  the schematic and left 9.8 mm away by the rescale; moved under the flash
+  in `../crystal-escape/`. No BOM addition needed.
 - **U15 has no +1.8V ball**; its supply is V_LS (C33). C1 is the *module's*
   +1.8V cap and now sits 1.0 mm from pin 38. The §0.7 row "U15 ↔ C1" was
   therefore the wrong pairing; it is left in the centre table for

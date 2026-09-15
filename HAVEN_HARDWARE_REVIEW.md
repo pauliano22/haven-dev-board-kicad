@@ -498,10 +498,58 @@ and after, identical by type+description; file header unchanged.
 | C22 / C16 / C18 / L2 → U2 | 10–14 mm | 0.9–2.2 mm |
 
 **Two corrections to §0.7's own pairings:** C31 is not U14's decoupling
-(its net is `$1N151` = U15 A3/B3; U14 has no dedicated cap on the BOM), and
+(its net is `$1N151` = U15 A3/B3; U14's cap is **C27** — §12 corrects the earlier "no cap on the BOM" reading), and
 U15 has no +1.8V ball — C1 is the module's cap. **Limit reached:** the codec
 crystal cannot get closer than ~6 mm of XTALI pad-to-ball without re-doing
 the BGA escape, because the kept escape vias sit in a B.Cu pocket bounded by
 the TDO/SDA1/DOUT diagonals (each crystal net hops over TDO on F.Cu with one
 new via). Load caps are tight to the crystal, which is the part of the
 loop that matters most. **Not done:** U6 ↔ C21 (8.3 mm).
+
+## 12. Crystal escape re-done, and the flash's cap found (2026-09-14)
+
+Follow-up to §11's one unfinished item, on branch `fix/codec-crystal-escape`
+(stacked on PR #5). Evidence and method:
+`routing-evidence/crystal-escape/README.md`.
+
+**Tool-verified (kicad-cli 9.0.8):** 219 violations / 2 unconnected before
+and after both stages, identical by type+description; `.kicad_pcb` header
+unchanged.
+
+| connection (pad → pin) | PR #5 | now |
+|---|---|---|
+| CRYSTAL1.1 (XTALI) → U15 B7 | 6.0 mm | **0.98 mm** |
+| R28.2 (XTALO) → U15 B6 | 4.5 mm | 3.3 mm |
+| C46 / C45 (33 pF) → crystal | 1.1 / 1.0 mm | 1.0 / 1.1 mm |
+| XTALI copper, vias | 9.0 mm, 3 | **2.8 mm, 2** |
+| C27 (100 nF V_LS) → U14 D2 | 9.8 mm | **0.21 mm** |
+
+**How:** the two via-in-pads at B6/B7 are kept; each net now runs a short
+inner-layer leg on **In2** (the second GND plane — the only layer in that
+corner with nothing but the through-via field, for which XTALI/XTALO already
+hold the per-pair `.kicad_dru` exceptions) to a new exit via beside the
+crystal, then a B.Cu stub. The crystal sits on B.Cu at (61.30, 112.35)
+**rotated 225°**: the pocket east of the BGA is a 3.5 mm diagonal band
+between SDA1's and PDMDIN's escapes, and the part only fits along it. Two
+~1.5 mm slots in the In2 GND pour result, through the already-perforated via
+field; no GND connectivity change in DRC.
+
+**Trade-off:** XTALI (the sensitive high-impedance input) got the short leg;
+XTALO/R28 stays ~3.3 mm because R28 must sit off the crystal's far pad in
+this orientation. Balancing the two legs (135°/315°) would put XTALI at
+~2.1 mm — the worse trade.
+
+**Correction to §11 / PR #5:** U14 (QSPI flash) *does* have a decoupling cap
+— **C27** (100 nF, V_LS/GND), drawn beside U14 on the schematic; the rescale
+had left it 9.8 mm away. It is now under the flash on B.Cu, 0.21 mm from
+ball D2. **No BOM change.** A bulk 1 µF alongside it would be a BOM addition
+for Paul to decide, not done here.
+
+**Still not done:** U6 ↔ C21 (8.3 mm). **Before ordering:** regenerate
+`fab_output/` (untracked) from this board.
+
+**Tooling lesson worth keeping:** refill zones only on the board *in the
+project directory*. The same board refilled from a /tmp copy (no `.kicad_pro`
+alongside) grows 5 phantom dangling warnings and 4 phantom unconnected items
+— the zone-fill face of the "/tmp copies lose the design rules" warning
+already in `CODEX_NOTES.md`.
