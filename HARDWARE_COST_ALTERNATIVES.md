@@ -135,6 +135,35 @@ Since the radio module itself is confirmed 0.65mm pitch (fine on its own),
 fixing these three parts plausibly removes the fine-pitch requirement from
 the board **entirely**, not just partially.
 
+## Update: the charger swap is more involved than first scoped
+
+Started the actual schematic rewiring and found a real complication this
+document understated. Checked BQ25120A's real net connections on the
+board directly (not assumed): it isn't just a charger. It also generates
+the **+1.8V rail that's shared between the MDBT531 (nRF5340) and U15
+(ADAU1860)** — confirmed via `HAVEN_HARDWARE_REVIEW.md`'s own decoupling-
+distance table, which lists "+1.8V" as a real shared digital supply rail —
+plus a `3V3` net and an `LSCTRL` (load switch control) net, both also
+originating from U2. **TP4056 is only a charger — it has no regulator
+outputs at all.** A straight swap would leave the nRF5340 and the audio
+codec with no 1.8V supply.
+
+This means the real fix isn't "swap the charger chip," it's "replace one
+highly-integrated charger+regulator+load-switch chip with a simple charger
+**plus** a separate small buck/LDO regulator chip" for whatever rails
+turn out to be genuinely regulated outputs (vs. just switched-through
+battery voltage — `3V3`'s exact nature (a real regulated rail, or just
+VBAT passed through the SW/load-switch pin) isn't confirmed yet and needs
+the real BQ25120A pin-function table, not a guess, before wiring the
+replacement). Codec pin-mapping (I2S/PDM/speaker-output pin names on
+TLV320AIC3100 vs. ADAU1860) has the same "needs the real datasheet table,
+not a guess" requirement — found real, confirmed KiCad symbols for both
+replacement chips (TLV320AIC3100, TP4056) in the standard library, and
+confirmed TLV320AIC3100 is active/in-stock, but haven't yet done the actual
+pin-by-pin rewiring since guessing at pin names on a power-sequencing-
+sensitive subsystem is exactly the kind of shortcut that caused the
+crystal-placement bug in the first place.
+
 ## Not yet done / needs a real decision
 
 This is a real architecture change, not a tweak — it means re-deriving the
