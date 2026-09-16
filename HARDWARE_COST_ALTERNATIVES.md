@@ -304,11 +304,20 @@ over:** the 3 brand-new nets that only exist between my new parts
 "dangling" in ERC, even though every label's coordinate was computed the
 same way as the working ones and cross-checked against a known-good
 existing example (R28's real labels) to confirm the placement formula
-itself is right. Ruled out several real hypotheses by direct testing:
-not a pin-UUID collision (pins carry no UUID in this format at all), not
-a symbol-unit-index mismatch (confirmed unit 1 in both the working
-original and my new instances). Root cause not found yet — flagged
-honestly rather than assumed benign or silently fixed. Practical impact
+itself is right. Ruled out several real hypotheses by direct testing: not a pin-UUID
+collision (pins carry no UUID in this format at all), not a symbol-unit-
+index mismatch (confirmed unit 1 in both the working original and my new
+instances), and not unquoted UUIDs (checked whether my new labels'
+`(uuid 6137e1d8-...)` lacking quotes — vs. the original file's quoted
+`(uuid "00000000-...")` — mattered; it doesn't, a pure unmodified
+round-trip through the same library produces unquoted UUIDs throughout
+and still loads/ERCs fine, so that's just this library's normal output,
+not a defect). Root cause not found yet after real, specific attempts —
+flagged honestly rather than assumed benign or silently fixed. Stopping
+this specific investigation here rather than continuing to guess without
+a new concrete lead; next attempt should probably open the actual file
+in real KiCad's GUI to inspect visually, which isn't available in this
+environment. Practical impact
 if unresolved: those two specific sub-circuits (feedback divider,
 charge-current/temp-sense resistors) might need their connections
 double-checked by hand before trusting this for real, even though the
