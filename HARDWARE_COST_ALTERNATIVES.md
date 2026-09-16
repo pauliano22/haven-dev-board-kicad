@@ -197,9 +197,29 @@ replaced.
    being able to power that rail down independently for battery savings —
    worth checking, but likely a safe simplification for a bring-up board.
 
-Still not done: picking the actual buck regulator part number and wiring
-it in, then the same real-datasheet-table treatment for
-TLV320AIC3100's I2S/PDM/speaker pins before touching the schematic file.
+**Buck regulator chosen and fully verified: TI TPS62822.** 2.4V-5.5V
+input (comfortably covers a single LiPo cell's full range), fixed 1.8V
+output option, up to 2A (far more than needed, doesn't hurt), 4µA
+quiescent current (good for battery life), confirmed in-stock on LCSC.
+Package: 8-pin VSON, 1.5x2mm, **0.5mm pitch — standard fab tier, not the
+exotic fine-pitch category being removed.** Both a standard KiCad symbol
+(`TPS62822DLC`) and the *exact* matching footprint
+(`Texas_VSON-HR-8_1.5x2mm_P0.5mm`) already exist in KiCad's own standard
+library — nothing hand-built needed for this part either.
+
+**Full replacement part list, now fully verified (real symbols, real
+footprints, real stock, no guessing):**
+| Old part | New part | Package | Pitch |
+|---|---|---|---|
+| ADAU1860 (audio DSP) | TLV320AIC3100 | QFN-32, 5x5mm | 0.5mm |
+| BQ25120A (charger+regulator) | TP4056 (charge) + TPS62822 (1.8V buck) | SOP-8 / VSON-8 | 1.27mm / 0.5mm |
+| BQ27220 (fuel gauge) | *(removed — confirmed unused)* | — | — |
+
+Still not done: the actual pin-by-pin schematic rewiring (need
+TLV320AIC3100's real I2S/PDM/speaker pin table before touching the
+schematic file, same discipline as everything above), and confirming
+whether `3V3`'s switch-disable behavior is actually needed anywhere
+before simplifying it to a direct battery connection.
 
 ## Not yet done / needs a real decision
 
