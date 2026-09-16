@@ -383,6 +383,28 @@ Worth combining with the cheaper-part redesign above, not instead of it:
   coursework — only relevant if this ties to an actual Cornell class with
   a professor willing to request on the student's behalf.
 
+**Cornell startup/pitch programs — real, but check current deadlines
+carefully, several 2026-cycle ones have likely already closed:**
+- **eLab** (Cornell's student startup accelerator): $5,000 investment,
+  mentorship, pitch to alumni/investors, MBA credit. The 2026-27 cohort
+  application closed August 30, 2026 — missed for now, worth applying
+  next cycle.
+- **Cornell Startup Awards**: real, large prizes (up to $100,000),
+  held annually each May — worth targeting for May 2027 with more
+  runway to prepare.
+- **Mark Mobius Pitch Competition** (Cornell EMC²): $30,000 top prize,
+  but themed around "emerging markets" impact specifically and its 2026
+  registration window (by April) has already passed — not a clean fit
+  for Haven's positioning anyway without a genuine emerging-markets
+  angle, and search results on exact dates were inconsistent enough that
+  this one needs a direct check with the organizers rather than trusting
+  what's written here.
+- Bigger picture: **the free/cheap wins (RPL for the enclosure, PCBWay/
+  JLC discounts, TI samples) are usable right now with no application
+  cycle to miss.** The larger competitive funding (eLab, Startup Awards)
+  is worth planning toward for next year's cycles, not something to wait
+  on before making progress now.
+
 ## Not yet done / needs a real decision
 
 This is a real architecture change, not a tweak — it means re-deriving the
