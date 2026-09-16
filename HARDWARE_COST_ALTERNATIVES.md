@@ -164,18 +164,42 @@ pin-by-pin rewiring since guessing at pin names on a power-sequencing-
 sensitive subsystem is exactly the kind of shortcut that caused the
 crystal-placement bug in the first place.
 
-**Follow-up: BQ25120A's real architecture, from its own datasheet.** It
-has *two* independent regulated outputs, not one: a switching buck
-regulator (SW pin, needs an external inductor — the board already has
-one, `L2`, 2.2µH) and a separately-configurable load-switch/LDO output
-(enabled via the `LSCTRL` pin, can either pass battery voltage through
-or regulate up to 3.3V). Very likely mapping: the buck output is `+1.8V`
-(the shared MDBT531/ADAU1860 rail), and the load-switch/LDO output is
-`3V3`. Not 100% confirmed pin-by-pin yet — that needs the full datasheet
-pin table, not this summary-level read — but this is now a much clearer
-target: **the replacement needs one small buck regulator chip (reusing
-the existing inductor) plus TP4056 for charging**, not a mystery
-component count. Good next step, not yet done.
+**Follow-up: pulled BQ25120A's real datasheet pin table (not a summary) and
+confirmed the mapping exactly.** Pin `B5` (`SYS`, the buck converter's
+regulated system output, **default 1.8V** per the datasheet's own device
+comparison table) is our board's `+1.8V` net. Pin `C5` (`LS/LDO`, the
+configurable load-switch-or-LDO output, enabled by `LSCTRL`, **default
+mode: plain load switch**, i.e. switched-through battery voltage, not a
+true regulated 3.3V) is our board's `3V3` net — so "3V3" is presently a
+slight misnomer; by default it's just switched battery voltage (3.0-4.2V
+range for a single LiPo cell), not a regulated 3.3V rail, unless firmware
+configures the LDO mode via I2C.
+
+Also checked a real worry and ruled it out: the datasheet lists pins `B4`
+and `C4` together under one "VINLS" name, which looked like it might mean
+both balls must be tied to the same net — our board only ties `B4` to
+`V_PMID` and leaves `C4` on its own net (just its own 1µF decoupling cap,
+per the datasheet's own recommendation for that pin). Traced `C4`'s net
+fully to confirm it goes nowhere else. This is standard for DSBGA
+packages (multiple balls per logical pin for routing flexibility, not a
+same-net requirement) — not a bug, and moot regardless since U2 is being
+replaced.
+
+**This gives a precise target for the replacement power tree:**
+1. TP4056 (or MCP73831) — charging only, as already planned.
+2. One small buck regulator IC, reusing the existing `L2` inductor,
+   generating the `+1.8V` rail (this one needs to be a real regulated
+   output — both the nRF5340 and the new codec depend on it).
+3. `3V3`: since the original default behavior was just switched *battery*
+   voltage (not actually regulated to 3.3V), the simplest correct
+   replacement is to just wire this net directly to battery voltage
+   (dropping the load-switch/enable behavior) unless something depends on
+   being able to power that rail down independently for battery savings —
+   worth checking, but likely a safe simplification for a bring-up board.
+
+Still not done: picking the actual buck regulator part number and wiring
+it in, then the same real-datasheet-table treatment for
+TLV320AIC3100's I2S/PDM/speaker pins before touching the schematic file.
 
 ## Not yet done / needs a real decision
 
