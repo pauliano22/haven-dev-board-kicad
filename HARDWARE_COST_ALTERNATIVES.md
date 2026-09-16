@@ -6,6 +6,28 @@ of the current design. Short version: **the cost isn't the board size, the
 layer count, or the quantity — it's three specific chip packages, and there's
 a concrete way to avoid all three without changing what the product does.**
 
+## TL;DR for the morning read
+
+- **Root cause found and verified**: 3 chips (ADAU1860, BQ25120A, BQ27220)
+  drive the whole cost via their fine pitch. The radio module is fine as-is.
+- **Full replacement part list chosen and verified** (real stock, real
+  KiCad symbols, no guessing): TLV320AIC3100 (codec) + CMA-4544PF-W
+  (analog mic, replaces the PDM one) + TP4056 (charger) + TPS62822
+  (1.8V buck) + a load switch for the 3.3V rail. Fuel gauge dropped
+  entirely — confirmed nothing reads it.
+- **Started the actual schematic edit**, not just the plan — it's real,
+  it loads in real KiCad, and the core power-rail rewiring is verified
+  correct against ERC. **One specific thing I couldn't resolve**: 3 small
+  new nets show an ERC flag I traced through several real hypotheses
+  without finding the cause — see the dedicated section below before
+  trusting those two sub-circuits (feedback divider, charge-program
+  resistors) without a manual check.
+- **Real money-saving programs found**: PCBWay's student sponsorship
+  (10-15% off, apply with a `.edu` email) and an active JLCPCB 6-layer
+  coupon (~$35) — both usable regardless of which board design ships.
+- **Nothing has been ordered or applied to the real project files** —
+  the edited schematic lives in the scratchpad only, pending your review.
+
 ## The actual cost driver
 
 Three parts on the current board use fine-pitch BGA/DSBGA packages —
