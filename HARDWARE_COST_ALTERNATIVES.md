@@ -164,6 +164,19 @@ pin-by-pin rewiring since guessing at pin names on a power-sequencing-
 sensitive subsystem is exactly the kind of shortcut that caused the
 crystal-placement bug in the first place.
 
+**Follow-up: BQ25120A's real architecture, from its own datasheet.** It
+has *two* independent regulated outputs, not one: a switching buck
+regulator (SW pin, needs an external inductor — the board already has
+one, `L2`, 2.2µH) and a separately-configurable load-switch/LDO output
+(enabled via the `LSCTRL` pin, can either pass battery voltage through
+or regulate up to 3.3V). Very likely mapping: the buck output is `+1.8V`
+(the shared MDBT531/ADAU1860 rail), and the load-switch/LDO output is
+`3V3`. Not 100% confirmed pin-by-pin yet — that needs the full datasheet
+pin table, not this summary-level read — but this is now a much clearer
+target: **the replacement needs one small buck regulator chip (reusing
+the existing inductor) plus TP4056 for charging**, not a mystery
+component count. Good next step, not yet done.
+
 ## Not yet done / needs a real decision
 
 This is a real architecture change, not a tweak — it means re-deriving the
