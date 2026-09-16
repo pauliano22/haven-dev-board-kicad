@@ -251,9 +251,35 @@ bandwidth, 3-10V compatible supply, omnidirectional electret condenser.
 | BQ25120A (charger+regulator) | TP4056 + TPS62822 | Charge + 1.8V buck |
 | BQ27220 (fuel gauge) | *(removed)* | Confirmed unused |
 
-Still not done: the actual pin-by-pin schematic rewiring, and confirming
-whether `3V3`'s switch-disable behavior is actually needed anywhere
-before simplifying it to a direct battery connection.
+## Started the actual schematic edit — how this file's connectivity works
+
+Installed `kiutils` (a real, structured KiCad-file library) rather than
+editing the raw schematic text blind. First real finding: **this
+schematic has no wire segments at all** — connectivity is defined purely
+by net-name labels placed exactly at each pin's coordinate, no drawn
+wires between them. That's consistent with this being a programmatically-
+generated port (matches how the PCB side of this project has always been
+described) rather than a hand-drawn schematic.
+
+Confirmed by locating U15's real label positions: e.g. `SCL1` at
+(393.7, 91.44), `DOUT` at (480.06, 100.33) — a left column and a right
+column of labels, matching a large auto-generated 56-pin symbol body with
+pins on both sides. This means adding a new component correctly means:
+place the new symbol, then place net-label text objects at each of its
+real pin coordinates (computed from the symbol's own pin offsets +
+placement + rotation) — no wire-drawing needed, but every label position
+has to be right or the pin silently doesn't connect (KiCad won't error on
+a slightly-off label, it'll just make a new, wrong, isolated net).
+
+**Not done yet, and this is the real next step:** the four new
+components' symbols (TLV320AIC3100, TP4056-42-ESOP8, TPS62822DLC,
+CMA-4544PF-W) live in KiCad's *global* standard library, not in this
+project's own schematic file yet — they need to be imported into this
+file's local symbol library before any instance can be placed, then each
+one's real pin table (already gathered for TLV320AIC3100 and the power
+chips) used to compute exact label placement. Sizable, mechanical-but-
+precise work — better done as its own careful pass than squeezed in
+alongside everything else tonight.
 
 ## Not yet done / needs a real decision
 
