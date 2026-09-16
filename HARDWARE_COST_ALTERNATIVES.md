@@ -334,12 +334,18 @@ instances), and not unquoted UUIDs (checked whether my new labels'
 `(uuid "00000000-...")` — mattered; it doesn't, a pure unmodified
 round-trip through the same library produces unquoted UUIDs throughout
 and still loads/ERCs fine, so that's just this library's normal output,
-not a defect). Root cause not found yet after real, specific attempts —
-flagged honestly rather than assumed benign or silently fixed. Stopping
-this specific investigation here rather than continuing to guess without
-a new concrete lead; next attempt should probably open the actual file
-in real KiCad's GUI to inspect visually, which isn't available in this
-environment. Practical impact
+not a defect). Also tried, after being asked to keep going: renaming the 3 nets to
+plain alphabetic names (`FBDIV`/`CHGPROG`/`CHGTEMP` instead of
+`FB_1V8`/`TP4056_PROG`/`TP4056_TEMP`) in case digit-containing names
+were the trigger — same 3 flags, same violation count. Also checked for
+a project-level "symbol instances" registry separate from each symbol's
+own data, in case pre-existing parts are tracked there and new ones
+aren't — the file has none at all, for any component, old or new.
+Root cause genuinely not found after real, specific attempts across two
+sessions — flagged honestly rather than assumed benign or silently
+fixed. This needs real KiCad's GUI (not available in this environment)
+to actually resolve; closing this investigation for good rather than
+continuing to guess. Practical impact
 if unresolved: those two specific sub-circuits (feedback divider,
 charge-current/temp-sense resistors) might need their connections
 double-checked by hand before trusting this for real, even though the
