@@ -333,6 +333,28 @@ for a change this size without a look from a person first. Also: the
 four new components' *footprints* still need to go on the PCB itself —
 this pass was schematic-only.
 
+## Real, stackable discounts found on top of the redesign
+
+Worth combining with the cheaper-part redesign above, not instead of it:
+
+- **PCBWay Educational Sponsor Program**: real, confirmed how-to. Email
+  `sponsor@PCBWay.com` from a `.edu` address with your student ID and a
+  short project description; they reply within 24 hours with a coupon
+  code, typically 10-15% off future orders. Requirement is just "the
+  project includes a PCB" — this genuinely qualifies.
+- **JLCPCB currently has an active coupon specifically for 6-layer PCBs**
+  (~$35 off), separate from any student program — worth checking
+  `jlcpcb.com/coupon-center` for current codes before ordering either the
+  original or redesigned board.
+- **TI's sample program** may be usable with a Cornell `.edu` address —
+  their restriction is against free consumer email domains (Gmail/Yahoo),
+  not academic ones — worth trying for small quantities of the new
+  TLV320AIC3100/TPS62822/TP4056 parts directly from TI at low/no cost
+  before paying distributor pricing for them.
+- **TI's University Program** offers free kits to faculty for
+  coursework — only relevant if this ties to an actual Cornell class with
+  a professor willing to request on the student's behalf.
+
 ## Not yet done / needs a real decision
 
 This is a real architecture change, not a tweak — it means re-deriving the
