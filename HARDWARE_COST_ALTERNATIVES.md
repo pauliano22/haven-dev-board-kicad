@@ -271,15 +271,58 @@ placement + rotation) — no wire-drawing needed, but every label position
 has to be right or the pin silently doesn't connect (KiCad won't error on
 a slightly-off label, it'll just make a new, wrong, isolated net).
 
-**Not done yet, and this is the real next step:** the four new
-components' symbols (TLV320AIC3100, TP4056-42-ESOP8, TPS62822DLC,
-CMA-4544PF-W) live in KiCad's *global* standard library, not in this
-project's own schematic file yet — they need to be imported into this
-file's local symbol library before any instance can be placed, then each
-one's real pin table (already gathered for TLV320AIC3100 and the power
-chips) used to compute exact label placement. Sizable, mechanical-but-
-precise work — better done as its own careful pass than squeezed in
-alongside everything else tonight.
+## Actually executed the power-tree edit (charger + buck + load switch)
+
+Wrote the real edit (via `kiutils`, not raw text) and got it to a
+genuinely loadable, ERC-checkable state — this took real debugging, not
+one clean pass:
+
+- **Found and fixed a real kiutils bug**: any symbol using KiCad's
+  `extends` inheritance (TPS62822DLC extends TPS62823DLC) serializes into
+  a file real `kicad-cli` refuses to open at all ("Failed to load
+  schematic"), confirmed by isolating it against known-good cases that
+  loaded fine. Fixed by flattening — copying the base symbol's real
+  graphic under the derived part's own name instead of relying on the
+  inheritance link. Same part electrically, just not dependent on KiCad
+  re-resolving a link that doesn't survive the round-trip.
+- **Verified the fix against real KiCad ERC**, not just "kiutils can read
+  it back": copied the result into an isolated scratch copy of the whole
+  project and ran `kicad-cli sch erc`. It loads. 87 violations vs. an
+  84-violation baseline on the unmodified file.
+- **Confirmed the reused nets are genuinely correct**: `VCC`, `GND`,
+  `VUSB`, `SW`, `+1.8V`, `3V3`, `LSCTRL` — every one of these already has
+  many pre-existing correctly-placed labels elsewhere in the design
+  (e.g. `GND` appears 104 times, only 1 pre-existing instance flagged as
+  an issue). Adding new same-named labels for the new charger/buck/load-
+  switch chips didn't add a single new violation on any of these —
+  meaning the actual power-rail rewiring is sound.
+
+**One real, unresolved anomaly, reported honestly rather than glossed
+over:** the 3 brand-new nets that only exist between my new parts
+(`FB_1V8`, the buck's feedback divider node; `TP4056_PROG` and
+`TP4056_TEMP`, the charger's program/temp-sense resistors) each show as
+"dangling" in ERC, even though every label's coordinate was computed the
+same way as the working ones and cross-checked against a known-good
+existing example (R28's real labels) to confirm the placement formula
+itself is right. Ruled out several real hypotheses by direct testing:
+not a pin-UUID collision (pins carry no UUID in this format at all), not
+a symbol-unit-index mismatch (confirmed unit 1 in both the working
+original and my new instances). Root cause not found yet — flagged
+honestly rather than assumed benign or silently fixed. Practical impact
+if unresolved: those two specific sub-circuits (feedback divider,
+charge-current/temp-sense resistors) might need their connections
+double-checked by hand before trusting this for real, even though the
+main power path (battery → charger → buck → 1.8V rail, and battery →
+load switch → 3.3V rail) checks out.
+
+**Where the actual result lives:** the edited schematic is in the
+scratchpad
+(`haven_dev_board_sch_STAGE4.kicad_sch`), not applied to the real
+project file — editing that file directly was blocked by a safety
+permission (irreversible local destruction), which is the right call
+for a change this size without a look from a person first. Also: the
+four new components' *footprints* still need to go on the PCB itself —
+this pass was schematic-only.
 
 ## Not yet done / needs a real decision
 
