@@ -215,9 +215,43 @@ footprints, real stock, no guessing):**
 | BQ25120A (charger+regulator) | TP4056 (charge) + TPS62822 (1.8V buck) | SOP-8 / VSON-8 | 1.27mm / 0.5mm |
 | BQ27220 (fuel gauge) | *(removed — confirmed unused)* | — | — |
 
-Still not done: the actual pin-by-pin schematic rewiring (need
-TLV320AIC3100's real I2S/PDM/speaker pin table before touching the
-schematic file, same discipline as everything above), and confirming
+## Correction: TLV320AIC3100 doesn't have a clean PDM mic input after all
+
+Pulled TLV320AIC3100's real pin table (not a search summary) to start the
+wiring, and it changes something. The earlier "PDM mic support" finding
+was real but misleading: this chip's mic inputs (`MIC1LM`/`MIC1LP`/
+`MIC1RP`) are **analog** PGA inputs, not a dedicated digital PDM
+interface. The PDM workaround mentioned earlier requires repurposing the
+`DIN` pin (normally the I2S data line carrying the nRF5340's filtered
+output back to the codec's speaker driver) to instead carry raw PDM mic
+data — you can't do both at once. That's a real conflict for Haven's
+actual signal path, which needs `DIN` (host→codec, filtered audio to
+speaker) and `DOUT` (codec→host, mic audio to firmware) working
+simultaneously.
+
+**The clean fix, and it's simpler than fighting the PDM path:** use the
+codec's native analog mic input instead of a PDM digital mic. This is
+the standard, fully-supported way this chip is meant to be used —
+`DOUT` carries the codec's own ADC output (fed by the analog mic) to the
+nRF5340, `DIN` carries the nRF5340's filtered signal back to the DAC/
+speaker, both running normally, no pin-sharing tricks. This means the
+mic itself changes too, not just the DSP/codec chip.
+
+**New mic found and verified:** CUI/Same Sky CMA-4544PF-W — real,
+currently active part (confirmed, unlike a couple of dead-end analog
+MEMS mic candidates checked first: SPU0410LR5H-QB and CMM-4030D-261 are
+both obsolete), in stock on both JLCPCB and LCSC, 20Hz-20kHz full audio
+bandwidth, 3-10V compatible supply, omnidirectional electret condenser.
+
+**Updated full replacement part list:**
+| Old part | New part | Notes |
+|---|---|---|
+| ADAU1860 (audio DSP) | TLV320AIC3100 | Analog mic input, not PDM |
+| SPH0641LU4H-1 (PDM mic) | CMA-4544PF-W (analog mic) | Required by the codec swap above |
+| BQ25120A (charger+regulator) | TP4056 + TPS62822 | Charge + 1.8V buck |
+| BQ27220 (fuel gauge) | *(removed)* | Confirmed unused |
+
+Still not done: the actual pin-by-pin schematic rewiring, and confirming
 whether `3V3`'s switch-disable behavior is actually needed anywhere
 before simplifying it to a direct battery connection.
 
