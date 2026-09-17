@@ -715,3 +715,48 @@ outweighs everything the new parts add. Zero violations of any kind
 involve the new codec/mic footprints once the above were fixed — checked
 directly, not inferred from the total count. Routing is still not done
 for any of the new parts (charger or codec/mic).
+
+## Update 5: found the missing mic-bias footprints, and a real reason routing needs a human/GUI
+
+Same branch. Two smaller findings this tick:
+
+**A real gap caught and fixed**: R_MICBIAS and C_MICIN (the mic-bias
+network from the codec/mic schematic redesign) had never actually been
+placed on the PCB — only the codec and mic footprints themselves made it
+into the earlier commit. Added now, using the project's existing R0402/
+C0402 footprints; `kicad-cli pcb drc` confirms 215 violations, same clean
+baseline as before, zero new issues.
+
+**A real, informative failed attempt at manual routing.** With every new
+part now placed, I checked which of the newest nets (FB_1V8,
+TP4056_PROG, MICBIAS, MIC_IN, MIC_IN_AC) were "local" enough — all
+endpoints close together, area pre-checked clear of existing copper — to
+route by hand with simple scripted straight-line traces, as a safer
+subset of the full routing job. FB_1V8 and TP4056_PROG qualified (their
+endpoints are a few mm apart in an already-verified-clear zone); the
+mic-bias nets didn't (the codec sits ~40mm from the mic-bias network,
+crossing real existing copper — correctly left alone rather than forced).
+
+Routed FB_1V8 and TP4056_PROG with direct/short-chain traces between
+pads. **`kicad-cli pcb drc` immediately caught two real shorts**: both
+traces, aimed at one pin of a tightly-pitched new IC (TPS62822's 0.5mm-
+pitch VSON-8, TP4056's SOP-8), passed close enough to graze the
+*adjacent* pin on the same package and briefly registered as touching it.
+Neither pre-check (courtyard scan, copper scan, board-polygon check) that
+worked for placement catches this — it's specifically about trace-to-
+adjacent-pad clearance on a single fine-pitch part, a different failure
+mode than anything found so far this session. **Reverted rather than
+guess at a fix** — hand-tuning exact trace paths around 0.5mm-pitch pins
+via scripted coordinates, with no interactive collision feedback, is a
+real path to introducing a short that DRC happens not to catch on the
+next attempt. This specific job needs KiCad's actual interactive router
+(which respects pad clearance live as you draw) or a real autorouter —
+neither is available in this environment (checked: `kicad-cli` has no
+routing subcommand, no Freerouting install present) — not more scripted
+guessing.
+
+**So: footprint placement and net assignment are done for all 5 new
+parts (charger + codec + mic). Copper routing is 0% done, deliberately,
+because it's the one piece of this whole effort that genuinely needs a
+real KiCad GUI session or a real autorouter, not just careful scripting
+and verification like everything else so far.**
