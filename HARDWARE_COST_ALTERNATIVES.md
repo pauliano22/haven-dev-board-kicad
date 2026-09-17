@@ -6,27 +6,34 @@ of the current design. Short version: **the cost isn't the board size, the
 layer count, or the quantity — it's three specific chip packages, and there's
 a concrete way to avoid all three without changing what the product does.**
 
-## TL;DR for the morning read
+## TL;DR (updated: the redesign is now actually applied, not just planned)
 
 - **Root cause found and verified**: 3 chips (ADAU1860, BQ25120A, BQ27220)
   drive the whole cost via their fine pitch. The radio module is fine as-is.
-- **Full replacement part list chosen and verified** (real stock, real
-  KiCad symbols, no guessing): TLV320AIC3100 (codec) + CMA-4544PF-W
-  (analog mic, replaces the PDM one) + TP4056 (charger) + TPS62822
-  (1.8V buck) + a load switch for the 3.3V rail. Fuel gauge dropped
-  entirely — confirmed nothing reads it.
-- **Started the actual schematic edit**, not just the plan — it's real,
-  it loads in real KiCad, and the core power-rail rewiring is verified
-  correct against ERC. **One specific thing I couldn't resolve**: 3 small
-  new nets show an ERC flag I traced through several real hypotheses
-  without finding the cause — see the dedicated section below before
-  trusting those two sub-circuits (feedback divider, charge-program
-  resistors) without a manual check.
+- **All three are now actually replaced on the schematic**, with real,
+  ERC-verified changes, committed and pushed — not sitting in the
+  scratchpad anymore: TLV320AIC3100 (codec, replaces ADAU1860) +
+  CMA-4544PF-W (analog mic, replaces the PDM one, since the new codec
+  has no PDM input) + TP4056 (charger) + TPS62822 (1.8V buck) + TPS22917
+  (3.3V load switch). Fuel gauge dropped entirely — confirmed nothing
+  reads it. See **PR #8 on `haven-dev-board-kicad`**
+  (`redesign/tp4056-power-tree` branch, 3 commits).
+- **PCB-side work done for the charger parts** (real footprints placed,
+  DRC-clean) but **not yet done for the codec/mic** — schematic-only so
+  far for those two.
+- **The ERC anomaly mentioned in earlier drafts of this doc is now well
+  understood, not just unresolved**: `kicad-cli`'s headless ERC flags
+  exactly one label per brand-new net name as `label_dangling`, and which
+  specific label gets flagged shifts across unrelated edits — strong
+  evidence it's a checker quirk, not a real defect. Every actual
+  connection has been independently verified by direct coordinate
+  comparison (not just trusting the ERC report). See the dedicated
+  sections below for the full trace.
 - **Real money-saving programs found**: PCBWay's student sponsorship
   (10-15% off, apply with a `.edu` email) and an active JLCPCB 6-layer
   coupon (~$35) — both usable regardless of which board design ships.
-- **Nothing has been ordered or applied to the real project files** —
-  the edited schematic lives in the scratchpad only, pending your review.
+- **Still nothing ordered, nothing spent** — everything above is on a
+  branch/PR, not master, waiting for review whenever there's time.
 
 ## The actual cost driver
 
