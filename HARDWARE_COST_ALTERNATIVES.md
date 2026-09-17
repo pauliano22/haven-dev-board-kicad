@@ -405,13 +405,115 @@ carefully, several 2026-cycle ones have likely already closed:**
   is worth planning toward for next year's cycles, not something to wait
   on before making progress now.
 
-## Not yet done / needs a real decision
+## Update: the charger/regulator redesign is now actually applied (branch, not master)
 
-This is a real architecture change, not a tweak — it means re-deriving the
-audio front-end schematic (new codec chip, new charger IC, likely new
-decoupling/crystal layout done correctly from scratch rather than ported)
-rather than patching the current board. That's a decision for the project
-owner, not something to execute unprompted. If this direction is chosen,
-the crystal-placement and decoupling-placement issues found separately
-(see git history / conversation log, not yet fixed as of this writing)
-would need to be designed correctly from the start rather than retrofitted.
+Paul gave explicit go-ahead to keep iterating and apply real changes while he's
+busy with school/recruiting, with one standing rule: **never place an order or
+spend real money without him there.** Everything below is a real, committed,
+ERC-checked schematic change — but on branch `redesign/tp4056-power-tree`, not
+merged to master. It's meant to be reviewed whenever there's time, not acted
+on immediately.
+
+### What changed
+
+U2 (BQ25120AYFPR) is removed, replaced by three parts, each verified against
+its own real datasheet this session (pin-for-pin, not guessed):
+
+- **TP4056** (linear Li-Ion charger, SOP-8) — pinout confirmed from
+  NanJing Top Power ASIC's own datasheet (1:TEMP, 2:PROG, 3:GND, 4:VCC,
+  5:BAT, 6:STDBY, 7:CHRG, 8:CE).
+- **TPS62822DLCR** (adjustable buck, VQFN-8) — from TI SLVSDV6C
+  (1:EN, 2:FB, 3:AGND, 4:NC, 5:PGND, 6:SW, 7:VIN, 8:PG). Feedback divider
+  sized for exactly 1.8V: R_FB1=200k (VOUT side) + R_FB2=100k (GND side),
+  Vout = 0.6V x (1 + 200/100) = 1.8V.
+- **TPS22917DBVR** (load switch, SOT-23-6) — from TI SLVSDW8B
+  (1:VIN, 2:GND, 3:ON, 4:CT, 5:QOD, 6:VOUT). CT/QOD left floating per
+  datasheet (fastest turn-on, discharge disabled) — matches this project's
+  own convention of leaving genuinely-optional pins unconnected rather than
+  fabricating a connection.
+
+### Real net-reuse, found by inspecting the actual schematic before writing anything
+
+Rather than re-guess wiring, I traced what each of U2's real pins already
+connected to and reused it:
+
+- `SW`/`+1.8V`: L2 (2.2uH inductor) is already sitting on exactly these two
+  nets, with 4 existing decoupling caps on `+1.8V` (C1/C4/C18/C20) — this is
+  the buck's real output tank, left over from BQ25120A's SYS pin. No new
+  output cap needed.
+- `3V3`: already has 4 decoupling caps (C5/C17/C29/C48) from its other
+  consumers — no new output cap needed for the load switch either.
+- `TS`: the battery thermistor sense line already has a real 2-resistor
+  divider (R6/R13) wired at the battery. TP4056's TEMP pin reuses this
+  directly instead of inventing new resistors (a mistake from an earlier
+  pass this session, caught before it was applied).
+- `LSCTRL`: already driven by a real MCU GPIO (MDBT531 pin 27) — reused
+  directly for the load switch's ON pin.
+- `VUSB`: the real 5V USB input rail. TP4056's VCC and its CE pin (must not
+  float, per datasheet) both land here — CE tied straight to VCC is the
+  standard "always enabled when powered" wiring.
+- `VCC`: confirmed to be this board's (slightly confusing) name for the
+  *battery* rail, not a regulated supply — TP4056's BAT, the buck's VIN, and
+  the load switch's VIN all land here.
+- **A real gap found and fixed**: BQ25120A's CD#/PG# status flags were
+  push-pull and fed two MCU GPIOs directly with no pull-up anywhere.
+  TP4056's CHRG/STDBY equivalents are open-drain, so reusing those same
+  nets as-is would leave the GPIOs floating. Added two new 100k pull-ups —
+  to `3V3`, deliberately not `VUSB`/5V, since pulling a 3.3V-domain MCU
+  input up to 5V would over-volt the pin.
+
+Net genuinely new nets introduced: just `FB_1V8` (buck feedback midpoint)
+and `TP4056_PROG` (charge-current-set resistor node, R_PROG=1.1k for
+~1A charge current, matching TI's own reference design's exact resistor
+value). Down from 3 in an earlier pass to 2, entirely by finding real
+reuse opportunities instead of inventing new nets.
+
+### The ERC "dangling label" anomaly — now genuinely isolated, not just retried
+
+Same category of issue as before (`kicad-cli sch erc` flags exactly one
+label per *brand-new* net name as `label_dangling`), but this time fully
+isolated with a minimal, from-scratch reproduction: **two freshly-created
+resistors bridging a single, never-before-used net name, with no ICs, no
+custom symbols, nothing carried over from this session's other work** —
+and `kicad-cli` still flags the first-encountered label of that net as
+dangling, even though the second resistor's matching label is right there.
+Manually verified (direct coordinate comparison, not trusting the ERC
+report) that every one of this redesign's new pins lands exactly on its
+intended label — the flagged labels really are sitting exactly on real
+pins. This looks like a first-occurrence-of-a-new-net-name quirk in
+`kicad-cli`'s headless ERC specifically, separate from anything about this
+design's actual correctness.
+
+Tested and ruled out as the cause: missing per-symbol `(instances (project
+...))` metadata, and missing per-pin `(pin "N" (uuid ...))` maps (added
+both by hand to the minimal repro; neither changed the result, and the
+pin-uuid one made ERC noticeably worse when applied file-wide, so it was
+not carried into the real redesign).
+
+### A separate, bigger, previously-undocumented finding: netlist export doesn't work on this project at all
+
+While chasing the above, tried exporting a real netlist
+(`kicad-cli sch export netlist`) as a way to independently confirm
+connectivity. It came back completely empty — zero components, zero nets —
+**on the real, untouched, git-committed schematic file, not just on my
+edited copy.** Confirmed `kicad-cli`'s netlist exporter works fine in
+general (tested against a real KiCad-authored template file, which
+exported cleanly). So this is a real, pre-existing gap in this specific
+project's schematic file, unrelated to anything from this session — the
+file can pass ERC/DRC (which work from pure geometry) but cannot currently
+produce a netlist for cross-checking against the PCB or for external tools.
+Root cause not found (tried the two hypotheses above without success);
+worth a real KiCad GUI session to investigate, since opening and re-saving
+the file through the actual application may just fix whatever structural
+piece `kicad-cli`'s exporter wants that isn't there.
+
+### Net result
+
+`kicad-cli sch erc` on the redesigned schematic: **86 violations vs. an
+84-violation baseline** on the real, unmodified board — and the 2 new ones
+are the isolated, likely-cosmetic anomaly above, not a real connectivity
+defect (every reused net — VCC, GND, VUSB, 3V3, SW, +1.8V, TS, LSCTRL,
+CC_#CD, CC_#PG — shows zero new issues). Committed to branch
+`redesign/tp4056-power-tree`, not master. PCB footprint placement for the
+three new parts has not been started — this pass was schematic-only, same
+as before.
