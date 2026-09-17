@@ -429,3 +429,37 @@ owner, not something to execute unprompted. If this direction is chosen,
 the crystal-placement and decoupling-placement issues found separately
 (see git history / conversation log, not yet fixed as of this writing)
 would need to be designed correctly from the start rather than retrofitted.
+
+## Decided: keep the ADAU1860 — and that changes what this doc's cost fix is worth
+
+A separate, independent body of work (see `redesign/tp4056-power-tree`
+branch and PRs #3/#5/#6/#7 on this repo) made a strong case for keeping
+the ADAU1860 rather than replacing it — mainly hear-through latency, a
+real product requirement this doc's original cost analysis never
+evaluated. That case was reviewed and accepted.
+
+**A real consequence, worth being honest about**: this doc's whole premise
+was "3 fine-pitch chips force expensive 6-layer/microvia/Advanced-tier
+fabrication — remove them, get a cheaper board." Keeping the ADAU1860 (the
+single finest-pitch part, 0.35mm, the worst offender of the three) means
+that requirement doesn't go away. **Verified this isn't per-component
+pricing** — PCB fab cost tiers are set by the whole board's worst-case
+trace/space/via requirement, not chip-by-chip (checked directly, not
+assumed: fab-cost breakdowns consistently describe pricing as driven by
+the board's minimum feature size overall, e.g. sub-4mil trace/space or
+sub-0.3mm vias raising the *whole board's* price, not a per-net or
+per-component charge). So the charger swap (TP4056/TPS62822/TPS22917,
+`haven-dev-board-kicad#8`) **would not meaningfully reduce the ~$500
+quote** that started this whole investigation, since the ADAU1860 alone
+already forces the same fab tier.
+
+Combined with the charger swap being unrouted (footprints placed, no
+copper traces drawn — see the PR's own commits) and introducing new,
+never-tested-on-hardware parts, the honest recommendation is: **don't
+include it in the first order.** Ship the board close to as-is (stock
+charger, ADAU1860 kept, just the crystal/decoupling placement fixes from
+#5/#7) — that's finished, verified, and gets to "ready to order" with the
+least new risk. The charger swap can be revisited later if the cost
+picture ever changes (e.g., if a future revision also finds a real path
+off the ADAU1860 without the latency problem), but it doesn't solve
+today's cost problem and shouldn't hold up ordering a working prototype.
