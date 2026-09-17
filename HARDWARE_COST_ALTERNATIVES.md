@@ -567,3 +567,101 @@ since — as found above — this project's schematic can't currently export
 one; whoever does the real routing pass should treat the net *names* as
 authoritative but re-verify the pad-to-net assignments against the
 schematic by eye first.
+
+## Update 3: the actual original cost driver — ADAU1860 → TLV320AIC3100 + mic swap
+
+Same branch (`redesign/tp4056-power-tree`). This is the real headline
+item from the very first table in this doc — the ADAU1860 (BGA-56,
+0.35mm pitch) was always the single biggest cost driver, bigger than the
+charger. Removed it and the old PDM mic (U13, SPH0641LU4H-1), replaced
+with:
+
+- **TLV320AIC3100** (TI, QFN-32, 5x5mm) — pin table pulled from its real
+  datasheet (SLAS667C, pages 6-7), not guessed.
+- **CMA-4544PF-W** (Same Sky/CUI, plain 2-terminal electret capsule) —
+  its own datasheet's "measurement circuit" diagram gives the real bias
+  resistor (2.2k) and coupling cap (1uF) values used here directly,
+  rather than picking arbitrary ones.
+
+TLV320AIC3100 has no PDM input at all (confirmed from its own datasheet —
+mic inputs are analog PGA inputs MIC1LP/MIC1RP/MIC1LM), which is exactly
+the incompatibility flagged earlier in this doc. Hence the mic swap too,
+not just the codec.
+
+### Real net reuse (same discipline as before)
+
+- `DIN`/`DOUT`/`BCLK`/`LRCLK`: the real I2S bus already wired to the MCU
+  (2 owners each before this change) — reused directly.
+- `SDA1`/`SCL1`: the I2C control bus (4 owners each) — reused directly.
+- `V_LS`: the existing switched analog rail already feeding the old
+  codec's AVDD/HPVDD/IOVDD and the old mic's VDD (38 owners board-wide)
+  — reused for the new codec's AVDD/HPVDD.
+- `+1.8V`: **the same rail this session's charger redesign created**
+  (TPS62822's regulated output) — reused for the new codec's DVDD, which
+  needs 1.65-1.95V per its own datasheet. This specifically only works
+  *because* the charger redesign landed first — the two changes are
+  actually coupled, not independent.
+- `DAC_N`/`DAC_P`: the old codec's HPOUTN/HPOUTP had only ONE owner each
+  on this sheet (a pre-existing condition — the real receiver connection
+  isn't modeled here, not something this change created or fixed).
+  Preserved as-is; the new codec's HPL/HPR reuse the same two names.
+- `TCK`/`TMS`/`TDI`/`TDO`: real JTAG pins with a second owner (a debug
+  header) — TLV320AIC3100 has no JTAG at all (fixed-function codec, not
+  a general DSP), so these just lose their old-codec end. Harmless.
+
+### Real simplifications made, each flagged rather than hidden
+
+- **MCLK tied to BCLK** instead of adding a dedicated crystal — the
+  datasheet explicitly allows BCLK (or GPIO1, etc.) as the PLL reference
+  instead of a true MCLK input. Avoids needing a new oscillator for a
+  part that didn't need one before.
+- **VOL/MICDET, MIC1RP, MIC1LM tied to GND** (unused in this
+  single-ended-mic setup). Worth a second look before trusting blind:
+  some reference designs bias the unused differential input pin (MIC1LM)
+  to a DC midpoint instead of hard ground for better common-mode
+  balance — this uses the simpler hard-ground approach.
+- **RESET tied directly to 3V3** (permanently out of reset) rather than
+  a firmware-controlled GPIO, since nothing in current firmware asserts
+  a hardware reset today.
+- **Class-D speaker block left fully unconnected** (SPKP/SPKM x2,
+  SPKVDD x2, SPKVSS x2 — 6 pins) — this device drives its receiver from
+  the headphone output, not the higher-power Class-D path.
+- **GPIO1 left floating** — genuinely optional per datasheet.
+
+### A real bug caught mid-script, before it was applied
+
+First draft of the mic-bias wiring accidentally gave the AC-coupling
+capacitor's two ends the *same* net name, which would have shorted across
+it and defeated its entire purpose (blocking the mic's DC bias from
+reaching the codec's input pin while still passing the AC audio signal).
+Caught by re-reading the wiring before running ERC, not by ERC itself —
+worth remembering that ERC only catches connectivity errors, not "this
+connection makes the circuit pointless" errors. Fixed with two distinct
+nets either side of the cap (`MIC_IN` on the biased/mic side, `MIC_IN_AC`
+on the codec-input side).
+
+### ERC result and the dangling-label quirk gets more interesting
+
+`kicad-cli sch erc` on the combined charger+codec+mic redesign: **still
+86 violations total** — flat, not growing. But the *specific* nets
+flagged as `label_dangling` changed: the 3 new mic-bias nets
+(`MICBIAS`, `MIC_IN`, `MIC_IN_AC`) are now flagged, while two nets that
+*were* flagged after the charger-only change (`FB_1V8`, `TP4056_PROG`)
+are no longer flagged at all — even though nothing about their actual
+wiring changed in this commit. That's a genuinely useful data point:
+it confirms (independent of anything else already found) that which
+specific label gets flagged is unstable across unrelated edits elsewhere
+in the file, which is much more consistent with a checker quirk than
+with a real, fixed electrical defect. Manually verified anyway, the same
+way as before, by direct coordinate comparison rather than trusting the
+report: every new pin — codec, mic, both new passives — lands exactly on
+its intended label, except the 9 pins deliberately left unconnected
+(the 8 Class-D pins + GPIO1).
+
+### Still not done
+
+PCB footprint placement and routing for TLV320AIC3100 (QFN-32,
+0.5mm pitch) and CMA-4544PF-W (a leaded through-hole capsule, not SMD —
+worth noting its "terminal: pin type (hand soldering only)" spec, so it
+needs through-holes, not pads, on the PCB) haven't been started. This
+pass was schematic-only, same pattern as the charger work before it.
