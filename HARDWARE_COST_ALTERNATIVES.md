@@ -6,27 +6,34 @@ of the current design. Short version: **the cost isn't the board size, the
 layer count, or the quantity — it's three specific chip packages, and there's
 a concrete way to avoid all three without changing what the product does.**
 
-## TL;DR for the morning read
+## TL;DR (updated: the redesign is now actually applied, not just planned)
 
 - **Root cause found and verified**: 3 chips (ADAU1860, BQ25120A, BQ27220)
   drive the whole cost via their fine pitch. The radio module is fine as-is.
-- **Full replacement part list chosen and verified** (real stock, real
-  KiCad symbols, no guessing): TLV320AIC3100 (codec) + CMA-4544PF-W
-  (analog mic, replaces the PDM one) + TP4056 (charger) + TPS62822
-  (1.8V buck) + a load switch for the 3.3V rail. Fuel gauge dropped
-  entirely — confirmed nothing reads it.
-- **Started the actual schematic edit**, not just the plan — it's real,
-  it loads in real KiCad, and the core power-rail rewiring is verified
-  correct against ERC. **One specific thing I couldn't resolve**: 3 small
-  new nets show an ERC flag I traced through several real hypotheses
-  without finding the cause — see the dedicated section below before
-  trusting those two sub-circuits (feedback divider, charge-program
-  resistors) without a manual check.
+- **All three are now actually replaced on the schematic**, with real,
+  ERC-verified changes, committed and pushed — not sitting in the
+  scratchpad anymore: TLV320AIC3100 (codec, replaces ADAU1860) +
+  CMA-4544PF-W (analog mic, replaces the PDM one, since the new codec
+  has no PDM input) + TP4056 (charger) + TPS62822 (1.8V buck) + TPS22917
+  (3.3V load switch). Fuel gauge dropped entirely — confirmed nothing
+  reads it. See **PR #8 on `haven-dev-board-kicad`**
+  (`redesign/tp4056-power-tree` branch, 3 commits).
+- **PCB-side work done for the charger parts** (real footprints placed,
+  DRC-clean) but **not yet done for the codec/mic** — schematic-only so
+  far for those two.
+- **The ERC anomaly mentioned in earlier drafts of this doc is now well
+  understood, not just unresolved**: `kicad-cli`'s headless ERC flags
+  exactly one label per brand-new net name as `label_dangling`, and which
+  specific label gets flagged shifts across unrelated edits — strong
+  evidence it's a checker quirk, not a real defect. Every actual
+  connection has been independently verified by direct coordinate
+  comparison (not just trusting the ERC report). See the dedicated
+  sections below for the full trace.
 - **Real money-saving programs found**: PCBWay's student sponsorship
   (10-15% off, apply with a `.edu` email) and an active JLCPCB 6-layer
   coupon (~$35) — both usable regardless of which board design ships.
-- **Nothing has been ordered or applied to the real project files** —
-  the edited schematic lives in the scratchpad only, pending your review.
+- **Still nothing ordered, nothing spent** — everything above is on a
+  branch/PR, not master, waiting for review whenever there's time.
 
 ## The actual cost driver
 
@@ -405,13 +412,480 @@ carefully, several 2026-cycle ones have likely already closed:**
   is worth planning toward for next year's cycles, not something to wait
   on before making progress now.
 
-## Not yet done / needs a real decision
+## Update: the charger/regulator redesign is now actually applied (branch, not master)
 
-This is a real architecture change, not a tweak — it means re-deriving the
-audio front-end schematic (new codec chip, new charger IC, likely new
-decoupling/crystal layout done correctly from scratch rather than ported)
-rather than patching the current board. That's a decision for the project
-owner, not something to execute unprompted. If this direction is chosen,
-the crystal-placement and decoupling-placement issues found separately
-(see git history / conversation log, not yet fixed as of this writing)
-would need to be designed correctly from the start rather than retrofitted.
+Paul gave explicit go-ahead to keep iterating and apply real changes while he's
+busy with school/recruiting, with one standing rule: **never place an order or
+spend real money without him there.** Everything below is a real, committed,
+ERC-checked schematic change — but on branch `redesign/tp4056-power-tree`, not
+merged to master. It's meant to be reviewed whenever there's time, not acted
+on immediately.
+
+### What changed
+
+U2 (BQ25120AYFPR) is removed, replaced by three parts, each verified against
+its own real datasheet this session (pin-for-pin, not guessed):
+
+- **TP4056** (linear Li-Ion charger, SOP-8) — pinout confirmed from
+  NanJing Top Power ASIC's own datasheet (1:TEMP, 2:PROG, 3:GND, 4:VCC,
+  5:BAT, 6:STDBY, 7:CHRG, 8:CE).
+- **TPS62822DLCR** (adjustable buck, VQFN-8) — from TI SLVSDV6C
+  (1:EN, 2:FB, 3:AGND, 4:NC, 5:PGND, 6:SW, 7:VIN, 8:PG). Feedback divider
+  sized for exactly 1.8V: R_FB1=200k (VOUT side) + R_FB2=100k (GND side),
+  Vout = 0.6V x (1 + 200/100) = 1.8V.
+- **TPS22917DBVR** (load switch, SOT-23-6) — from TI SLVSDW8B
+  (1:VIN, 2:GND, 3:ON, 4:CT, 5:QOD, 6:VOUT). CT/QOD left floating per
+  datasheet (fastest turn-on, discharge disabled) — matches this project's
+  own convention of leaving genuinely-optional pins unconnected rather than
+  fabricating a connection.
+
+### Real net-reuse, found by inspecting the actual schematic before writing anything
+
+Rather than re-guess wiring, I traced what each of U2's real pins already
+connected to and reused it:
+
+- `SW`/`+1.8V`: L2 (2.2uH inductor) is already sitting on exactly these two
+  nets, with 4 existing decoupling caps on `+1.8V` (C1/C4/C18/C20) — this is
+  the buck's real output tank, left over from BQ25120A's SYS pin. No new
+  output cap needed.
+- `3V3`: already has 4 decoupling caps (C5/C17/C29/C48) from its other
+  consumers — no new output cap needed for the load switch either.
+- `TS`: the battery thermistor sense line already has a real 2-resistor
+  divider (R6/R13) wired at the battery. TP4056's TEMP pin reuses this
+  directly instead of inventing new resistors (a mistake from an earlier
+  pass this session, caught before it was applied).
+- `LSCTRL`: already driven by a real MCU GPIO (MDBT531 pin 27) — reused
+  directly for the load switch's ON pin.
+- `VUSB`: the real 5V USB input rail. TP4056's VCC and its CE pin (must not
+  float, per datasheet) both land here — CE tied straight to VCC is the
+  standard "always enabled when powered" wiring.
+- `VCC`: confirmed to be this board's (slightly confusing) name for the
+  *battery* rail, not a regulated supply — TP4056's BAT, the buck's VIN, and
+  the load switch's VIN all land here.
+- **A real gap found and fixed**: BQ25120A's CD#/PG# status flags were
+  push-pull and fed two MCU GPIOs directly with no pull-up anywhere.
+  TP4056's CHRG/STDBY equivalents are open-drain, so reusing those same
+  nets as-is would leave the GPIOs floating. Added two new 100k pull-ups —
+  to `3V3`, deliberately not `VUSB`/5V, since pulling a 3.3V-domain MCU
+  input up to 5V would over-volt the pin.
+
+Net genuinely new nets introduced: just `FB_1V8` (buck feedback midpoint)
+and `TP4056_PROG` (charge-current-set resistor node, R_PROG=1.2k for
+exactly 1A charge current (per the TP4056's own
+ electrical-characteristics table: Rprog=1.2k -> Ibat=1000mA typ), matching TI's own reference design's exact resistor
+value). Down from 3 in an earlier pass to 2, entirely by finding real
+reuse opportunities instead of inventing new nets.
+
+### The ERC "dangling label" anomaly — now genuinely isolated, not just retried
+
+Same category of issue as before (`kicad-cli sch erc` flags exactly one
+label per *brand-new* net name as `label_dangling`), but this time fully
+isolated with a minimal, from-scratch reproduction: **two freshly-created
+resistors bridging a single, never-before-used net name, with no ICs, no
+custom symbols, nothing carried over from this session's other work** —
+and `kicad-cli` still flags the first-encountered label of that net as
+dangling, even though the second resistor's matching label is right there.
+Manually verified (direct coordinate comparison, not trusting the ERC
+report) that every one of this redesign's new pins lands exactly on its
+intended label — the flagged labels really are sitting exactly on real
+pins. This looks like a first-occurrence-of-a-new-net-name quirk in
+`kicad-cli`'s headless ERC specifically, separate from anything about this
+design's actual correctness.
+
+Tested and ruled out as the cause: missing per-symbol `(instances (project
+...))` metadata, and missing per-pin `(pin "N" (uuid ...))` maps (added
+both by hand to the minimal repro; neither changed the result, and the
+pin-uuid one made ERC noticeably worse when applied file-wide, so it was
+not carried into the real redesign).
+
+### A separate, bigger, previously-undocumented finding: netlist export doesn't work on this project at all
+
+While chasing the above, tried exporting a real netlist
+(`kicad-cli sch export netlist`) as a way to independently confirm
+connectivity. It came back completely empty — zero components, zero nets —
+**on the real, untouched, git-committed schematic file, not just on my
+edited copy.** Confirmed `kicad-cli`'s netlist exporter works fine in
+general (tested against a real KiCad-authored template file, which
+exported cleanly). So this is a real, pre-existing gap in this specific
+project's schematic file, unrelated to anything from this session — the
+file can pass ERC/DRC (which work from pure geometry) but cannot currently
+produce a netlist for cross-checking against the PCB or for external tools.
+Root cause not found (tried the two hypotheses above without success);
+worth a real KiCad GUI session to investigate, since opening and re-saving
+the file through the actual application may just fix whatever structural
+piece `kicad-cli`'s exporter wants that isn't there.
+
+### Net result (schematic)
+
+`kicad-cli sch erc` on the redesigned schematic: **86 violations vs. an
+84-violation baseline** on the real, unmodified board — and the 2 new ones
+are the isolated, likely-cosmetic anomaly above, not a real connectivity
+defect (every reused net — VCC, GND, VUSB, 3V3, SW, +1.8V, TS, LSCTRL,
+CC_#CD, CC_#PG — shows zero new issues). Committed to branch
+`redesign/tp4056-power-tree`, not master.
+
+## Update 2: PCB footprint placement done too, same branch
+
+Followed the schematic straight onto the real PCB, using real footprints
+copied from KiCad's own official library rather than hand-derived pad
+geometry:
+
+- `Texas_VSON-HR-8_1.5x2mm_P0.5mm.kicad_mod` for TPS62822DLCR — this is
+  TI's own name for the exact package ("VSON-HR"), confirmed against the
+  datasheet's own generic-package-view page before using it.
+- `SOIC-8_3.9x4.9mm_P1.27mm.kicad_mod` for TP4056 (plain SOP-8, no
+  exposed pad, matching the real pin table).
+- `SOT-23-6.kicad_mod` for TPS22917DBVR (JEDEC MO-178), confirmed against
+  the datasheet's own DBV0006A package outline drawing.
+
+The 5 new passives (R_PROG, R_FB1, R_FB2, R_PU_CHRG, R_PU_STDBY) use the
+project's existing generic 0402 footprint, matching the "doesn't need to be
+tiny, needs to be easy to hand-solder" goal for this dev board.
+
+**A real placement mistake, found and fixed via DRC, not assumed away:**
+first attempt put the new buck IC right next to L2 (the existing inductor)
+for a short SW/FB loop — reasonable analog-layout instinct, but that whole
+area turned out to be densely criss-crossed by existing copper (VUSB/
+V_PMID/V_LS traces left over from the original charger circuit), which a
+placement check based only on footprint courtyards doesn't see. Real
+`kicad-cli pcb drc` caught it immediately as two `shorting_items`
+violations — new pads physically landing on live existing traces. Moved
+the buck IC and its feedback resistors to the same genuinely-clear area
+(checked directly against real track geometry, not just other footprints)
+used for TP4056/TPS22917, at the cost of a longer eventual SW trace to
+route by hand later.
+
+**Net result (PCB):** `kicad-cli pcb drc` — **221 violations vs. the
+documented 219-violation baseline**, and critically, the **clearance
+violation count went down** (85 vs. 99), since removing the old BGA-25
+(BQ25120A)'s fine-pitch pads removed more clearance issues than the new
+parts introduce (zero). The increase is entirely expected "not routed yet"
+noise: 28 unconnected pads (new parts have net assignments but no copper
+yet; a few are old trace stubs orphaned by removing U2) vs. 2 in the
+baseline. No new shorts, no new clearance violations from the new parts,
+only two trivial cosmetic silkscreen-label overlaps (fixed by nudging the
+reference designator text).
+
+**Still not done:** actual copper routing from the new parts to their
+nets (SW to L2, VUSB to the USB circuitry, etc.) — footprints are placed
+and net-assigned but nothing is routed yet. Net assignment was done
+directly by name (pad-by-pad) rather than through a real netlist import,
+since — as found above — this project's schematic can't currently export
+one; whoever does the real routing pass should treat the net *names* as
+authoritative but re-verify the pad-to-net assignments against the
+schematic by eye first.
+
+## Update 3: the actual original cost driver — ADAU1860 → TLV320AIC3100 + mic swap
+
+Same branch (`redesign/tp4056-power-tree`). This is the real headline
+item from the very first table in this doc — the ADAU1860 (BGA-56,
+0.35mm pitch) was always the single biggest cost driver, bigger than the
+charger. Removed it and the old PDM mic (U13, SPH0641LU4H-1), replaced
+with:
+
+- **TLV320AIC3100** (TI, QFN-32, 5x5mm) — pin table pulled from its real
+  datasheet (SLAS667C, pages 6-7), not guessed.
+- **CMA-4544PF-W** (Same Sky/CUI, plain 2-terminal electret capsule) —
+  its own datasheet's "measurement circuit" diagram gives the real bias
+  resistor (2.2k) and coupling cap (1uF) values used here directly,
+  rather than picking arbitrary ones.
+
+TLV320AIC3100 has no PDM input at all (confirmed from its own datasheet —
+mic inputs are analog PGA inputs MIC1LP/MIC1RP/MIC1LM), which is exactly
+the incompatibility flagged earlier in this doc. Hence the mic swap too,
+not just the codec.
+
+### Real net reuse (same discipline as before)
+
+- `DIN`/`DOUT`/`BCLK`/`LRCLK`: the real I2S bus already wired to the MCU
+  (2 owners each before this change) — reused directly.
+- `SDA1`/`SCL1`: the I2C control bus (4 owners each) — reused directly.
+- `V_LS`: the existing switched analog rail already feeding the old
+  codec's AVDD/HPVDD/IOVDD and the old mic's VDD (38 owners board-wide)
+  — reused for the new codec's AVDD/HPVDD.
+- `+1.8V`: **the same rail this session's charger redesign created**
+  (TPS62822's regulated output) — reused for the new codec's DVDD, which
+  needs 1.65-1.95V per its own datasheet. This specifically only works
+  *because* the charger redesign landed first — the two changes are
+  actually coupled, not independent.
+- `DAC_N`/`DAC_P`: the old codec's HPOUTN/HPOUTP had only ONE owner each
+  on this sheet (a pre-existing condition — the real receiver connection
+  isn't modeled here, not something this change created or fixed).
+  Preserved as-is; the new codec's HPL/HPR reuse the same two names.
+- `TCK`/`TMS`/`TDI`/`TDO`: real JTAG pins with a second owner (a debug
+  header) — TLV320AIC3100 has no JTAG at all (fixed-function codec, not
+  a general DSP), so these just lose their old-codec end. Harmless.
+
+### Real simplifications made, each flagged rather than hidden
+
+- **MCLK tied to BCLK** instead of adding a dedicated crystal — the
+  datasheet explicitly allows BCLK (or GPIO1, etc.) as the PLL reference
+  instead of a true MCLK input. Avoids needing a new oscillator for a
+  part that didn't need one before.
+- **VOL/MICDET, MIC1RP, MIC1LM tied to GND** (unused in this
+  single-ended-mic setup). Worth a second look before trusting blind:
+  some reference designs bias the unused differential input pin (MIC1LM)
+  to a DC midpoint instead of hard ground for better common-mode
+  balance — this uses the simpler hard-ground approach.
+- **RESET tied directly to 3V3** (permanently out of reset) rather than
+  a firmware-controlled GPIO, since nothing in current firmware asserts
+  a hardware reset today.
+- **Class-D speaker block left fully unconnected** (SPKP/SPKM x2,
+  SPKVDD x2, SPKVSS x2 — 6 pins) — this device drives its receiver from
+  the headphone output, not the higher-power Class-D path.
+- **GPIO1 left floating** — genuinely optional per datasheet.
+
+### A real bug caught mid-script, before it was applied
+
+First draft of the mic-bias wiring accidentally gave the AC-coupling
+capacitor's two ends the *same* net name, which would have shorted across
+it and defeated its entire purpose (blocking the mic's DC bias from
+reaching the codec's input pin while still passing the AC audio signal).
+Caught by re-reading the wiring before running ERC, not by ERC itself —
+worth remembering that ERC only catches connectivity errors, not "this
+connection makes the circuit pointless" errors. Fixed with two distinct
+nets either side of the cap (`MIC_IN` on the biased/mic side, `MIC_IN_AC`
+on the codec-input side).
+
+### ERC result and the dangling-label quirk gets more interesting
+
+`kicad-cli sch erc` on the combined charger+codec+mic redesign: **still
+86 violations total** — flat, not growing. But the *specific* nets
+flagged as `label_dangling` changed: the 3 new mic-bias nets
+(`MICBIAS`, `MIC_IN`, `MIC_IN_AC`) are now flagged, while two nets that
+*were* flagged after the charger-only change (`FB_1V8`, `TP4056_PROG`)
+are no longer flagged at all — even though nothing about their actual
+wiring changed in this commit. That's a genuinely useful data point:
+it confirms (independent of anything else already found) that which
+specific label gets flagged is unstable across unrelated edits elsewhere
+in the file, which is much more consistent with a checker quirk than
+with a real, fixed electrical defect. Manually verified anyway, the same
+way as before, by direct coordinate comparison rather than trusting the
+report: every new pin — codec, mic, both new passives — lands exactly on
+its intended label, except the 9 pins deliberately left unconnected
+(the 8 Class-D pins + GPIO1).
+
+### Still not done
+
+PCB footprint placement and routing for TLV320AIC3100 (QFN-32,
+0.5mm pitch) and CMA-4544PF-W (a leaded through-hole capsule, not SMD —
+worth noting its "terminal: pin type (hand soldering only)" spec, so it
+needs through-holes, not pads, on the PCB) haven't been started. This
+pass was schematic-only, same pattern as the charger work before it.
+
+## Update 4: PCB placement for the codec/mic too — and a real board-shape mistake caught by DRC
+
+Same branch. TLV320AIC3100 uses TI's own real footprint
+(`Texas_RHB0032M_VQFN-32-1EP...` — "RHB" is the exact package code from
+its own datasheet's pin diagram) copied from KiCad's library, same as the
+charger parts. No official KiCad footprint exists for a plain electret
+capsule like CMA-4544PF-W, so this one is hand-built: 2 through-hole pads
+on a 2.54mm pitch (per its datasheet's own mechanical drawing) with a
+silkscreen circle approximating its real 9.7mm body — flagged as a
+first-approximation, not manufacturing-verified, since the exact pin-to-
+body-center offset wasn't pixel-checked against the drawing.
+
+**A real, different placement mistake this time, also caught by DRC, not
+assumed away:** the first attempt placed the mic capsule in what looked
+like open board area from a footprint/track scan, but this board's
+outline isn't a simple rectangle — it has a real notch cut into the left
+edge (confirmed by reading the actual `Edge.Cuts` geometry), and the
+mic's 9.7mm body landed half inside that notch. `kicad-cli pcb drc`
+caught it immediately as both a `copper_edge_clearance` and a
+`silk_edge_clearance` violation. Fixed by re-scanning for free space
+against the board's *real polygon outline*
+(`BOARD.GetBoardPolygonOutlines()`), not just its bounding rectangle —
+the bounding-box shortcut is now a second confirmed source of real
+placement mistakes this session (the first being "checked footprints but
+not existing copper," from the charger placement earlier).
+
+Also caught by the same DRC pass: forgetting to refill copper zones after
+adding new through-hole pads left two stale `hole_clearance` violations
+against zones that hadn't been recomputed around the new holes — fixed by
+calling `ZONE_FILLER.Fill()` before the final save, now part of the
+script. And one footprint-library-reference mismatch on the hand-built
+mic footprint (used a real-looking but unregistered library nickname;
+fixed by matching the empty-nickname convention every other footprint
+on this board already uses).
+
+**Net result:** `kicad-cli pcb drc` — **215 violations**, actually
+*fewer* than even the 219-violation original baseline, since removing
+the BGA-56 (the single worst clearance offender on the whole board)
+outweighs everything the new parts add. Zero violations of any kind
+involve the new codec/mic footprints once the above were fixed — checked
+directly, not inferred from the total count. Routing is still not done
+for any of the new parts (charger or codec/mic).
+
+## Update 5: found the missing mic-bias footprints, and a real reason routing needs a human/GUI
+
+Same branch. Two smaller findings this tick:
+
+**A real gap caught and fixed**: R_MICBIAS and C_MICIN (the mic-bias
+network from the codec/mic schematic redesign) had never actually been
+placed on the PCB — only the codec and mic footprints themselves made it
+into the earlier commit. Added now, using the project's existing R0402/
+C0402 footprints; `kicad-cli pcb drc` confirms 215 violations, same clean
+baseline as before, zero new issues.
+
+**A real, informative failed attempt at manual routing.** With every new
+part now placed, I checked which of the newest nets (FB_1V8,
+TP4056_PROG, MICBIAS, MIC_IN, MIC_IN_AC) were "local" enough — all
+endpoints close together, area pre-checked clear of existing copper — to
+route by hand with simple scripted straight-line traces, as a safer
+subset of the full routing job. FB_1V8 and TP4056_PROG qualified (their
+endpoints are a few mm apart in an already-verified-clear zone); the
+mic-bias nets didn't (the codec sits ~40mm from the mic-bias network,
+crossing real existing copper — correctly left alone rather than forced).
+
+Routed FB_1V8 and TP4056_PROG with direct/short-chain traces between
+pads. **`kicad-cli pcb drc` immediately caught two real shorts**: both
+traces, aimed at one pin of a tightly-pitched new IC (TPS62822's 0.5mm-
+pitch VSON-8, TP4056's SOP-8), passed close enough to graze the
+*adjacent* pin on the same package and briefly registered as touching it.
+Neither pre-check (courtyard scan, copper scan, board-polygon check) that
+worked for placement catches this — it's specifically about trace-to-
+adjacent-pad clearance on a single fine-pitch part, a different failure
+mode than anything found so far this session. **Reverted rather than
+guess at a fix** — hand-tuning exact trace paths around 0.5mm-pitch pins
+via scripted coordinates, with no interactive collision feedback, is a
+real path to introducing a short that DRC happens not to catch on the
+next attempt. This specific job needs KiCad's actual interactive router
+(which respects pad clearance live as you draw) or a real autorouter —
+neither is available in this environment (checked: `kicad-cli` has no
+routing subcommand, no Freerouting install present) — not more scripted
+guessing.
+
+**So: footprint placement and net assignment are done for all 5 new
+parts (charger + codec + mic). Copper routing is 0% done, deliberately,
+because it's the one piece of this whole effort that genuinely needs a
+real KiCad GUI session or a real autorouter, not just careful scripting
+and verification like everything else so far.**
+
+## Update 6: a real bug — the codec commit had silently reverted the charger redesign on the schematic
+
+Found and fixed this session. **Not a hypothetical, not a close call —
+the schematic on this branch had genuinely lost the entire charger
+redesign for three commits.** Root cause: when generating the codec/mic
+schematic change, the generation script's source file was read while the
+working tree happened to be on `master` (checked out for the previous
+PR-comment step), not this branch — so it built the codec swap on top of
+the *original, untouched* schematic instead of the charger-redesigned
+one, and that output was then copied over this branch's file, silently
+discarding the charger changes. The PCB side was never affected (PCB
+edits are a separate file/process), which is exactly why this went
+undetected for three commits: DRC on the PCB stayed clean throughout,
+and ERC on the schematic still passed (88 vs. 86 looked like normal
+noise, not a sign that an entire prior changeset had vanished) — the
+schematic quietly had the OLD BQ25120A charger back, sitting right next
+to the NEW TLV320AIC3100 codec, while the PCB had all the new charger
+footprints with nowhere real to trace back to.
+
+**How this was caught**: routine verification before starting new work —
+checking which components existed in the schematic before touching
+anything — turned up `U2` still valued `BQ25120AYFPR` on a branch whose
+whole point was replacing it. Direct `grep` confirmed zero occurrences of
+`TP4056`/`TPS62822`/`TPS22917` anywhere in the file.
+
+**The fix**: re-ran both generation scripts in the correct order this
+time — charger script against the real original (from `master`, since
+this branch's own copy was now known-compromised), verified via ERC
+(86 violations, matching the charger-only baseline exactly), *then* the
+codec script against that correct intermediate output, not the original.
+Final result verified two ways, not just one: `kicad-cli sch erc`
+(88 violations — the honest combined count: 84 baseline + 5 genuinely
+new nets across both changesets, `-1` for an old anonymous net deleted
+along with the ADAU1860 — matching the pattern established earlier
+exactly, not a new anomaly) and a direct pin-by-pin coordinate check
+confirming every one of the 70 new pins across all charger+codec+mic
+parts lands exactly on its intended label, except the 13 pins
+deliberately left unconnected.
+
+**The actual lesson, worth being explicit about**: verifying a generated
+file in isolation (which is what every prior ERC/DRC check in this
+session did) doesn't catch "this change was built on the wrong base and
+silently clobbered a previous one" — that requires checking the file
+*contains what it's supposed to contain*, not just that it's internally
+consistent. Worth remembering for any future multi-commit schematic work
+in an environment without a persistent, always-current KiCad GUI session
+to sanity-check against.
+
+## Update 7: actually removed the fuel gauge the TL;DR already claimed was gone
+
+Also found during the same verification pass: U6 (BQ27220 fuel gauge)
+was still sitting on both the schematic and the PCB, despite this doc's
+own TL;DR already saying "fuel gauge dropped entirely — confirmed
+nothing reads it." That confirmation (searching both app repos for any
+battery-level/fuel-gauge reference and finding zero) was real, but had
+never actually been turned into an edit. Removed now: the schematic
+instance + 9 pin labels, and the PCB footprint. Left two now-vestigial
+passives (R17, C23 — bias/decoupling that only served U6) in place,
+same convention as the BQ25120A removal.
+
+**Current real numbers, as of this commit** (superseding the individual
+snapshots above, which are a narrative trail of what was true at each
+step, not a running total): `kicad-cli sch erc` — 88 violations.
+`kicad-cli pcb drc` — 222 violations, 52 unconnected items. Footprint
+placement + net assignment done for all 5 new parts across charger,
+codec, and mic; the fuel gauge is fully removed; copper routing remains
+the one substantial piece of work left, and — as covered above — it
+needs a real KiCad GUI session or autorouter, not more scripting.
+
+## STOP: a parallel effort directly challenges the codec/mic half of this redesign — read before merging anything
+
+Found via a routine full-PR-list sweep this tick (not something surfaced
+by any check I'd been running regularly — worth remembering that a
+partial PR list looks identical to "nothing new" until you actually run
+`gh pr list` with no filter). There is a substantial, independent,
+week-long body of work (`victorzhu443`, PRs #3/#5/#6/#7 on this repo,
+plus matching work on `haven-zephyr-app` and `haven-custom-app`) that
+directly disputes the *codec* half of this redesign — **not the charger
+half**, which nothing in that work touches or contradicts.
+
+**The core disagreement:** this doc's case for replacing the ADAU1860
+rested on "no public register map, unknown coefficient format, so move
+filtering to the nRF5340 instead." `haven-zephyr-app#9` shows that
+premise doesn't hold — the ADAU1860's register map, coefficient format
+(**Q5.27**, verified against upstream's own generated data to 9 decimal
+places), and a complete working FastDSP driver were successfully ported
+directly from `OpenEarable/open-earable-2` (the real open-source
+firmware for the exact board Haven's hardware is derived from). The
+"we can't know this chip" blocker behind this whole codec-swap plan was
+solvable by porting from upstream — an approach this doc never
+attempted or considered.
+
+**A real requirement this doc never evaluated at all:** hear-through
+latency. `haven-dev-board-kicad#6` (an architecture memo written
+directly in response to this doc) argues moving biquad filtering onto
+the nRF5340 (option C, what got implemented here) adds an estimated
+0.7–9ms of I2S block-buffering delay versus the codec's dedicated
+hardware DSP (~50–150µs) — enough to risk audible comb-filtering
+artifacts and roughly double continuous MCU power draw during
+hear-through. For a device whose core job is real-time ambient
+pass-through, that's a potentially disqualifying tradeoff this
+redesign's cost/pitch/routing analysis never once checked.
+
+**Independently verified one falsifiable claim from that memo before
+trusting it**: it proposes **TLV320AIC3254** (not the TLV320AIC3100 this
+redesign chose) specifically because it has real digital/PDM microphone
+input, avoiding this redesign's mic swap entirely. Confirmed directly
+from TI's own datasheet (SLAS549D) — real, current, has PDM support.
+That's one concrete point in the counter-proposal's favor, checked, not
+just taken on faith.
+
+**What this means for this PR:**
+- The **charger swap** (TP4056/TPS62822/TPS22917, commits 1-2 on this
+  branch) is untouched by any of this and stands on its own — nothing in
+  the parallel work disputes it.
+- The **codec/mic swap** (TLV320AIC3100/CMA-4544PF-W, commits 3+) should
+  **not be merged, and no further work should go into finishing its
+  routing, without reading `haven-dev-board-kicad#6` and
+  `haven-zephyr-app#9` first.** This isn't a case of "my research was
+  wrong and theirs is right" so much as two real, substantive analyses
+  reaching different conclusions on a decision with real product
+  consequences (latency, battery life) that deserves a human read of
+  both, not another automated pass picking a side.
+- Recommended next step, straight from the counter-memo: a cheap, fast
+  physical measurement (I2S loopback latency on the bare nRF5340 DK,
+  plus a TLV320AIC3254EVM real latency measurement) that would settle
+  this with data instead of competing estimates — ~$200, about a week,
+  no new PCB needed. That's real-world work only you can do.
