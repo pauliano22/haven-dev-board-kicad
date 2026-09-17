@@ -255,7 +255,7 @@ def main():
             add_label(sch, ls_pin_labels[num], x, y)
 
     # ---- 5. New passives ----
-    add_resistor(sch, 'R_PROG', '1.1k', 260, 260, 'TP4056_PROG', 'GND')
+    add_resistor(sch, 'R_PROG', '1.2k', 260, 260, 'TP4056_PROG', 'GND')
     add_resistor(sch, 'R_FB1', '200k', 260, 295, 'FB_1V8', 'FBTOP_1V8')
     add_resistor(sch, 'R_FB2', '100k', 260, 305, 'FB_1V8', 'GND')
     # R_FB1 bridges +1.8V (the regulated output) <-> FB_1V8 (the FB pin node);

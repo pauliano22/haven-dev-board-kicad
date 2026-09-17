@@ -463,8 +463,9 @@ connected to and reused it:
   input up to 5V would over-volt the pin.
 
 Net genuinely new nets introduced: just `FB_1V8` (buck feedback midpoint)
-and `TP4056_PROG` (charge-current-set resistor node, R_PROG=1.1k for
-~1A charge current, matching TI's own reference design's exact resistor
+and `TP4056_PROG` (charge-current-set resistor node, R_PROG=1.2k for
+exactly 1A charge current (per the TP4056's own
+ electrical-characteristics table: Rprog=1.2k -> Ibat=1000mA typ), matching TI's own reference design's exact resistor
 value). Down from 3 in an earlier pass to 2, entirely by finding real
 reuse opportunities instead of inventing new nets.
 
@@ -507,13 +508,62 @@ worth a real KiCad GUI session to investigate, since opening and re-saving
 the file through the actual application may just fix whatever structural
 piece `kicad-cli`'s exporter wants that isn't there.
 
-### Net result
+### Net result (schematic)
 
 `kicad-cli sch erc` on the redesigned schematic: **86 violations vs. an
 84-violation baseline** on the real, unmodified board — and the 2 new ones
 are the isolated, likely-cosmetic anomaly above, not a real connectivity
 defect (every reused net — VCC, GND, VUSB, 3V3, SW, +1.8V, TS, LSCTRL,
 CC_#CD, CC_#PG — shows zero new issues). Committed to branch
-`redesign/tp4056-power-tree`, not master. PCB footprint placement for the
-three new parts has not been started — this pass was schematic-only, same
-as before.
+`redesign/tp4056-power-tree`, not master.
+
+## Update 2: PCB footprint placement done too, same branch
+
+Followed the schematic straight onto the real PCB, using real footprints
+copied from KiCad's own official library rather than hand-derived pad
+geometry:
+
+- `Texas_VSON-HR-8_1.5x2mm_P0.5mm.kicad_mod` for TPS62822DLCR — this is
+  TI's own name for the exact package ("VSON-HR"), confirmed against the
+  datasheet's own generic-package-view page before using it.
+- `SOIC-8_3.9x4.9mm_P1.27mm.kicad_mod` for TP4056 (plain SOP-8, no
+  exposed pad, matching the real pin table).
+- `SOT-23-6.kicad_mod` for TPS22917DBVR (JEDEC MO-178), confirmed against
+  the datasheet's own DBV0006A package outline drawing.
+
+The 5 new passives (R_PROG, R_FB1, R_FB2, R_PU_CHRG, R_PU_STDBY) use the
+project's existing generic 0402 footprint, matching the "doesn't need to be
+tiny, needs to be easy to hand-solder" goal for this dev board.
+
+**A real placement mistake, found and fixed via DRC, not assumed away:**
+first attempt put the new buck IC right next to L2 (the existing inductor)
+for a short SW/FB loop — reasonable analog-layout instinct, but that whole
+area turned out to be densely criss-crossed by existing copper (VUSB/
+V_PMID/V_LS traces left over from the original charger circuit), which a
+placement check based only on footprint courtyards doesn't see. Real
+`kicad-cli pcb drc` caught it immediately as two `shorting_items`
+violations — new pads physically landing on live existing traces. Moved
+the buck IC and its feedback resistors to the same genuinely-clear area
+(checked directly against real track geometry, not just other footprints)
+used for TP4056/TPS22917, at the cost of a longer eventual SW trace to
+route by hand later.
+
+**Net result (PCB):** `kicad-cli pcb drc` — **221 violations vs. the
+documented 219-violation baseline**, and critically, the **clearance
+violation count went down** (85 vs. 99), since removing the old BGA-25
+(BQ25120A)'s fine-pitch pads removed more clearance issues than the new
+parts introduce (zero). The increase is entirely expected "not routed yet"
+noise: 28 unconnected pads (new parts have net assignments but no copper
+yet; a few are old trace stubs orphaned by removing U2) vs. 2 in the
+baseline. No new shorts, no new clearance violations from the new parts,
+only two trivial cosmetic silkscreen-label overlaps (fixed by nudging the
+reference designator text).
+
+**Still not done:** actual copper routing from the new parts to their
+nets (SW to L2, VUSB to the USB circuitry, etc.) — footprints are placed
+and net-assigned but nothing is routed yet. Net assignment was done
+directly by name (pad-by-pad) rather than through a real netlist import,
+since — as found above — this project's schematic can't currently export
+one; whoever does the real routing pass should treat the net *names* as
+authoritative but re-verify the pad-to-net assignments against the
+schematic by eye first.
