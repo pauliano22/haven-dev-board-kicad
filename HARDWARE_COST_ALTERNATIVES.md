@@ -672,3 +672,46 @@ PCB footprint placement and routing for TLV320AIC3100 (QFN-32,
 worth noting its "terminal: pin type (hand soldering only)" spec, so it
 needs through-holes, not pads, on the PCB) haven't been started. This
 pass was schematic-only, same pattern as the charger work before it.
+
+## Update 4: PCB placement for the codec/mic too — and a real board-shape mistake caught by DRC
+
+Same branch. TLV320AIC3100 uses TI's own real footprint
+(`Texas_RHB0032M_VQFN-32-1EP...` — "RHB" is the exact package code from
+its own datasheet's pin diagram) copied from KiCad's library, same as the
+charger parts. No official KiCad footprint exists for a plain electret
+capsule like CMA-4544PF-W, so this one is hand-built: 2 through-hole pads
+on a 2.54mm pitch (per its datasheet's own mechanical drawing) with a
+silkscreen circle approximating its real 9.7mm body — flagged as a
+first-approximation, not manufacturing-verified, since the exact pin-to-
+body-center offset wasn't pixel-checked against the drawing.
+
+**A real, different placement mistake this time, also caught by DRC, not
+assumed away:** the first attempt placed the mic capsule in what looked
+like open board area from a footprint/track scan, but this board's
+outline isn't a simple rectangle — it has a real notch cut into the left
+edge (confirmed by reading the actual `Edge.Cuts` geometry), and the
+mic's 9.7mm body landed half inside that notch. `kicad-cli pcb drc`
+caught it immediately as both a `copper_edge_clearance` and a
+`silk_edge_clearance` violation. Fixed by re-scanning for free space
+against the board's *real polygon outline*
+(`BOARD.GetBoardPolygonOutlines()`), not just its bounding rectangle —
+the bounding-box shortcut is now a second confirmed source of real
+placement mistakes this session (the first being "checked footprints but
+not existing copper," from the charger placement earlier).
+
+Also caught by the same DRC pass: forgetting to refill copper zones after
+adding new through-hole pads left two stale `hole_clearance` violations
+against zones that hadn't been recomputed around the new holes — fixed by
+calling `ZONE_FILLER.Fill()` before the final save, now part of the
+script. And one footprint-library-reference mismatch on the hand-built
+mic footprint (used a real-looking but unregistered library nickname;
+fixed by matching the empty-nickname convention every other footprint
+on this board already uses).
+
+**Net result:** `kicad-cli pcb drc` — **215 violations**, actually
+*fewer* than even the 219-violation original baseline, since removing
+the BGA-56 (the single worst clearance offender on the whole board)
+outweighs everything the new parts add. Zero violations of any kind
+involve the new codec/mic footprints once the above were fixed — checked
+directly, not inferred from the total count. Routing is still not done
+for any of the new parts (charger or codec/mic).
