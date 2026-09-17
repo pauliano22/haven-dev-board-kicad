@@ -760,3 +760,51 @@ parts (charger + codec + mic). Copper routing is 0% done, deliberately,
 because it's the one piece of this whole effort that genuinely needs a
 real KiCad GUI session or a real autorouter, not just careful scripting
 and verification like everything else so far.**
+
+## Update 6: a real bug — the codec commit had silently reverted the charger redesign on the schematic
+
+Found and fixed this session. **Not a hypothetical, not a close call —
+the schematic on this branch had genuinely lost the entire charger
+redesign for three commits.** Root cause: when generating the codec/mic
+schematic change, the generation script's source file was read while the
+working tree happened to be on `master` (checked out for the previous
+PR-comment step), not this branch — so it built the codec swap on top of
+the *original, untouched* schematic instead of the charger-redesigned
+one, and that output was then copied over this branch's file, silently
+discarding the charger changes. The PCB side was never affected (PCB
+edits are a separate file/process), which is exactly why this went
+undetected for three commits: DRC on the PCB stayed clean throughout,
+and ERC on the schematic still passed (88 vs. 86 looked like normal
+noise, not a sign that an entire prior changeset had vanished) — the
+schematic quietly had the OLD BQ25120A charger back, sitting right next
+to the NEW TLV320AIC3100 codec, while the PCB had all the new charger
+footprints with nowhere real to trace back to.
+
+**How this was caught**: routine verification before starting new work —
+checking which components existed in the schematic before touching
+anything — turned up `U2` still valued `BQ25120AYFPR` on a branch whose
+whole point was replacing it. Direct `grep` confirmed zero occurrences of
+`TP4056`/`TPS62822`/`TPS22917` anywhere in the file.
+
+**The fix**: re-ran both generation scripts in the correct order this
+time — charger script against the real original (from `master`, since
+this branch's own copy was now known-compromised), verified via ERC
+(86 violations, matching the charger-only baseline exactly), *then* the
+codec script against that correct intermediate output, not the original.
+Final result verified two ways, not just one: `kicad-cli sch erc`
+(88 violations — the honest combined count: 84 baseline + 5 genuinely
+new nets across both changesets, `-1` for an old anonymous net deleted
+along with the ADAU1860 — matching the pattern established earlier
+exactly, not a new anomaly) and a direct pin-by-pin coordinate check
+confirming every one of the 70 new pins across all charger+codec+mic
+parts lands exactly on its intended label, except the 13 pins
+deliberately left unconnected.
+
+**The actual lesson, worth being explicit about**: verifying a generated
+file in isolation (which is what every prior ERC/DRC check in this
+session did) doesn't catch "this change was built on the wrong base and
+silently clobbered a previous one" — that requires checking the file
+*contains what it's supposed to contain*, not just that it's internally
+consistent. Worth remembering for any future multi-commit schematic work
+in an environment without a persistent, always-current KiCad GUI session
+to sanity-check against.
