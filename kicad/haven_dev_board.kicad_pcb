@@ -4121,6 +4121,73 @@
 		)
 		(embedded_fonts no)
 	)
+	(footprint "R0402"
+		(layer "F.Cu")
+		(uuid "969df3d7-9683-4622-acec-9217860f5308")
+		(at 90 -13)
+		(property "Reference" "R_MICBIAS"
+			(at 0 -1.5 0)
+			(layer "F.SilkS")
+			(uuid "0c447318-3280-45de-816d-566056530805")
+			(effects
+				(font
+					(size 0.8 0.8)
+					(thickness 0.12)
+				)
+			)
+		)
+		(property "Value" "2.2k"
+			(at 0 1.5 0)
+			(layer "F.Fab")
+			(uuid "357bbe3c-0468-4bd1-8d3f-3f4d083c0df1")
+			(effects
+				(font
+					(size 0.8 0.8)
+					(thickness 0.12)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "f040ed67-292f-4c5e-963d-3a5257aa4a75")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "038f4cc3-3e62-42ce-8823-fd8ff3020981")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(attr smd)
+		(pad "1" smd rect
+			(at -0.4329 -0.0001 180)
+			(size 0.5657 0.54)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net 87 "MICBIAS")
+			(uuid "b6e7f533-174c-4267-a9e6-322fdccaed9f")
+		)
+		(pad "2" smd rect
+			(at 0.4327 -0.0001 180)
+			(size 0.5657 0.54)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net 89 "MIC_IN")
+			(uuid "0ba0385c-fe66-4827-8517-c90e899259a8")
+		)
+		(embedded_fonts no)
+	)
 	(footprint "CMA-4544PF-W"
 		(layer "F.Cu")
 		(uuid "9b33ca4f-c23e-41d3-b165-66e0c4408fa6")
@@ -5021,6 +5088,73 @@
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net 15 "3V3")
 			(uuid "d2d151b0-d723-408e-a8fb-1e26291c7f57")
+		)
+		(embedded_fonts no)
+	)
+	(footprint "C0402"
+		(layer "F.Cu")
+		(uuid "cc0a3164-e208-4039-bd30-ed0d99fbe674")
+		(at 94 -13)
+		(property "Reference" "C_MICIN"
+			(at 0 -3 0)
+			(layer "F.SilkS")
+			(uuid "2ec72a9e-0458-4090-87c7-5e7f25a712c6")
+			(effects
+				(font
+					(size 0.8 0.8)
+					(thickness 0.12)
+				)
+			)
+		)
+		(property "Value" "1uF"
+			(at 0 1.5 0)
+			(layer "F.Fab")
+			(uuid "c2bb3d29-d7fa-476d-88e2-4814dec51431")
+			(effects
+				(font
+					(size 0.8 0.8)
+					(thickness 0.12)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "3f955bc1-7ceb-4408-b446-3fa379634df2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "bd1f8d85-8a50-44b3-a377-30a9ae90f2e5")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(attr smd)
+		(pad "1" smd rect
+			(at -0.5451 0.0001)
+			(size 0.7901 0.54)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net 89 "MIC_IN")
+			(uuid "489f6e5c-f20f-4db8-8fba-79e11453bd7f")
+		)
+		(pad "2" smd rect
+			(at 0.545 0.0001)
+			(size 0.7901 0.54)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net 88 "MIC_IN_AC")
+			(uuid "a7966b02-a3c4-449f-b04a-efd86130a215")
 		)
 		(embedded_fonts no)
 	)
