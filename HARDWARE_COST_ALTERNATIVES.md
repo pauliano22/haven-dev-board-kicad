@@ -829,3 +829,63 @@ placement + net assignment done for all 5 new parts across charger,
 codec, and mic; the fuel gauge is fully removed; copper routing remains
 the one substantial piece of work left, and — as covered above — it
 needs a real KiCad GUI session or autorouter, not more scripting.
+
+## STOP: a parallel effort directly challenges the codec/mic half of this redesign — read before merging anything
+
+Found via a routine full-PR-list sweep this tick (not something surfaced
+by any check I'd been running regularly — worth remembering that a
+partial PR list looks identical to "nothing new" until you actually run
+`gh pr list` with no filter). There is a substantial, independent,
+week-long body of work (`victorzhu443`, PRs #3/#5/#6/#7 on this repo,
+plus matching work on `haven-zephyr-app` and `haven-custom-app`) that
+directly disputes the *codec* half of this redesign — **not the charger
+half**, which nothing in that work touches or contradicts.
+
+**The core disagreement:** this doc's case for replacing the ADAU1860
+rested on "no public register map, unknown coefficient format, so move
+filtering to the nRF5340 instead." `haven-zephyr-app#9` shows that
+premise doesn't hold — the ADAU1860's register map, coefficient format
+(**Q5.27**, verified against upstream's own generated data to 9 decimal
+places), and a complete working FastDSP driver were successfully ported
+directly from `OpenEarable/open-earable-2` (the real open-source
+firmware for the exact board Haven's hardware is derived from). The
+"we can't know this chip" blocker behind this whole codec-swap plan was
+solvable by porting from upstream — an approach this doc never
+attempted or considered.
+
+**A real requirement this doc never evaluated at all:** hear-through
+latency. `haven-dev-board-kicad#6` (an architecture memo written
+directly in response to this doc) argues moving biquad filtering onto
+the nRF5340 (option C, what got implemented here) adds an estimated
+0.7–9ms of I2S block-buffering delay versus the codec's dedicated
+hardware DSP (~50–150µs) — enough to risk audible comb-filtering
+artifacts and roughly double continuous MCU power draw during
+hear-through. For a device whose core job is real-time ambient
+pass-through, that's a potentially disqualifying tradeoff this
+redesign's cost/pitch/routing analysis never once checked.
+
+**Independently verified one falsifiable claim from that memo before
+trusting it**: it proposes **TLV320AIC3254** (not the TLV320AIC3100 this
+redesign chose) specifically because it has real digital/PDM microphone
+input, avoiding this redesign's mic swap entirely. Confirmed directly
+from TI's own datasheet (SLAS549D) — real, current, has PDM support.
+That's one concrete point in the counter-proposal's favor, checked, not
+just taken on faith.
+
+**What this means for this PR:**
+- The **charger swap** (TP4056/TPS62822/TPS22917, commits 1-2 on this
+  branch) is untouched by any of this and stands on its own — nothing in
+  the parallel work disputes it.
+- The **codec/mic swap** (TLV320AIC3100/CMA-4544PF-W, commits 3+) should
+  **not be merged, and no further work should go into finishing its
+  routing, without reading `haven-dev-board-kicad#6` and
+  `haven-zephyr-app#9` first.** This isn't a case of "my research was
+  wrong and theirs is right" so much as two real, substantive analyses
+  reaching different conclusions on a decision with real product
+  consequences (latency, battery life) that deserves a human read of
+  both, not another automated pass picking a side.
+- Recommended next step, straight from the counter-memo: a cheap, fast
+  physical measurement (I2S loopback latency on the bare nRF5340 DK,
+  plus a TLV320AIC3254EVM real latency measurement) that would settle
+  this with data instead of competing estimates — ~$200, about a week,
+  no new PCB needed. That's real-world work only you can do.
