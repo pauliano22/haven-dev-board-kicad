@@ -405,6 +405,20 @@ carefully, several 2026-cycle ones have likely already closed:**
   is worth planning toward for next year's cycles, not something to wait
   on before making progress now.
 
+**Update, checked again with fresher searches**: Cornell used to run a
+dedicated **SBIR/STTR Assistance Program** (paid for a grant-writing
+consultant, matching funds) — it's referenced in some older search
+results, but **it sunset at the end of 2024** and no longer exists.
+Don't chase it. What IS real and available right now, no deadline, no
+application cycle: **Blackstone LaunchPad** (`eship.cornell.edu`) — free,
+ongoing entrepreneurship mentoring/coaching for any Cornell student or
+alum, walk-in basis, not a once-a-year cohort like eLab. Given eLab and
+the SBIR assistance program are both currently unavailable, this is the
+actual "go talk to someone at Cornell this week" option — worth using
+specifically to get an outside read on whether NIOSH SBIR (see
+`haven-workspace/FUNDING_RESEARCH.md`) is realistic before spending real
+time on a proposal.
+
 ## Not yet done / needs a real decision
 
 This is a real architecture change, not a tweak — it means re-deriving the
