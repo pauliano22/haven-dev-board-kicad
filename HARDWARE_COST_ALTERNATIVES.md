@@ -808,3 +808,24 @@ silently clobbered a previous one" — that requires checking the file
 consistent. Worth remembering for any future multi-commit schematic work
 in an environment without a persistent, always-current KiCad GUI session
 to sanity-check against.
+
+## Update 7: actually removed the fuel gauge the TL;DR already claimed was gone
+
+Also found during the same verification pass: U6 (BQ27220 fuel gauge)
+was still sitting on both the schematic and the PCB, despite this doc's
+own TL;DR already saying "fuel gauge dropped entirely — confirmed
+nothing reads it." That confirmation (searching both app repos for any
+battery-level/fuel-gauge reference and finding zero) was real, but had
+never actually been turned into an edit. Removed now: the schematic
+instance + 9 pin labels, and the PCB footprint. Left two now-vestigial
+passives (R17, C23 — bias/decoupling that only served U6) in place,
+same convention as the BQ25120A removal.
+
+**Current real numbers, as of this commit** (superseding the individual
+snapshots above, which are a narrative trail of what was true at each
+step, not a running total): `kicad-cli sch erc` — 88 violations.
+`kicad-cli pcb drc` — 222 violations, 52 unconnected items. Footprint
+placement + net assignment done for all 5 new parts across charger,
+codec, and mic; the fuel gauge is fully removed; copper routing remains
+the one substantial piece of work left, and — as covered above — it
+needs a real KiCad GUI session or autorouter, not more scripting.
