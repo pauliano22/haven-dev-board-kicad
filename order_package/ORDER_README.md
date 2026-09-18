@@ -27,3 +27,12 @@ Board: 73.1 x 161.1 mm, 6 layers, 1.6 mm. Order 5, not 1.
 - Silkscreen is nearly empty (known, cosmetic).
 
 Nothing has been ordered. Ordering/paying needs you.
+
+## Headphone supply (HPVDD) check - done 2026-09-18
+Earlier reviews listed HPVDD/HPVDD_L as unresolved. Checked: they sit on V_LS,
+the switched 1.8 V rail, matching the ADAU1860 datasheet (HPVDD ~1.8 V typ,
+HPVDD_L 1.2 V..HPVDD). A 10 uF cap (C33) is 1.9 mm from those pins on this
+(fixed) board; datasheet asks for 10 uF close. Remaining nit: V_LS traces are
+thin (0.09-0.2 mm) where the datasheet asks for a wider trace to HPVDD_L; low
+risk for a small in-ear speaker. Source: datasheet excerpts via search, not a
+full read of the PDF.
