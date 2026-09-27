@@ -5,7 +5,10 @@ import math, pcbnew
 import route_lib as rl
 
 def layer_id(name):
-    return {'F.Cu': pcbnew.F_Cu, 'B.Cu': pcbnew.B_Cu}[name]
+    # inner layers added for the crystal escape (tracks on a plane layer are legal;
+    # the pour refills around them) -- see routing-evidence/crystal-escape/
+    return {'F.Cu': pcbnew.F_Cu, 'B.Cu': pcbnew.B_Cu, 'In1.Cu': pcbnew.In1_Cu, 'In2.Cu': pcbnew.In2_Cu,
+            'In3.Cu': pcbnew.In3_Cu, 'In4.Cu': pcbnew.In4_Cu}[name]
 
 def other_copper(board, layer, exclude_refs=(), exclude_nets=()):
     """(shape, netname) for every pad on `layer`, every track on `layer`
