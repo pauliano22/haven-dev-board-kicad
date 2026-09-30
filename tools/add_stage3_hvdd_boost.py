@@ -192,6 +192,14 @@ def main():
     # CFF: feedforward cap in parallel with R1, HVDD -> FB_NODE
     place_2pin(sch, "C55", "C_22pF_ff", 595.0, 170.0, "HVDD", "FB_NODE")
 
+    # MICBIAS decoupling: 1uF/35V, value straight from the TAC5301-Q1
+    # datasheet's own Figure 8-1 reference circuit (the ">25V rating"
+    # layout guideline is for the chip's own full 3-10V MICBIAS range,
+    # not specific to what we actually program it to -- using TI's own
+    # cited value rather than re-deriving a lower rating for our case).
+    sch.libSymbols.append(build_2pin_symbol("C_1uF_35V_micbias", "1uF 35V"))
+    place_2pin(sch, "C56", "C_1uF_35V_micbias", 610.0, 140.0, "MIC_BIAS", "GND")
+
     sch.to_file(SCH_PATH)
     print("Wrote", SCH_PATH)
 
