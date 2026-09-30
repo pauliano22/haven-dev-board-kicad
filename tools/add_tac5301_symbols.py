@@ -122,7 +122,18 @@ NET_MAP = {
     "IOVDD": "3V3",
     "AVDD#11": "3V3",
     "AVDD#23": "3V3",
-    "HVDD": "3V3",          # simplification: ties mic bias headroom to 3V3, flagged for review
+    "HVDD": None,           # NOT 3V3 -- real datasheet spec (Recommended Operating
+                            # Conditions, HVDD to AVSS) requires 5.6V MIN / 9V TYP /
+                            # 12V MAX. Tying this to the 3.3V rail would put HVDD
+                            # below its functional minimum and MICBIAS likely
+                            # wouldn't work at all. Needs its own small boost
+                            # converter from the battery (TPS61040-class part is a
+                            # real, verified candidate: SOT-23, single-Li-ion-cell
+                            # input, up to 12V/20mA output, sold specifically as a
+                            # "bias voltage" boost converter -- but the actual
+                            # boost sub-circuit, inductor/diode/feedback-resistor
+                            # sizing, is not designed yet. Left unconnected rather
+                            # than wired wrong.
     "MICBIAS": "MIC_BIAS",
     "VREF": "VREF_DECOUPLE",  # flagged: needs its own decoupling cap, stage 2
     "VSS#A1": "GND",
