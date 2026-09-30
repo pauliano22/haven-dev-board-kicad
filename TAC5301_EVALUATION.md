@@ -33,12 +33,13 @@ experiment can be narrowed or skipped by reading harder before spending money.*
   300µs — this is comfortably under it, in the same range as the ADAU1860's own *estimated*
   50–150µs, except this number comes from a published filter-characteristics table instead of an
   estimate.
-- **Price: TI lists it at $0.66**, cheaper than the AIC3254's $3.03 — but TI's own site shows it
-  out of stock at that price, and I have not yet confirmed real stock/price at LCSC, Digikey, or
-  Mouser. **This is the one open item before committing any schematic time to this part** — an
-  automotive-qualified (AEC-Q100) part sometimes has thinner small-quantity consumer-channel
-  stock than its price suggests, and that needs a real distributor check, not a search-snippet
-  guess.
+- **Real stock, confirmed at Mouser (2026-09-30): 2,834 units, ships immediately.** Pricing at
+  prototype quantities: $1.61 (qty 1), $1.18 (qty 10), $1.07 (qty 25), $1.00 (qty 100). TI's own
+  site listing of $0.66 was stale/wrong — the real distributor price is 1.6–2.4x that, but still
+  well under the AIC3254's $3.03. The 20-week figure on the listing is Mouser's *factory
+  lead-time for restocking after current inventory runs out*, not a blocker — there's nowhere
+  near enough demand from a handful of prototype boards to touch that. **This was the one open
+  item and it's now closed: real, in-stock, cheap.**
 
 ## What this changes vs. the AIC3254 recommendation
 
@@ -60,14 +61,8 @@ confirmed directly from the register map (§7.2.3 onward), not inferred.
 
 ## What's still unverified (do this before writing any schematic)
 
-1. **Real distributor stock and price** at LCSC/JLC/Digikey/Mouser, in the quantities Haven would
-   actually order. TI's own $0.66/out-of-stock listing is not enough to commit to. **Tried and
-   genuinely blocked, not just unattempted**: both LCSC's product-search API and Mouser's returned
-   bot-detection responses ("Access to this page has been denied") to a plain scripted request, and
-   a full-page fetch of Mouser's TAC5301-Q1 category listing timed out. This isn't a "search harder"
-   problem — it needs either a real distributor API key (LCSC/Digikey/Mouser all offer one on
-   registration, none set up here) or a person clicking through a browser. Flagging as blocked
-   rather than silently retrying it every tick.
+1. ~~Real distributor stock and price~~ **Resolved 2026-09-30**: 2,834 in stock at Mouser,
+   $1.07–1.61/unit at prototype quantities, ships immediately. See TL;DR.
 2. **Whether the 3+3 loopback split can actually implement 5 independent notch/peaking bands** —
    reasoned through on paper this tick, not bench-verified. The ADC loopback path to the DAC chain
    does **not** appear to pass through the DAC chain's sample-rate converter (Figure 6-61 shows the
@@ -88,11 +83,30 @@ confirmed directly from the register map (§7.2.3 onward), not inferred.
 
 ## Recommendation
 
-Don't commit schematic time to either QFN candidate yet. Next step is cheap and non-committal:
-confirm real TAC5301-Q1 stock/pricing at an actual distributor. If that comes back reasonable,
-it's now a genuine two-way comparison (TAC5301-Q1 vs TLV320AIC3254) instead of a single unresolved
-recommendation, and the $200 bench-test question from the architecture memo should specify *which*
-part(s) to buy eval hardware for, rather than assuming AIC3254 by default.
+**TAC5301-Q1 over TLV320AIC3254, pending the bench check both parts still need.** Reasoning:
+
+| | TAC5301-Q1 | TLV320AIC3254 |
+|---|---|---|
+| Price (prototype qty) | $1.07–1.61 (confirmed, Mouser) | $3.03 (JLC catalog) |
+| Stock | 2,834 @ Mouser, ships now | not independently re-confirmed this pass |
+| Biquads for 5 bands | 3+3 across two banks, needs the paper-verified split (§ above) | 5 on ADC (Filter C), only 4 on DAC at the same latency tier — needs Filter A for the 5th, at a latency cost |
+| Group delay (ultra-low-latency, 48kHz) | ~120–190µs combined, from real filter tables | not fully pinned down from public docs this pass |
+| DSP tool dependency | none — pure register writes, confirmed from register map | none for fixed blocks; miniDSP only if going beyond them |
+| Datasheet currency | Apr 2025, rev. Apr 2026 | Sept 2008, rev. Nov 2014 |
+| Package | VQFN-24, 4×4mm | VQFN-32, 5×5mm |
+
+TAC5301-Q1 wins on price, confirmed stock, and datasheet-sourced (not estimated) latency numbers.
+Its one real asterisk — needing the 5 bands split 3+2 (or similar) across two independently-clocked
+biquad banks instead of 5 in one bank — is reasoned through above as sound, not hand-waved, but
+it's paper reasoning, not a bench measurement.
+
+**Before any schematic work**: run the cheap experiment the architecture memo already proposed
+(§7 there), but aimed at this part instead of the AIC3254 — a TAC5301-Q1 costs about $1.50 in
+parts; TI doesn't appear to sell a dedicated EVM for it the way it does for the AIC3254 family, so
+the practical version of that experiment is likely a small breakout/dead-bug prototype on a
+breadboard-friendly adapter rather than an off-the-shelf eval board. Confirm real hear-through
+latency and that the 3+2 (or 3+3) band split sounds and measures correctly before committing PCB
+time to it.
 
 ---
 
