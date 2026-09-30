@@ -1626,7 +1626,7 @@
 	(footprint "C0402"
 		(layer "F.Cu")
 		(uuid "4e4cef52-7fe8-4e9c-8ed7-164e435455c6")
-		(at 60 140)
+		(at 60 122)
 		(property "Reference" "C56"
 			(at 0 -1.5 0)
 			(layer "F.SilkS")
@@ -4214,7 +4214,7 @@
 	(footprint "C0402"
 		(layer "F.Cu")
 		(uuid "b9ce0c16-bc4d-47ec-8259-58f71134fe0b")
-		(at 50 130)
+		(at 55 122)
 		(property "Reference" "C50"
 			(at 0 -1.5 0)
 			(layer "F.SilkS")
