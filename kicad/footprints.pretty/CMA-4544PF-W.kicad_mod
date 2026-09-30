@@ -1,0 +1,7 @@
+(footprint "CMA-4544PF-W"
+  (layer "F.Cu")
+  (tedit 6abcfd17)
+  (attr through_hole)
+  (pad "1" thru_hole rect (at -1.27 0 0) (size 1.4 1.4) (drill 0.8) (layers *.Cu *.Mask))
+  (pad "2" thru_hole circle (at 1.27 0 0) (size 1.4 1.4) (drill 0.8) (layers *.Cu *.Mask))
+)
