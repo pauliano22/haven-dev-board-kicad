@@ -61,12 +61,27 @@ confirmed directly from the register map (§7.2.3 onward), not inferred.
 ## What's still unverified (do this before writing any schematic)
 
 1. **Real distributor stock and price** at LCSC/JLC/Digikey/Mouser, in the quantities Haven would
-   actually order. TI's own $0.66/out-of-stock listing is not enough to commit to.
-2. **Whether the 3+3 loopback split can actually implement 5 independent notch/peaking bands**
-   with the coefficients Haven's existing `apply_bands`-style tuning already computes, or whether
-   the split requires re-deriving which bands go on which side and re-checking the combined
-   transfer function is still correct — this is a real DSP question, not just a register-count
-   question.
+   actually order. TI's own $0.66/out-of-stock listing is not enough to commit to. **Tried and
+   genuinely blocked, not just unattempted**: both LCSC's product-search API and Mouser's returned
+   bot-detection responses ("Access to this page has been denied") to a plain scripted request, and
+   a full-page fetch of Mouser's TAC5301-Q1 category listing timed out. This isn't a "search harder"
+   problem — it needs either a real distributor API key (LCSC/Digikey/Mouser all offer one on
+   registration, none set up here) or a person clicking through a browser. Flagging as blocked
+   rather than silently retrying it every tick.
+2. **Whether the 3+3 loopback split can actually implement 5 independent notch/peaking bands** —
+   reasoned through on paper this tick, not bench-verified. The ADC loopback path to the DAC chain
+   does **not** appear to pass through the DAC chain's sample-rate converter (Figure 6-61 shows the
+   SRC block specifically in the *Aux ASI* input path, a separate branch from the "Tone Generator or
+   ADC loopback" input into the adder) — so both biquad banks should be operating on the same
+   signal at the same sample rate, with no resampling between them. Under that condition, cascading
+   any 5 (of the available 6) independently-programmed biquad sections is a standard LTI cascade:
+   the combined transfer function is just the product of each section's response, regardless of
+   which physical bank each one lives in. **One real firmware requirement this implies**: each
+   side's HPF (`ADC_DSP_HPF_SEL`/`DAC_DSP_HPF_SEL`, Tables 6-15/6-39) and digital volume control
+   need to be left at their lowest-cutoff/unity settings, or they'd act as extra, unaccounted-for
+   filter stages in the cascade — a straightforward init-sequence detail, not a redesign. This
+   reasoning is solid enough to plan around but should still get a real bench check (a swept sine
+   through both banks configured) before it's treated as settled, same as item 3 below.
 3. The datasheet's own group delay numbers are worst-case-pairing arithmetic done by me in this
    doc, not a measured round-trip on real hardware. Same caveat the architecture memo already
    raised for the AIC3254: **read the real thing, but bench it before it's a safety claim.**
