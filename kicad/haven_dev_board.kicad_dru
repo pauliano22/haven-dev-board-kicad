@@ -1021,3 +1021,7 @@
 (rule "tight_clearance_HVDD_vs_PDMDIN"
   (condition "(A.NetName == 'HVDD' && B.NetName == 'PDMDIN') || (B.NetName == 'HVDD' && A.NetName == 'PDMDIN')")
   (constraint clearance (min 0.18mm)))
+
+(rule "tight_clearance_HVDD_vs_RGB_B"
+  (condition "(A.NetName == 'HVDD' && B.NetName == 'RGB_B') || (B.NetName == 'HVDD' && A.NetName == 'RGB_B')")
+  (constraint clearance (min 0.17mm)))
