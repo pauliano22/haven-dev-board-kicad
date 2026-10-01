@@ -1037,3 +1037,7 @@
 (rule "tight_clearance_3V3_vs_FB_NODE"
   (condition "(A.NetName == '3V3' && B.NetName == 'FB_NODE') || (B.NetName == '3V3' && A.NetName == 'FB_NODE')")
   (constraint clearance (min 0.16mm)))
+
+(rule "tight_clearance_GND_vs_SW_NODE"
+  (condition "(A.NetName == 'GND' && B.NetName == 'SW_NODE') || (B.NetName == 'GND' && A.NetName == 'SW_NODE')")
+  (constraint clearance (min 0.19mm)))
