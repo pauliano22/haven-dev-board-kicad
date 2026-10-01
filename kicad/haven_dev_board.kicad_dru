@@ -1041,3 +1041,7 @@
 (rule "tight_clearance_GND_vs_SW_NODE"
   (condition "(A.NetName == 'GND' && B.NetName == 'SW_NODE') || (B.NetName == 'GND' && A.NetName == 'SW_NODE')")
   (constraint clearance (min 0.19mm)))
+
+(rule "tight_clearance_VREF_DECOUPLE_vs_V_LS"
+  (condition "(A.NetName == 'VREF_DECOUPLE' && B.NetName == 'V_LS') || (B.NetName == 'VREF_DECOUPLE' && A.NetName == 'V_LS')")
+  (constraint clearance (min 0.15mm)))
