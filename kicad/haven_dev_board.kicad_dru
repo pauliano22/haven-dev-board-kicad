@@ -1045,3 +1045,11 @@
 (rule "tight_clearance_VREF_DECOUPLE_vs_V_LS"
   (condition "(A.NetName == 'VREF_DECOUPLE' && B.NetName == 'V_LS') || (B.NetName == 'VREF_DECOUPLE' && A.NetName == 'V_LS')")
   (constraint clearance (min 0.15mm)))
+
+(rule "tight_clearance_3V3_vs_DAC_P"
+  (condition "(A.NetName == '3V3' && B.NetName == 'DAC_P') || (B.NetName == '3V3' && A.NetName == 'DAC_P')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_1N151_vs_3V3"
+  (condition "(A.NetName == '$1N151' && B.NetName == '3V3') || (B.NetName == '$1N151' && A.NetName == '3V3')")
+  (constraint clearance (min 0.18mm)))
