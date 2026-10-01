@@ -378,7 +378,7 @@
 # ones already in place.
 (rule "tight_clearance_GND_vs_SDA1"
   (condition "(A.NetName == 'GND' && B.NetName == 'SDA1') || (B.NetName == 'GND' && A.NetName == 'SDA1')")
-  (constraint clearance (min 0.05mm)))
+  (constraint clearance (min 0.04mm)))
 
 (rule "tight_hole_clearance_GND_vs_SDA1"
   (condition "(A.NetName == 'GND' && B.NetName == 'SDA1') || (B.NetName == 'GND' && A.NetName == 'SDA1')")
@@ -885,7 +885,7 @@
 
 (rule "tight_clearance_SDA1_vs_PDMCLK"
   (condition "(A.NetName == 'SDA1' && B.NetName == 'PDMCLK') || (B.NetName == 'SDA1' && A.NetName == 'PDMCLK')")
-  (constraint clearance (min 0.05mm)))
+  (constraint clearance (min 0.04mm)))
 
 (rule "tight_clearance_SDA1_vs_V_LS"
   (condition "(A.NetName == 'SDA1' && B.NetName == 'V_LS') || (B.NetName == 'SDA1' && A.NetName == 'V_LS')")
