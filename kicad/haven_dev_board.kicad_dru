@@ -961,3 +961,7 @@
 (rule "tight_clearance_FB_NODE_vs_RGB_B"
   (condition "(A.NetName == 'FB_NODE' && B.NetName == 'RGB_B') || (B.NetName == 'FB_NODE' && A.NetName == 'RGB_B')")
   (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_FB_NODE_vs_HVDD"
+  (condition "(A.NetName == 'FB_NODE' && B.NetName == 'HVDD') || (B.NetName == 'FB_NODE' && A.NetName == 'HVDD')")
+  (constraint clearance (min 0.18mm)))
