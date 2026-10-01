@@ -16269,6 +16269,14 @@
 		(uuid "0d424d46-db57-4c72-bb09-c90767b95283")
 	)
 	(segment
+		(start 55.615 115.448)
+		(end 57.5525 115.198)
+		(width 0.2)
+		(layer "F.Cu")
+		(net 25)
+		(uuid "10231ae2-5b17-4586-a28c-6ac57d6999c2")
+	)
+	(segment
 		(start 64.4103 99.9399)
 		(end 64.4103 99.7392)
 		(width 0.2)
@@ -16276,6 +16284,14 @@
 		(layer "F.Cu")
 		(net 25)
 		(uuid "10eff08f-904c-4253-8aec-c827448fcc31")
+	)
+	(segment
+		(start 58.578094 113.323)
+		(end 57.565 113.598)
+		(width 0.2)
+		(layer "F.Cu")
+		(net 25)
+		(uuid "140a7531-3c8b-4652-8388-185919d2368d")
 	)
 	(segment
 		(start 78.9319 132.869)
@@ -16687,6 +16703,14 @@
 		(uuid "708fe9d9-70c5-4d84-8394-3774b3e648a4")
 	)
 	(segment
+		(start 68.545 108.0001)
+		(end 72.8625 107.5)
+		(width 0.2)
+		(layer "F.Cu")
+		(net 25)
+		(uuid "714636f5-6486-4203-bb5f-b7224425acb1")
+	)
+	(segment
 		(start 109.5811 42.6114)
 		(end 109.5811 44.2187)
 		(width 0.2)
@@ -16841,6 +16865,14 @@
 		(layer "F.Cu")
 		(net 25)
 		(uuid "91ccf584-551d-4652-a0b6-d6e0c8effb2a")
+	)
+	(segment
+		(start 44.5703 106.0201)
+		(end 45.545 105.0001)
+		(width 0.2)
+		(layer "F.Cu")
+		(net 25)
+		(uuid "91e2ee54-1354-46cc-9f1d-6c410bc1f6f2")
 	)
 	(segment
 		(start 84.8102 65.1296)
@@ -17216,6 +17248,14 @@
 		(layer "F.Cu")
 		(net 25)
 		(uuid "e610c69f-5c42-41ae-808b-08b4005b4109")
+	)
+	(segment
+		(start 58.4404 112.3739)
+		(end 58.4404 112.6219)
+		(width 0.15)
+		(layer "F.Cu")
+		(net 25)
+		(uuid "e782302f-40b8-4f71-905a-8f305baf1f50")
 	)
 	(segment
 		(start 61.945 123.0001)
