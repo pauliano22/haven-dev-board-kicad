@@ -1845,7 +1845,7 @@
 	(footprint "R0402"
 		(layer "F.Cu")
 		(uuid "57b3081b-dfbd-451d-9e06-7543ce2352ab")
-		(at 45 130)
+		(at 50 125)
 		(property "Reference" "R29"
 			(at 0 -1.5 0)
 			(layer "F.SilkS")
