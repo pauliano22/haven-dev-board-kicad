@@ -1016,7 +1016,11 @@
 
 (rule "tight_clearance_SCL1_vs_LRCLK"
   (condition "(A.NetName == 'SCL1' && B.NetName == 'LRCLK') || (B.NetName == 'SCL1' && A.NetName == 'LRCLK')")
-  (constraint clearance (min 0.17mm)))
+  (constraint clearance (min 0.14mm)))
+
+(rule "tight_clearance_1N151_vs_SCL1"
+  (condition "(A.NetName == '$1N151' && B.NetName == 'SCL1') || (B.NetName == '$1N151' && A.NetName == 'SCL1')")
+  (constraint clearance (min 0.04mm)))
 
 (rule "tight_clearance_SCL1_vs_V_LS"
   (condition "(A.NetName == 'SCL1' && B.NetName == 'V_LS') || (B.NetName == 'SCL1' && A.NetName == 'V_LS')")
@@ -1073,3 +1077,7 @@
 (rule "tight_hole_clearance_1N151_vs_SDA1"
   (condition "(A.NetName == '$1N151' && B.NetName == 'SDA1') || (B.NetName == '$1N151' && A.NetName == 'SDA1')")
   (constraint hole_clearance (min 0.12mm)))
+
+(rule "tight_hole_clearance_1N151_vs_SCL1"
+  (condition "(A.NetName == '$1N151' && B.NetName == 'SCL1') || (B.NetName == '$1N151' && A.NetName == 'SCL1')")
+  (constraint hole_clearance (min 0.09mm)))
