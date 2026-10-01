@@ -1005,3 +1005,19 @@
 (rule "tight_hole_clearance_SCL1_vs_DREG_DECOUPLE"
   (condition "(A.NetName == 'SCL1' && B.NetName == 'DREG_DECOUPLE') || (B.NetName == 'SCL1' && A.NetName == 'DREG_DECOUPLE')")
   (constraint hole_clearance (min 0.12mm)))
+
+(rule "tight_clearance_HVDD_vs_MIC_BIAS"
+  (condition "(A.NetName == 'HVDD' && B.NetName == 'MIC_BIAS') || (B.NetName == 'HVDD' && A.NetName == 'MIC_BIAS')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_HVDD_vs_SW_NODE"
+  (condition "(A.NetName == 'HVDD' && B.NetName == 'SW_NODE') || (B.NetName == 'HVDD' && A.NetName == 'SW_NODE')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_GND_vs_HVDD"
+  (condition "(A.NetName == 'GND' && B.NetName == 'HVDD') || (B.NetName == 'GND' && A.NetName == 'HVDD')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_HVDD_vs_PDMDIN"
+  (condition "(A.NetName == 'HVDD' && B.NetName == 'PDMDIN') || (B.NetName == 'HVDD' && A.NetName == 'PDMDIN')")
+  (constraint clearance (min 0.18mm)))
