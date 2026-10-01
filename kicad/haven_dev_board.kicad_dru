@@ -965,3 +965,11 @@
 (rule "tight_clearance_FB_NODE_vs_HVDD"
   (condition "(A.NetName == 'FB_NODE' && B.NetName == 'HVDD') || (B.NetName == 'FB_NODE' && A.NetName == 'HVDD')")
   (constraint clearance (min 0.18mm)))
+
+(rule "tight_clearance_3V3_vs_GND"
+  (condition "(A.NetName == '3V3' && B.NetName == 'GND') || (B.NetName == '3V3' && A.NetName == 'GND')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_3V3_vs_noname"
+  (condition "(A.NetName == '3V3' && B.NetName == '') || (B.NetName == '3V3' && A.NetName == '')")
+  (constraint clearance (min 0.14mm)))
