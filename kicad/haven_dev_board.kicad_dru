@@ -973,3 +973,7 @@
 (rule "tight_clearance_3V3_vs_noname"
   (condition "(A.NetName == '3V3' && B.NetName == '') || (B.NetName == '3V3' && A.NetName == '')")
   (constraint clearance (min 0.14mm)))
+
+(rule "tight_clearance_3V3_vs_VREF_DECOUPLE"
+  (condition "(A.NetName == '3V3' && B.NetName == 'VREF_DECOUPLE') || (B.NetName == '3V3' && A.NetName == 'VREF_DECOUPLE')")
+  (constraint clearance (min 0.17mm)))
