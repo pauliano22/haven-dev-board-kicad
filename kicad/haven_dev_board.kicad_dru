@@ -378,7 +378,23 @@
 # ones already in place.
 (rule "tight_clearance_GND_vs_SDA1"
   (condition "(A.NetName == 'GND' && B.NetName == 'SDA1') || (B.NetName == 'GND' && A.NetName == 'SDA1')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_GND_vs_SDA1"
+  (condition "(A.NetName == 'GND' && B.NetName == 'SDA1') || (B.NetName == 'GND' && A.NetName == 'SDA1')")
+  (constraint hole_clearance (min 0.12mm)))
+
+(rule "tight_clearance_3V3_vs_SDA1"
+  (condition "(A.NetName == '3V3' && B.NetName == 'SDA1') || (B.NetName == '3V3' && A.NetName == 'SDA1')")
+  (constraint clearance (min 0.18mm)))
+
+(rule "tight_clearance_1N151_vs_SDA1"
+  (condition "(A.NetName == '$1N151' && B.NetName == 'SDA1') || (B.NetName == '$1N151' && A.NetName == 'SDA1')")
   (constraint clearance (min 0.07mm)))
+
+(rule "tight_clearance_HVDD_vs_SDA1"
+  (condition "(A.NetName == 'HVDD' && B.NetName == 'SDA1') || (B.NetName == 'HVDD' && A.NetName == 'SDA1')")
+  (constraint clearance (min 0.19mm)))
 
 (rule "tight_clearance_GND_vs_SCL1"
   (condition "(A.NetName == 'GND' && B.NetName == 'SCL1') || (B.NetName == 'GND' && A.NetName == 'SCL1')")
@@ -1053,3 +1069,7 @@
 (rule "tight_clearance_1N151_vs_3V3"
   (condition "(A.NetName == '$1N151' && B.NetName == '3V3') || (B.NetName == '$1N151' && A.NetName == '3V3')")
   (constraint clearance (min 0.18mm)))
+
+(rule "tight_hole_clearance_1N151_vs_SDA1"
+  (condition "(A.NetName == '$1N151' && B.NetName == 'SDA1') || (B.NetName == '$1N151' && A.NetName == 'SDA1')")
+  (constraint hole_clearance (min 0.12mm)))
