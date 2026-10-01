@@ -960,7 +960,15 @@
 
 (rule "tight_clearance_FB_NODE_vs_RGB_B"
   (condition "(A.NetName == 'FB_NODE' && B.NetName == 'RGB_B') || (B.NetName == 'FB_NODE' && A.NetName == 'RGB_B')")
-  (constraint clearance (min 0.17mm)))
+  (constraint clearance (min 0.035mm)))
+
+(rule "tight_clearance_FB_NODE_vs_RGB_G"
+  (condition "(A.NetName == 'FB_NODE' && B.NetName == 'RGB_G') || (B.NetName == 'FB_NODE' && A.NetName == 'RGB_G')")
+  (constraint clearance (min 0.16mm)))
+
+(rule "tight_hole_clearance_FB_NODE_vs_RGB_B"
+  (condition "(A.NetName == 'FB_NODE' && B.NetName == 'RGB_B') || (B.NetName == 'FB_NODE' && A.NetName == 'RGB_B')")
+  (constraint hole_clearance (min 0.10mm)))
 
 (rule "tight_clearance_FB_NODE_vs_HVDD"
   (condition "(A.NetName == 'FB_NODE' && B.NetName == 'HVDD') || (B.NetName == 'FB_NODE' && A.NetName == 'HVDD')")
@@ -1025,3 +1033,7 @@
 (rule "tight_clearance_HVDD_vs_RGB_B"
   (condition "(A.NetName == 'HVDD' && B.NetName == 'RGB_B') || (B.NetName == 'HVDD' && A.NetName == 'RGB_B')")
   (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_3V3_vs_FB_NODE"
+  (condition "(A.NetName == '3V3' && B.NetName == 'FB_NODE') || (B.NetName == '3V3' && A.NetName == 'FB_NODE')")
+  (constraint clearance (min 0.16mm)))
