@@ -929,3 +929,19 @@
 (rule "tight_clearance_DREG_DECOUPLE_vs_V_LS"
   (condition "(A.NetName == 'DREG_DECOUPLE' && B.NetName == 'V_LS') || (B.NetName == 'DREG_DECOUPLE' && A.NetName == 'V_LS')")
   (constraint clearance (min 0.065mm)))
+
+(rule "tight_clearance_DAC_P_vs_GND"
+  (condition "(A.NetName == 'DAC_P' && B.NetName == 'GND') || (B.NetName == 'DAC_P' && A.NetName == 'GND')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_DAC_P_vs_HVDD"
+  (condition "(A.NetName == 'DAC_P' && B.NetName == 'HVDD') || (B.NetName == 'DAC_P' && A.NetName == 'HVDD')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_DAC_P_vs_MIC_P"
+  (condition "(A.NetName == 'DAC_P' && B.NetName == 'MIC_P') || (B.NetName == 'DAC_P' && A.NetName == 'MIC_P')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_DAC_P_vs_1N151"
+  (condition "(A.NetName == 'DAC_P' && B.NetName == '$1N151') || (B.NetName == 'DAC_P' && A.NetName == '$1N151')")
+  (constraint clearance (min 0.17mm)))
