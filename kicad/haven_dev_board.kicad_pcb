@@ -673,7 +673,7 @@
 		(descr "SOD-123")
 		(tags "SOD-123")
 		(property "Reference" "D1"
-			(at 0 -2 0)
+			(at 0 -6 0)
 			(layer "F.SilkS")
 			(uuid "f7cd499e-238a-4f89-a911-166c5a81a85f")
 			(effects
@@ -2061,7 +2061,7 @@
 		(descr "Texas RGE0024C VQFN, 24 Pin (http://www.ti.com/lit/ds/symlink/pca9548a.pdf#page=37), generated with kicad-footprint-generator ipc_noLead_generator.py")
 		(tags "Texas VQFN NoLead")
 		(property "Reference" "U15"
-			(at 0 0 0)
+			(at 0 -14 0)
 			(layer "F.SilkS")
 			(uuid "0d4780d4-3a5c-4f5b-bf78-72e6919e802f")
 			(effects
@@ -2690,7 +2690,7 @@
 		(uuid "6b68cb4d-26eb-481a-b70f-082394d9cbc6")
 		(at 90 118.5 90)
 		(property "Reference" "C55"
-			(at 0 -1.5 90)
+			(at -5 -1.5 90)
 			(layer "F.SilkS")
 			(uuid "5f29fea8-f057-40c8-9cba-3822dd290b49")
 			(effects
@@ -4216,7 +4216,7 @@
 		(uuid "b9ce0c16-bc4d-47ec-8259-58f71134fe0b")
 		(at 55 122)
 		(property "Reference" "C50"
-			(at 0 -1.5 0)
+			(at 0 3.5 0)
 			(layer "F.SilkS")
 			(uuid "58858f3b-40c4-4a03-af97-6122fa9d6444")
 			(effects
@@ -5044,7 +5044,7 @@
 		(uuid "dc769dc5-6952-457c-8964-f1cc51bb165f")
 		(at 58.615 90)
 		(property "Reference" "MIC1"
-			(at 0 0 0)
+			(at 0 -6 0)
 			(layer "F.SilkS")
 			(uuid "082e42ee-e503-4efe-813f-c29f1f905875")
 			(effects
