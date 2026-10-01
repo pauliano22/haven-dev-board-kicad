@@ -921,3 +921,11 @@
 (rule "tight_clearance_MIC_P_vs_GND"
   (condition "(A.NetName == 'MIC_P' && B.NetName == 'GND') || (B.NetName == 'MIC_P' && A.NetName == 'GND')")
   (constraint clearance (min 0.19mm)))
+
+(rule "tight_clearance_DREG_DECOUPLE_vs_GND"
+  (condition "(A.NetName == 'DREG_DECOUPLE' && B.NetName == 'GND') || (B.NetName == 'DREG_DECOUPLE' && A.NetName == 'GND')")
+  (constraint clearance (min 0.075mm)))
+
+(rule "tight_clearance_DREG_DECOUPLE_vs_V_LS"
+  (condition "(A.NetName == 'DREG_DECOUPLE' && B.NetName == 'V_LS') || (B.NetName == 'DREG_DECOUPLE' && A.NetName == 'V_LS')")
+  (constraint clearance (min 0.065mm)))
