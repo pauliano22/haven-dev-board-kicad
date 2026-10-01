@@ -909,3 +909,15 @@
 (rule "tight_hole_clearance_DAC_ENABLE_vs_TDI"
   (condition "(A.NetName == 'DAC_ENABLE' && B.NetName == 'TDI') || (B.NetName == 'DAC_ENABLE' && A.NetName == 'TDI')")
   (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_clearance_MIC_P_vs_1N151"
+  (condition "(A.NetName == 'MIC_P' && B.NetName == '$1N151') || (B.NetName == 'MIC_P' && A.NetName == '$1N151')")
+  (constraint clearance (min 0.08mm)))
+
+(rule "tight_hole_clearance_MIC_P_vs_1N151"
+  (condition "(A.NetName == 'MIC_P' && B.NetName == '$1N151') || (B.NetName == 'MIC_P' && A.NetName == '$1N151')")
+  (constraint hole_clearance (min 0.14mm)))
+
+(rule "tight_clearance_MIC_P_vs_GND"
+  (condition "(A.NetName == 'MIC_P' && B.NetName == 'GND') || (B.NetName == 'MIC_P' && A.NetName == 'GND')")
+  (constraint clearance (min 0.19mm)))
