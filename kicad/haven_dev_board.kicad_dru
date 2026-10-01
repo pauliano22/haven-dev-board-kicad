@@ -981,3 +981,7 @@
 (rule "tight_clearance_MIC_BIAS_vs_MIC_P"
   (condition "(A.NetName == 'MIC_BIAS' && B.NetName == 'MIC_P') || (B.NetName == 'MIC_BIAS' && A.NetName == 'MIC_P')")
   (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_3V3_vs_MIC_BIAS_NODE"
+  (condition "(A.NetName == '3V3' && B.NetName == 'MIC_BIAS_NODE') || (B.NetName == '3V3' && A.NetName == 'MIC_BIAS_NODE')")
+  (constraint clearance (min 0.17mm)))
