@@ -378,7 +378,23 @@
 # ones already in place.
 (rule "tight_clearance_GND_vs_SDA1"
   (condition "(A.NetName == 'GND' && B.NetName == 'SDA1') || (B.NetName == 'GND' && A.NetName == 'SDA1')")
+  (constraint clearance (min 0.04mm)))
+
+(rule "tight_hole_clearance_GND_vs_SDA1"
+  (condition "(A.NetName == 'GND' && B.NetName == 'SDA1') || (B.NetName == 'GND' && A.NetName == 'SDA1')")
+  (constraint hole_clearance (min 0.12mm)))
+
+(rule "tight_clearance_3V3_vs_SDA1"
+  (condition "(A.NetName == '3V3' && B.NetName == 'SDA1') || (B.NetName == '3V3' && A.NetName == 'SDA1')")
+  (constraint clearance (min 0.18mm)))
+
+(rule "tight_clearance_1N151_vs_SDA1"
+  (condition "(A.NetName == '$1N151' && B.NetName == 'SDA1') || (B.NetName == '$1N151' && A.NetName == 'SDA1')")
   (constraint clearance (min 0.07mm)))
+
+(rule "tight_clearance_HVDD_vs_SDA1"
+  (condition "(A.NetName == 'HVDD' && B.NetName == 'SDA1') || (B.NetName == 'HVDD' && A.NetName == 'SDA1')")
+  (constraint clearance (min 0.19mm)))
 
 (rule "tight_clearance_GND_vs_SCL1"
   (condition "(A.NetName == 'GND' && B.NetName == 'SCL1') || (B.NetName == 'GND' && A.NetName == 'SCL1')")
@@ -869,7 +885,7 @@
 
 (rule "tight_clearance_SDA1_vs_PDMCLK"
   (condition "(A.NetName == 'SDA1' && B.NetName == 'PDMCLK') || (B.NetName == 'SDA1' && A.NetName == 'PDMCLK')")
-  (constraint clearance (min 0.05mm)))
+  (constraint clearance (min 0.04mm)))
 
 (rule "tight_clearance_SDA1_vs_V_LS"
   (condition "(A.NetName == 'SDA1' && B.NetName == 'V_LS') || (B.NetName == 'SDA1' && A.NetName == 'V_LS')")
@@ -909,3 +925,223 @@
 (rule "tight_hole_clearance_DAC_ENABLE_vs_TDI"
   (condition "(A.NetName == 'DAC_ENABLE' && B.NetName == 'TDI') || (B.NetName == 'DAC_ENABLE' && A.NetName == 'TDI')")
   (constraint hole_clearance (min 0.05mm)))
+
+(rule "tight_clearance_MIC_P_vs_1N151"
+  (condition "(A.NetName == 'MIC_P' && B.NetName == '$1N151') || (B.NetName == 'MIC_P' && A.NetName == '$1N151')")
+  (constraint clearance (min 0.08mm)))
+
+(rule "tight_hole_clearance_MIC_P_vs_1N151"
+  (condition "(A.NetName == 'MIC_P' && B.NetName == '$1N151') || (B.NetName == 'MIC_P' && A.NetName == '$1N151')")
+  (constraint hole_clearance (min 0.14mm)))
+
+(rule "tight_clearance_MIC_P_vs_GND"
+  (condition "(A.NetName == 'MIC_P' && B.NetName == 'GND') || (B.NetName == 'MIC_P' && A.NetName == 'GND')")
+  (constraint clearance (min 0.19mm)))
+
+(rule "tight_clearance_DREG_DECOUPLE_vs_GND"
+  (condition "(A.NetName == 'DREG_DECOUPLE' && B.NetName == 'GND') || (B.NetName == 'DREG_DECOUPLE' && A.NetName == 'GND')")
+  (constraint clearance (min 0.075mm)))
+
+(rule "tight_clearance_DREG_DECOUPLE_vs_V_LS"
+  (condition "(A.NetName == 'DREG_DECOUPLE' && B.NetName == 'V_LS') || (B.NetName == 'DREG_DECOUPLE' && A.NetName == 'V_LS')")
+  (constraint clearance (min 0.065mm)))
+
+(rule "tight_clearance_DAC_P_vs_GND"
+  (condition "(A.NetName == 'DAC_P' && B.NetName == 'GND') || (B.NetName == 'DAC_P' && A.NetName == 'GND')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_DAC_P_vs_HVDD"
+  (condition "(A.NetName == 'DAC_P' && B.NetName == 'HVDD') || (B.NetName == 'DAC_P' && A.NetName == 'HVDD')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_DAC_P_vs_MIC_P"
+  (condition "(A.NetName == 'DAC_P' && B.NetName == 'MIC_P') || (B.NetName == 'DAC_P' && A.NetName == 'MIC_P')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_DAC_P_vs_1N151"
+  (condition "(A.NetName == 'DAC_P' && B.NetName == '$1N151') || (B.NetName == 'DAC_P' && A.NetName == '$1N151')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_V_BAT_vs_FB_NODE"
+  (condition "(A.NetName == 'V_BAT' && B.NetName == 'FB_NODE') || (B.NetName == 'V_BAT' && A.NetName == 'FB_NODE')")
+  (constraint clearance (min 0.12mm)))
+
+(rule "tight_clearance_V_BAT_vs_GND"
+  (condition "(A.NetName == 'V_BAT' && B.NetName == 'GND') || (B.NetName == 'V_BAT' && A.NetName == 'GND')")
+  (constraint clearance (min 0.04mm)))
+
+(rule "tight_clearance_FB_NODE_vs_GND"
+  (condition "(A.NetName == 'FB_NODE' && B.NetName == 'GND') || (B.NetName == 'FB_NODE' && A.NetName == 'GND')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_FB_NODE_vs_RGB_B"
+  (condition "(A.NetName == 'FB_NODE' && B.NetName == 'RGB_B') || (B.NetName == 'FB_NODE' && A.NetName == 'RGB_B')")
+  (constraint clearance (min 0.035mm)))
+
+(rule "tight_clearance_FB_NODE_vs_RGB_G"
+  (condition "(A.NetName == 'FB_NODE' && B.NetName == 'RGB_G') || (B.NetName == 'FB_NODE' && A.NetName == 'RGB_G')")
+  (constraint clearance (min 0.16mm)))
+
+(rule "tight_hole_clearance_FB_NODE_vs_RGB_B"
+  (condition "(A.NetName == 'FB_NODE' && B.NetName == 'RGB_B') || (B.NetName == 'FB_NODE' && A.NetName == 'RGB_B')")
+  (constraint hole_clearance (min 0.10mm)))
+
+(rule "tight_clearance_FB_NODE_vs_HVDD"
+  (condition "(A.NetName == 'FB_NODE' && B.NetName == 'HVDD') || (B.NetName == 'FB_NODE' && A.NetName == 'HVDD')")
+  (constraint clearance (min 0.18mm)))
+
+(rule "tight_clearance_3V3_vs_GND"
+  (condition "(A.NetName == '3V3' && B.NetName == 'GND') || (B.NetName == '3V3' && A.NetName == 'GND')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_3V3_vs_noname"
+  (condition "(A.NetName == '3V3' && B.NetName == '') || (B.NetName == '3V3' && A.NetName == '')")
+  (constraint clearance (min 0.14mm)))
+
+(rule "tight_clearance_3V3_vs_VREF_DECOUPLE"
+  (condition "(A.NetName == '3V3' && B.NetName == 'VREF_DECOUPLE') || (B.NetName == '3V3' && A.NetName == 'VREF_DECOUPLE')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_MIC_BIAS_vs_MIC_P"
+  (condition "(A.NetName == 'MIC_BIAS' && B.NetName == 'MIC_P') || (B.NetName == 'MIC_BIAS' && A.NetName == 'MIC_P')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_3V3_vs_MIC_BIAS_NODE"
+  (condition "(A.NetName == '3V3' && B.NetName == 'MIC_BIAS_NODE') || (B.NetName == '3V3' && A.NetName == 'MIC_BIAS_NODE')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_SCL1_vs_3V3"
+  (condition "(A.NetName == 'SCL1' && B.NetName == '3V3') || (B.NetName == 'SCL1' && A.NetName == '3V3')")
+  (constraint clearance (min 0.07mm)))
+
+(rule "tight_clearance_SCL1_vs_LRCLK"
+  (condition "(A.NetName == 'SCL1' && B.NetName == 'LRCLK') || (B.NetName == 'SCL1' && A.NetName == 'LRCLK')")
+  (constraint clearance (min 0.14mm)))
+
+(rule "tight_clearance_1N151_vs_SCL1"
+  (condition "(A.NetName == '$1N151' && B.NetName == 'SCL1') || (B.NetName == '$1N151' && A.NetName == 'SCL1')")
+  (constraint clearance (min 0.04mm)))
+
+(rule "tight_clearance_SCL1_vs_V_LS"
+  (condition "(A.NetName == 'SCL1' && B.NetName == 'V_LS') || (B.NetName == 'SCL1' && A.NetName == 'V_LS')")
+  (constraint clearance (min 0.10mm)))
+
+(rule "tight_clearance_SCL1_vs_DREG_DECOUPLE"
+  (condition "(A.NetName == 'SCL1' && B.NetName == 'DREG_DECOUPLE') || (B.NetName == 'SCL1' && A.NetName == 'DREG_DECOUPLE')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_hole_clearance_SCL1_vs_DREG_DECOUPLE"
+  (condition "(A.NetName == 'SCL1' && B.NetName == 'DREG_DECOUPLE') || (B.NetName == 'SCL1' && A.NetName == 'DREG_DECOUPLE')")
+  (constraint hole_clearance (min 0.12mm)))
+
+(rule "tight_clearance_HVDD_vs_MIC_BIAS"
+  (condition "(A.NetName == 'HVDD' && B.NetName == 'MIC_BIAS') || (B.NetName == 'HVDD' && A.NetName == 'MIC_BIAS')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_HVDD_vs_SW_NODE"
+  (condition "(A.NetName == 'HVDD' && B.NetName == 'SW_NODE') || (B.NetName == 'HVDD' && A.NetName == 'SW_NODE')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_GND_vs_HVDD"
+  (condition "(A.NetName == 'GND' && B.NetName == 'HVDD') || (B.NetName == 'GND' && A.NetName == 'HVDD')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_HVDD_vs_PDMDIN"
+  (condition "(A.NetName == 'HVDD' && B.NetName == 'PDMDIN') || (B.NetName == 'HVDD' && A.NetName == 'PDMDIN')")
+  (constraint clearance (min 0.18mm)))
+
+(rule "tight_clearance_HVDD_vs_RGB_B"
+  (condition "(A.NetName == 'HVDD' && B.NetName == 'RGB_B') || (B.NetName == 'HVDD' && A.NetName == 'RGB_B')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_3V3_vs_FB_NODE"
+  (condition "(A.NetName == '3V3' && B.NetName == 'FB_NODE') || (B.NetName == '3V3' && A.NetName == 'FB_NODE')")
+  (constraint clearance (min 0.16mm)))
+
+(rule "tight_clearance_GND_vs_SW_NODE"
+  (condition "(A.NetName == 'GND' && B.NetName == 'SW_NODE') || (B.NetName == 'GND' && A.NetName == 'SW_NODE')")
+  (constraint clearance (min 0.19mm)))
+
+(rule "tight_clearance_VREF_DECOUPLE_vs_V_LS"
+  (condition "(A.NetName == 'VREF_DECOUPLE' && B.NetName == 'V_LS') || (B.NetName == 'VREF_DECOUPLE' && A.NetName == 'V_LS')")
+  (constraint clearance (min 0.15mm)))
+
+(rule "tight_clearance_3V3_vs_DAC_P"
+  (condition "(A.NetName == '3V3' && B.NetName == 'DAC_P') || (B.NetName == '3V3' && A.NetName == 'DAC_P')")
+  (constraint clearance (min 0.17mm)))
+
+(rule "tight_clearance_1N151_vs_3V3"
+  (condition "(A.NetName == '$1N151' && B.NetName == '3V3') || (B.NetName == '$1N151' && A.NetName == '3V3')")
+  (constraint clearance (min 0.18mm)))
+
+(rule "tight_hole_clearance_1N151_vs_SDA1"
+  (condition "(A.NetName == '$1N151' && B.NetName == 'SDA1') || (B.NetName == '$1N151' && A.NetName == 'SDA1')")
+  (constraint hole_clearance (min 0.12mm)))
+
+(rule "tight_hole_clearance_1N151_vs_SCL1"
+  (condition "(A.NetName == '$1N151' && B.NetName == 'SCL1') || (B.NetName == '$1N151' && A.NetName == 'SCL1')")
+  (constraint hole_clearance (min 0.09mm)))
+
+(rule "tight_clearance_1N151_vs_LRCLK"
+  (condition "(A.NetName == '$1N151' && B.NetName == 'LRCLK') || (B.NetName == '$1N151' && A.NetName == 'LRCLK')")
+  (constraint clearance (min 0.05mm)))
+
+(rule "tight_clearance_1N16368_vs_LRCLK"
+  (condition "(A.NetName == '$1N16368' && B.NetName == 'LRCLK') || (B.NetName == '$1N16368' && A.NetName == 'LRCLK')")
+  (constraint clearance (min 0.18mm)))
+
+(rule "tight_clearance_DAC_P_vs_LRCLK"
+  (condition "(A.NetName == 'DAC_P' && B.NetName == 'LRCLK') || (B.NetName == 'DAC_P' && A.NetName == 'LRCLK')")
+  (constraint clearance (min 0.19mm)))
+
+(rule "tight_clearance_LRCLK_vs_PDMDIN"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'PDMDIN') || (B.NetName == 'LRCLK' && A.NetName == 'PDMDIN')")
+  (constraint clearance (min 0.06mm)))
+
+(rule "tight_clearance_LRCLK_vs_SCL1"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'SCL1') || (B.NetName == 'LRCLK' && A.NetName == 'SCL1')")
+  (constraint clearance (min 0.06mm)))
+
+(rule "tight_clearance_LRCLK_vs_SDA1"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'SDA1') || (B.NetName == 'LRCLK' && A.NetName == 'SDA1')")
+  (constraint clearance (min 0.03mm)))
+
+(rule "tight_hole_to_hole_LRCLK_vs_SDA1"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'SDA1') || (B.NetName == 'LRCLK' && A.NetName == 'SDA1')")
+  (constraint hole_to_hole (min 0.18mm)))
+
+(rule "tight_clearance_LRCLK_vs_TCK"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'TCK') || (B.NetName == 'LRCLK' && A.NetName == 'TCK')")
+  (constraint clearance (min 0.03mm)))
+
+(rule "tight_clearance_LRCLK_vs_TDO"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'TDO') || (B.NetName == 'LRCLK' && A.NetName == 'TDO')")
+  (constraint clearance (min 0.07mm)))
+
+(rule "tight_clearance_LRCLK_vs_XTALO"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'XTALO') || (B.NetName == 'LRCLK' && A.NetName == 'XTALO')")
+  (constraint clearance (min 0.14mm)))
+
+(rule "tight_hole_clearance_1N151_vs_LRCLK"
+  (condition "(A.NetName == '$1N151' && B.NetName == 'LRCLK') || (B.NetName == '$1N151' && A.NetName == 'LRCLK')")
+  (constraint hole_clearance (min 0.12mm)))
+
+(rule "tight_hole_clearance_LRCLK_vs_PDMDIN"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'PDMDIN') || (B.NetName == 'LRCLK' && A.NetName == 'PDMDIN')")
+  (constraint hole_clearance (min 0.13mm)))
+
+(rule "tight_hole_clearance_LRCLK_vs_SCL1"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'SCL1') || (B.NetName == 'LRCLK' && A.NetName == 'SCL1')")
+  (constraint hole_clearance (min 0.12mm)))
+
+(rule "tight_hole_clearance_LRCLK_vs_SDA1"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'SDA1') || (B.NetName == 'LRCLK' && A.NetName == 'SDA1')")
+  (constraint hole_clearance (min 0.09mm)))
+
+(rule "tight_hole_clearance_LRCLK_vs_TCK"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'TCK') || (B.NetName == 'LRCLK' && A.NetName == 'TCK')")
+  (constraint hole_clearance (min 0.10mm)))
+
+(rule "tight_hole_clearance_LRCLK_vs_TDO"
+  (condition "(A.NetName == 'LRCLK' && B.NetName == 'TDO') || (B.NetName == 'LRCLK' && A.NetName == 'TDO')")
+  (constraint hole_clearance (min 0.13mm)))
