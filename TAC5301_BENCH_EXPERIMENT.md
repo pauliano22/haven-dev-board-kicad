@@ -79,8 +79,8 @@ which makes the real minimal sequence shorter than the evaluation doc could have
 | already default | 0 | — | `CH_EN` (0x76) | reset = `0xCC` | IN_CH1_EN, IN_CH2_EN, OUT_CH1_EN, OUT_CH2_EN all already enabled (datasheet §7.1.1.86) — **no write needed** |
 | already default | 0 | — | `ADC_BQ1..3`, `DAC_BQ1..3` coefficients | reset N0 = `0x7FFFFFFF`, N1/N2/D1/D2 = `0` | This is a unity-gain passthrough biquad (H(z) = 1) at reset, per the register map's own listed reset values (§7.2.1-7.2.4 tables) — **the chip ships configured for clean passthrough on all 6 biquad slots**, so Phase 1 of this test (raw loopback latency) needs zero coefficient writes |
 | 1 | 0 | `0x50` | `ADC_CH1_CFG0` | `0x40` | bits[7:6]=01 (single-ended analog input, matching the CMA-4544PF-W wiring), bits[3:2]=00 (AC-coupled, default) |
-| 2 | 0 | `0x72` | `P0_R114` (`ADC_DSP_DECI_FILT`) | `0x80` | bits[7:6]=10b = ultra-low-latency ADC decimation filter (§6.3.7.1.7, Table 6-19) |
-| 3 | 0 | `0x73` | `P0_R115` (`DAC_DSP_INTX_FILT`) | `0x80` | bits[7:6]=10b = ultra-low-latency DAC interpolation filter (§6.3.7.2.5, Table 6-43) |
+| 2 | 0 | `0x72` | `DSP_CFG0` | `0x9C` | **Corrected from an earlier draft of this doc**, which only set bits[7:6] and missed bits[3:2]. Full register (§7.1.1.84, Table 7-86): bits[7:6]=`10`b ultra-low-latency ADC decimation filter; bits[5:4]=`01`b (reset default, 1Hz HPF — left alone); **bits[3:2]=`11`b, 3 biquads per ADC channel** (reset default is `10`b = only 2/channel — doesn't affect Phase 1 since the extra slot is still unity at reset, but Phase 2 needs this bit set to reach all 3 bands) |
+| 3 | 0 | `0x73` | `DSP_CFG1` | `0x9C` | Same correction, DAC side (§7.1.1.85, Table 7-87): bits[7:6]=`10`b ultra-low-latency DAC interpolation filter; bits[5:4]=`01`b (reset default HPF, left alone); **bits[3:2]=`11`b, 3 biquads per DAC channel** |
 | 4 | 0 | `0x2C` | `MIXER_CFG0` | `0x10` | bit4 `EN_LOOPBACK_MIXER`=1, everything else 0 — **this also keeps `EN_DAC_ASI_MIXER` (bit7) at its reset-default 0**, meaning the DAC hears *only* the loopback path, nothing from the (unused) I2S data stream, which is why no real ASI audio data needs to flow for this test |
 | 5 | 0 | `0x78` | `PWR_CFG` | `0xE0` | bit7 `ADC_PDZ`=1, bit6 `DAC_PDZ`=1, bit5 `MICBIAS_PDZ`=1 — power up ADC, DAC, and the mic bias together |
 | optional | 1 | `0x73` | `MICBIAS_CFG` | `0xA0` (reset default) | MICBIAS_VAL=1010b=7.5V is already the reset value — only write this if a different mic-bias voltage is wanted |
@@ -125,12 +125,33 @@ Once raw loopback latency is confirmed acceptable, repeat with Haven's real 5-ba
 coefficients split across the two biquad banks (the evaluation doc's open question —
 "whether the 3+3 loopback split can actually implement 5 independent notch/peaking bands,"
 reasoned through on paper but not bench-verified) instead of the reset-default unity
-coefficients. This needs the actual Q-format coefficient math from the existing `haven-zephyr-app`
+coefficients.
+
+**A real correction to the evaluation doc's assumption, found reading the full register map this
+pass**: the 3 biquads allocated to a channel in "3 biquads per channel" mode are **not** a
+contiguous block (filters 1, 2, 3) — they're interleaved across the device's 4-channel-capable
+biquad bank (§6.3.7.1.5 Table 6-17 / §6.3.7.2.4 Table 6-41): channel 1 (the only channel this mono
+part uses) gets **filters 1, 5, and 9**, with filters 2/3/4, 6/7/8, 10/11/12 reserved for channels
+2-4 (unused here). Concretely, for Haven's mono hear-through path:
+
+| Biquad | Page/registers (ADC) | Page/registers (DAC) |
+|---|---|---|
+| Channel-1 biquad A (filter 1) | Page 8, R8-R27 | Page 16, R8-R27 |
+| Channel-1 biquad B (filter 5) | Page 8, R88-R107 | Page 16, R88-R107 |
+| Channel-1 biquad C (filter 9) | Page 9, R48-R67 | Page 17, R48-R67 |
+
+(Table 6-18 / 6-42 give the full filter→register mapping if a different split is ever wanted.)
+Writing to filters 2/3/4/etc. would silently do nothing for this mono part — a real bug this
+correction heads off before anyone wires up the wrong registers.
+
+This needs the actual Q-format coefficient math from the existing `haven-zephyr-app`
 ADAU1860 driver's band-to-biquad conversion, re-targeted at this chip's coefficient byte layout
-(§7.2.1-7.2.4 register tables — 4-byte big-endian fields per N0/N1/N2/D1/D2 coefficient, format
-confirmed from the register map but the exact fixed-point Q-format wasn't pinned down this pass
-and should be checked against §6.3.7.1.5/6.3.7.2.4 before writing real coefficients, not assumed
-to match the ADAU1860's Q5.27).
+(§7.2.1-7.2.4 register tables — 4-byte big-endian fields per N0/N1/N2/D1/D2 coefficient per
+20-register block). The reset value `0x7FFFFFFF` for N0 (unity) matches two's-complement Q1.31
+(2³¹-1 = 0x7FFFFFFF ≈ +1.0, the closest Q1.31 can represent to exact unity) — a reasonable,
+evidence-based inference, not confirmed by an explicit "Q1.31" statement anywhere in this
+datasheet, so verify against §6.3.7.1.5/6.3.7.2.4 or a real coefficient readback before trusting
+it for a safety-relevant filter.
 
 ## What this doesn't settle
 
