@@ -144,14 +144,30 @@ part uses) gets **filters 1, 5, and 9**, with filters 2/3/4, 6/7/8, 10/11/12 res
 Writing to filters 2/3/4/etc. would silently do nothing for this mono part — a real bug this
 correction heads off before anyone wires up the wrong registers.
 
-This needs the actual Q-format coefficient math from the existing `haven-zephyr-app`
-ADAU1860 driver's band-to-biquad conversion, re-targeted at this chip's coefficient byte layout
-(§7.2.1-7.2.4 register tables — 4-byte big-endian fields per N0/N1/N2/D1/D2 coefficient per
-20-register block). The reset value `0x7FFFFFFF` for N0 (unity) matches two's-complement Q1.31
-(2³¹-1 = 0x7FFFFFFF ≈ +1.0, the closest Q1.31 can represent to exact unity) — a reasonable,
-evidence-based inference, not confirmed by an explicit "Q1.31" statement anywhere in this
-datasheet, so verify against §6.3.7.1.5/6.3.7.2.4 or a real coefficient readback before trusting
-it for a safety-relevant filter.
+**Update, resolved for real**: the coefficient format and sign convention above were originally
+written as "a reasonable inference, not confirmed" — that inference turned out to be wrong on 3 of
+5 terms. TI publishes a dedicated application note, SLAAEH6 ("TAC5x1x and TAC5x1x-Q1 Programmable
+Biquad Filters - Configuration and Applications"), fetched and read in full as a follow-up to this
+doc. It states explicitly (not inferred): coefficients are Q1.31 two's-complement, and the real
+conversion from standard RBJ `[b0,b1,b2,a1,a2]` is
+
+```
+N0 = b0
+N1 = b1 / 2   -- NOT b1 directly
+N2 = b2
+D1 = -a1 / 2  -- negated AND halved
+D2 = -a2      -- negated, not halved
+```
+
+(transfer function: `H(z) = (N0 + 2·N1·z⁻¹ + N2·z⁻²) / (2 − 2·D1·z⁻¹ + D2·z⁻²)`). This was wrong
+in the first implementation of `haven-zephyr-app`'s TAC5301 driver (PR #17, since fixed in #18) —
+N1/D1 need halving and D1/D2 need negation, neither of which an "unnegated textbook form" guess
+would do. The bug would not have errored; it would have produced a filter with roughly the right
+shape but a silently wrong center frequency/Q/depth. Caught by reading TI's own documentation
+before any hardware use, which is exactly the kind of thing this bench experiment's own
+measurement step would **not** have reliably caught either (a subtly-wrong notch can still sound
+roughly right on a quick listen) — worth remembering that a bench pass on latency doesn't
+by itself validate the coefficient math.
 
 ## What this doesn't settle
 
