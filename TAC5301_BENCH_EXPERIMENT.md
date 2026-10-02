@@ -112,6 +112,12 @@ return to page 0 before the above).
    ```
 5. Compare the measured device latency against the evaluation doc's ~120-190µs estimate and the
    300µs comb-filter threshold from `HARDWARE_ARCHITECTURE_DECISION.md`.
+6. **While the breadboard is already wired and powered, measure real current draw** (multimeter
+   in series on the AVDD/HVDD/IOVDD supplies, or a USB power meter if those rails are bench-
+   supplied from one source) during the hear-through test. This is nearly free to add to the same
+   session and settles a real, previously-undocumented finding: the datasheet's own tables put
+   TAC5301-Q1's hear-through current meaningfully higher than the ADAU1860's (see
+   `POWER_BUDGET.md`'s 2026-10-01 update) — a real measurement replaces that bracketed estimate.
 
 ## Phase 2 (only if Phase 1 passes): the actual notch-filter coefficients
 
