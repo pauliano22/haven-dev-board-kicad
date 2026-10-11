@@ -9,7 +9,7 @@
       (property "Reference" "U" (at -10.16 7.62 0)
         (effects (font (size 1.27 1.27)))
       )
-      (property "Value" "BMI160" (at -10.16 -7.62 0)
+      (property "Value" "BMI270" (at -10.16 -7.62 0)
         (effects (font (size 1.27 1.27)))
       )
       (symbol "U1_0_1"
@@ -5437,7 +5437,7 @@
     (property "Reference" "U1" (at 210.82 188.04 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Value" "BMI160" (at 210.82 198.04 0)
+    (property "Value" "BMI270" (at 210.82 198.04 0)
       (effects (font (size 1.27 1.27)))
     )
   )
