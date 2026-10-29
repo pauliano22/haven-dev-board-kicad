@@ -59,6 +59,23 @@ with open(os.path.join(ROOT, "HAVEN_BOM.csv")) as f:
 placement = json.load(open(os.path.join(ROOT, "extracted", "pcb_placement.json")))
 
 
+# Parts JLCPCB stocks in place of OpenEarable's choices (checked 2026-10-29).
+OVERRIDES = {
+    "R21": ("0R", "0402WGF0000TCE", "C17168"),
+    # RC0201FR-0727RL had 6 in stock for 10 placements.
+    "R23": ("27R", "RMCF0201FT27R0", "C2484262"),
+    "R26": ("27R", "RMCF0201FT27R0", "C2484262"),
+    # Same YJM0003A FemtoFET package and pinout as CSD13380F3 (1 in stock);
+    # only switches the ~2.5 mA red status LED, so its 1.2 ohm Rds(on) is fine.
+    "Q2": ("CSD15380F3", "CSD15380F3", "C529568"),
+    # The real MDBT53-1M listing, so JLCPCB doesn't auto-match the wrong part.
+    "MDBT531": ("MDBT53-1M", "MDBT53-1M", "C5355663"),
+}
+# No KTD2026 variant is stocked anywhere at JLCPCB; the RGB LED is cosmetic
+# (the red status LED U4 stays), so both are left unpopulated for Rev A.
+REV_A_DNP = {"U5", "LED3"}
+
+
 def clean(v):
     v = re.sub(r"\.1$", "", str(v or "")).replace("&gt;", ">")
     return v.replace("mΩ", "mohm").replace("kΩ", "k").replace("MΩ", "M").replace("Ω", "R").replace(" >", " min ").replace(">", "min ")
@@ -68,11 +85,11 @@ groups = collections.OrderedDict()
 cpl = []
 for fp in sorted(board.GetFootprints(), key=lambda f: f.GetReference()):
     ref = fp.GetReference()
-    if fp.IsExcludedFromBOM() or fp.IsDNP():
+    if fp.IsExcludedFromBOM() or fp.IsDNP() or ref in REV_A_DNP:
         continue
     comment, mpn, lcsc = oe.get(ref, (fp.GetValue(), haven.get(ref, ""), ""))
-    if ref == "R21":
-        comment, mpn, lcsc = "0R", "0402WGF0000TCE", "C17168"
+    if ref in OVERRIDES:
+        comment, mpn, lcsc = OVERRIDES[ref]
     comment = clean(comment or fp.GetValue())
     footprint = str(fp.GetFPID().GetLibItemName())
     if re.fullmatch(r"[0-9a-f]{32}", footprint):

@@ -108,22 +108,79 @@ So it should fit JLCPCB's standard 6-layer process with free POFV, not an HDI/ad
 tier. One flag for the quote: JLCPCB's BGA guide recommends 0.35 mm pads when vias are in
 the pads, and ours are 0.25 mm. Expect a DFM question there.
 
-Sourcing: 68 placed parts on 39 BOM lines. Every line except one has an LCSC number,
-mostly taken from OpenEarable's own BOM, which was designed for JLCPCB assembly.
-- **MDBT53 (Raytac):** not in LCSC's catalog. Either ship it to JLCPCB (consignment) or
-  hand-place it.
-- **ADAU1860 (LCSC C17592940):** stock wasn't checked here. DigiKey lists about a 10-week
-  lead time.
+Sourcing (updated 2026-10-29 after the JLCPCB quote): 66 placed parts on 37 BOM lines,
+every line with an LCSC number.
+- **Substituted for stock** (checked with JLCPCB's parts search):
+  - R23, R26 (27 Ω USB series): RC0201FR-0727RL had 6 in stock for 10 placements →
+    RMCF0201FT27R0, C2484262 (1 %, 10,000 in stock).
+  - Q2 (switches the red status LED U4 through R4): CSD13380F3T had 1 in stock →
+    CSD15380F3, C529568 (6,584 in stock). Same TI YJM0003A FemtoFET package, same pinout
+    (1 gate, 2 source, 3 drain) and tape orientation. Its Rds(on) is 1.17 Ω at 4.5 V vs
+    63 mΩ, which doesn't matter at ~2.5 mA.
+  - MDBT531: now carries the real JLCPCB listing, MDBT53-1M C5355663 (0 in stock), so
+    the matcher stops picking the unrelated "MDBT531MND" part.
+- **Left unpopulated for Rev A:** U5 KTD2026 RGB LED driver and LED3. No KTD2026 or
+  KTD2027 variant is in stock at JLCPCB. The RGB LED is cosmetic and on the main I2C bus,
+  not the codec's, so leaving it off changes nothing else. The red status LED U4 stays.
+- **Short:** U2 BQ25120AYFPR charger has 4 in stock for 5 boards (YFPT suffix: 0). The
+  charger also makes the system rail, so the fifth board would be dead without it. Assemble
+  4 boards, or buy one through Global Sourcing.
+- **MDBT53-1M (Raytac):** the one real blocker. 0 at JLCPCB, and no DigiKey or Mouser
+  module listing was found (only the MDBT53-DB-40 eval board via DigiKey's marketplace;
+  SparkFun retired it; Core Electronics is out of stock). Options: JLCPCB Global Sourcing
+  (Parts Manager → Order Parts → Global Sourcing, review 1–3 business days, purchase
+  9–20 business days, possible 3–30 % customs duty on modules, no separate service fee
+  listed) if a supplier has it; buy direct from Raytac or a Raytac distributor and consign
+  it; or hand-place it. It is an LGA with pads underneath, so hand placement needs a
+  stencil and hot air or reflow, not an iron.
 
 Placement file: the port puts every footprint at 0° with rotation baked into its pads, so
 `kicad-cli pos` would report 0° for everything. The CPL takes rotation from the source
 placement data instead. Bottom-side rotation conventions vary between tools, so **check
 every bottom part in JLCPCB's placement preview** before paying.
 
+Origin: the first export put the gerbers and drill in KiCad's absolute page coordinates
+while the CPL was relative to the board's bottom-left, so JLCPCB flagged the parts as
+offset. The drill/place origin is now set to the board's bottom-left and all three files
+use it (outline 0–14.66 × 0–32.26 mm; the ADAU1860's CPL point is 0.03 mm from its pad
+centroid in the gerber frame).
+
+Thickness: **1.6 mm.** OpenEarable's own stackup (0.55 mm cores, 3313/2116 prepreg, 1 oz
+outer, 0.5 oz inner) is JLCPCB's standard 1.6 mm 6-layer build, and the shell's board slot
+was made for it. 0.8 mm costs the same but would change the stackup and loosen the fit.
+
+## JLCPCB quote (2026-10-29, before the fixes above)
+
+5 boards, 5 assembled, both sides, Standard PCBA, epoxy-filled and capped vias, 1.6 mm.
+JLCPCB auto-switched the order to its Advanced PCB/PCBA line. Nothing was ordered; the
+project is saved in Paul's JLCPCB account as "haven_rev_a_gerbers".
+
+| Item | USD |
+|---|---|
+| Bare PCB (6 layers, 5 pcs) | 32.00 |
+| Epoxy-filled and capped vias | 0.00 |
+| PCBA setup | 51.50 |
+| Stencil | 16.54 |
+| Components (32 lines) | 90.25 |
+| Feeder loading | 49.60 |
+| SMT assembly | 2.96 |
+| X-ray (BGA/WLCSP) | 12.45 |
+| Special components (USB-C, mic) | 0.15 |
+| Packaging | 0.50 |
+| **Total before shipping** | **255.95** |
+
+Shipping wasn't shown on the assembly page; expect about $30–40. The ADAU1860 was matched
+with 116 in stock at $12.38 each. Standard PCBA needs a 70 mm panel, so JLCPCB adds edge
+rails (70.58 × 70.18 mm) and the boards arrive in that frame unless depaneling is added.
+No DFM warnings appeared at quote time; JLCPCB runs DFM 4–6 hours after an order, so the
+0.25 mm BGA via-in-pad question may come then. The quote placed the five shortage parts
+as "do not place"; with the substitutes above only U2's fifth unit and the MDBT53 remain.
+
 ## Still needs a person
 
-1. Upload the three files to JLCPCB for a real quote: 6 layers, POFV, assembly. Then check
-   the placement preview, especially the bottom side and the 0.25 mm BGA via-in-pad DFM note.
-2. Decide how the MDBT53 gets on the board (consignment or hand-placed), and confirm
-   ADAU1860 stock.
-3. Optionally, snap the schematic labels to pins so the schematic matches the board.
+1. Re-upload the regenerated BOM and CPL (the quote above used the earlier files) and check
+   the placement preview, especially the bottom side. Consider "Confirm Parts Placement".
+2. Get MDBT53-1M modules: Raytac direct or a distributor, then consign them or use Global
+   Sourcing; or hand-place them with a stencil and hot air.
+3. Decide 4 assembled boards or source one more BQ25120AYFPR.
+4. Optionally, snap the schematic labels to pins so the schematic matches the board.
