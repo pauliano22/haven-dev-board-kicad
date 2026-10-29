@@ -18,13 +18,25 @@ OE_BOM = os.path.join(ROOT, "..", "hardware", "openearable_base_pcb", "OpenEarab
                       "OpenEarable-PCB-main-2.0-BOM.xlsx")
 os.makedirs(OUT, exist_ok=True)
 
+# Gerbers, drill and CPL must share one origin, or JLCPCB sees the parts
+# offset from the board: put the drill/place (aux) origin at the board's
+# bottom-left and export everything relative to it.
+board = pcbnew.LoadBoard(PCB)
+bb = board.GetBoardEdgesBoundingBox()
+origin = pcbnew.VECTOR2I(bb.GetLeft(), bb.GetBottom())
+ds = board.GetDesignSettings()
+if ds.GetAuxOrigin() != origin:
+    ds.SetAuxOrigin(origin)
+    board.Save(PCB)
+
 # gerbers + drill
 gdir = os.path.join(OUT, "gerbers")
 os.makedirs(gdir, exist_ok=True)
 layers = "F.Cu,In1.Cu,In2.Cu,In3.Cu,In4.Cu,B.Cu,F.Paste,B.Paste,F.SilkS,B.SilkS,F.Mask,B.Mask,Edge.Cuts"
 subprocess.run(["kicad-cli", "pcb", "export", "gerbers", "--layers", layers, "--use-drill-file-origin",
                 "--subtract-soldermask", "-o", gdir + "/", PCB], check=True, capture_output=True)
-subprocess.run(["kicad-cli", "pcb", "export", "drill", "--format", "excellon", "--excellon-separate-th",
+subprocess.run(["kicad-cli", "pcb", "export", "drill", "--format", "excellon", "--drill-origin", "plot",
+                "--excellon-separate-th",
                 "--generate-map", "--map-format", "gerberx2", "-o", gdir + "/", PCB], check=True, capture_output=True)
 with zipfile.ZipFile(os.path.join(OUT, "haven_rev_a_gerbers.zip"), "w", zipfile.ZIP_DEFLATED) as z:
     for f in sorted(os.listdir(gdir)):
@@ -52,8 +64,6 @@ def clean(v):
     return v.replace("mΩ", "mohm").replace("kΩ", "k").replace("MΩ", "M").replace("Ω", "R").replace(" >", " min ").replace(">", "min ")
 
 
-board = pcbnew.LoadBoard(PCB)
-bb = board.GetBoardEdgesBoundingBox()
 groups = collections.OrderedDict()
 cpl = []
 for fp in sorted(board.GetFootprints(), key=lambda f: f.GetReference()):
@@ -72,7 +82,7 @@ for fp in sorted(board.GetFootprints(), key=lambda f: f.GetReference()):
     back = fp.GetLayer() == pcbnew.B_Cu
     p = fp.GetPosition()
     rot = placement.get(ref, {}).get("rot") or 0
-    cpl.append([ref, f"{pcbnew.ToMM(p.x - bb.GetLeft()):.4f}mm", f"{pcbnew.ToMM(bb.GetBottom() - p.y):.4f}mm",
+    cpl.append([ref, f"{pcbnew.ToMM(p.x - origin.x):.4f}mm", f"{pcbnew.ToMM(origin.y - p.y):.4f}mm",
                 "Bottom" if back else "Top", f"{rot % 360:g}"])
 
 with open(os.path.join(OUT, "haven_rev_a_bom.csv"), "w", newline="") as f:
