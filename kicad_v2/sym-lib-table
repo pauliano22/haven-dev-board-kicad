@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "haven_v2")(type "KiCad")(uri "${KIPRJMOD}/haven_v2.kicad_sym")(options "")(descr "Haven v2 symbols, generated"))
+)
