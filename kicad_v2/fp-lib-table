@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name "haven_v2")(type "KiCad")(uri "${KIPRJMOD}/footprints.pretty")(options "")(descr "Haven v2 footprints: v1 copies + new parts"))
+)
