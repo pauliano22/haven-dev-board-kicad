@@ -7,7 +7,7 @@
 "C101","4.7uF","haven_v2_pod:C0402","CL05A475KP5NRNC","C368809","1",""
 "C110","2.2uF","haven_v2_pod:C0402","CL05A225KA5NUNC","C307418","1",""
 "CRYSTAL1","24.576MHz","haven_v2_pod:CRYSTAL-SMD_4P-L2.0-W1.6-BL_HUAXIN_CN4","CN4024M57620001","C7294677","1",""
-"D1-D6","TPD1E05U06","haven_v2_pod:D_SOD-523","TPD1E05U06DYAR","","6",""
+"D1-D6","TPD1E05U06","haven_v2_pod:D_SOD-523","TPD1E05U06DYAR","C3702980","6",""
 "L2","2.2uH","haven_v2_pod:L0402","MLZ1005M2R2WT000","C383389","1",""
 "L101,L102","10uH","haven_v2_pod:L0402","","","2","DNP"
 "P1","POGO_VBUS","haven_v2_pod:PogoPad_1.6","","","1",""

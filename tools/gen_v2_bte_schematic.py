@@ -35,7 +35,7 @@ g.NEW_FPS["D_SOD-523"] = sod523_ti_fp
 g.NEW_FPS["WirePad_0.8"] = lambda: g.round_pad_fp(
     "WirePad_0.8", 0.8, "Solder pad for one 38-40 AWG cable conductor")
 
-TVS = ("TPD1E05U06DYAR", "")   # LCSC number not confirmed; check at JLCPCB upload
+TVS = ("TPD1E05U06DYAR", "C3702980")   # LCSC C3702980, ~8k in stock 2026-11-04
 R33 = ("ERJ1GNF33R0C", "C717007")
 C100N = g.C100N
 
