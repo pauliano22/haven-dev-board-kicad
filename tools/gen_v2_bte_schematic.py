@@ -89,6 +89,26 @@ def pod_parts():
                         nets={"1": "PDMCLK", "2": "CBL_PDMCLK"}, mpn=R33[0], lcsc=R33[1],
                         note="PDM clock series termination at the source", dnp=False))
 
+    # Fallback pod mic on the same PDM pair, opposite channel. SPH0641 SELECT high =
+    # data driven on the clock's rising edge (Knowles datasheet interface table);
+    # the in-ear mic has SELECT low (falling edge) = DMIC0, which the firmware uses
+    # today. Either mic can be left unfitted.
+    g_parts.append(dict(ref="U14", sym="SPH0641LU4H-1", value="SPH0641LU4H-1",
+                        fp="MIC-SMD_5P_L3.5-W2.7-P0.82_SPH0641LU4H-1",
+                        nets={"1": "MIC2_DATA", "2": "V_LS", "3": "GND", "4": "PDMCLK", "5": "V_LS",
+                              "6": "GND", "7": "GND", "8": "GND"},
+                        mpn="SPH0641LU4H-1", lcsc="C2879853",
+                        note="Fallback pod mic, bottom port. SELECT high = rising-edge data = DMIC1. "
+                             "Port hole through the board; the pod shell port must face outward, away "
+                             "from the head. Optional: fit this, the in-ear mic, or both.",
+                        dnp=False))
+    g_parts.append(dict(ref="R122", sym="R", value="33R", fp="R0201",
+                        nets={"1": "MIC2_DATA", "2": "PDMDIN"}, mpn=R33[0], lcsc=R33[1],
+                        note="Pod mic data series resistor (shared data line)", dnp=False))
+    g_parts.append(dict(ref="C116", sym="C", value="100nF", fp="C0201", nets={"1": "V_LS", "2": "GND"},
+                        mpn=C100N[0], lcsc=C100N[1], note="Pod mic decoupling, at its VDD pin",
+                        dnp=False))
+
     # ESD on every cable line that leaves the pod (GND excepted).
     for i, (net, _, label) in enumerate([c for c in CABLE if c[0] != "GND"], 2):
         g_parts.append(dict(ref=f"D{i}", sym="TVS", value="TPD1E05U06", fp="D_SOD-523",
@@ -111,7 +131,7 @@ def inear_parts():
                             "6": "GND", "7": "GND", "8": "GND"},
                       mpn="SPH0641LU4H-1", lcsc="C2879853",
                       note="Outer mic, bottom port: needs a 0.5-0.8 mm hole through this board "
-                           "under the port. SELECT low = data on the clock's falling edge (as v1)",
+                           "under the port. SELECT low = falling-edge data = DMIC0 (primary mic, as v1)",
                       dnp=False))
     parts.append(dict(ref="C1", sym="C", value="100nF", fp="C0201", nets={"1": "V_MIC", "2": "GND"},
                       mpn=C100N[0], lcsc=C100N[1], note="Mic decoupling, at the VDD pin", dnp=False))

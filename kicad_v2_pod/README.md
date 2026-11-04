@@ -8,7 +8,7 @@ to a small in-ear unit with the mic, the speaker, the nozzle and the tip.
 
 | Folder | Board | What's on it |
 |---|---|---|
-| `kicad_v2_pod/` | Pod board (6-layer, fine pitch) | MDBT53V-1M, nPM1100, ADAU1860 + 24.576 MHz crystal, load switch, status LED, charge pads, SWD pads, cable ESD, cable pads |
+| `kicad_v2_pod/` | Pod board (6-layer, fine pitch) | MDBT53V-1M, nPM1100, ADAU1860 + 24.576 MHz crystal, load switch, status LED, fallback pod mic (U14), charge pads, SWD pads, cable ESD, cable pads |
 | `kicad_v2_inear/` | In-ear board (tiny, 2-layer) | SPH0641 mic, 100 nF, 33 Ω series resistor, cable pads, speaker pads |
 
 The boards are fabricated, assembled and laid out separately, and they share nothing but the
@@ -20,8 +20,8 @@ cable. Two projects keep each board's DRC rules, stackup and BOM independent: th
 and writer in `tools/gen_v2_schematic.py`, which still generates the single-board pebble design
 in `kicad_v2/`. Edit the scripts, not the `.kicad_sch` files.
 
-## Status (2026-11-03)
-- Pod: 76 parts, 47 nets. In-ear: 11 parts, 7 nets.
+## Status (2026-11-04)
+- Pod: 79 parts, 48 nets. In-ear: 11 parts, 7 nets.
 - `kicad-cli sch erc`: **0 violations on both**.
 - Exported netlists match the scripts' intended netlists on every net (0 mismatches).
 - BOM export works: `kicad_v2_pod/haven_v2_pod_bom.csv`, `kicad_v2_inear/haven_v2_inear_bom.csv`.
@@ -46,9 +46,29 @@ the board edge where the cable exits, add an anchor slot for the aramid knot, an
 
 ## Decisions
 
-**Mic in the in-ear unit, not the pod.** A mic at the ear-canal entrance hears the room through
-the wearer's own outer ear, which keeps natural direction and pinna cues in hear-through. A mic
-on the pod behind the ear would sound less natural.
+**Two mic positions on one PDM pair: in-ear primary, pod fallback** (Paul, 2026-11-04). A mic at
+the ear-canal entrance hears the room through the wearer's own outer ear, which keeps natural
+direction and pinna cues in hear-through, so the in-ear mic (U13 on the in-ear board) is the
+primary. A second SPH0641 on the pod (U14) is the fallback, built into the same pod design so no
+second pod board is needed.
+- The two mics share PDM_CLK and PDM_DATA on opposite clock edges, set by each mic's SELECT pin.
+  From the Knowles SPH0641 datasheet's interface table, SELECT low means the mic drives DATA on
+  the falling clock edge, and SELECT high means the rising edge. Each mic leaves the line
+  high-impedance on the other half-cycle.
+- **In-ear U13: SELECT low = DMIC0.** That's the channel and edge the firmware already uses (same
+  as v1/OpenEarable), so the primary needs no firmware change.
+- **Pod U14: SELECT high = DMIC1.** The ADAU1860's DMIC01 pin carries both channels on one data
+  line, and DMIC0 and DMIC1 route independently: FastDSP inputs 39 and 40, see
+  `haven-zephyr-app/docs/fastdsp-program.md`. Using the pod mic is a firmware choice of input,
+  DMIC1 instead of DMIC0, in the FastDSP or EQ route. At bring-up, confirm the edge-to-channel
+  mapping bits in `DMIC_CTRL2` against the ADAU1860 datasheet.
+- Either mic can be left unfitted. If both are fitted, the firmware can pick one or use both.
+- Pod mic data goes through its own 33 Ω (R122) onto the shared PDMDIN, and its clock taps PDMCLK
+  on the codec side of R120. C116 decouples it.
+- **Mechanical note for the pod mic:** it's bottom-port, so drill a hole through the pod board
+  under its port. In the pod shell, the port must face outward, away from the head, through a
+  sealed channel with a mesh. Keep it away from the charge pads, magnet and cable exit. Acoustic
+  feedback to the sealed in-ear speaker should be low with a good tip seal; check it at bring-up.
 - The PDM clock is **3.072 MHz** (`DMIC_CTRL1 = 0x33` in `haven-zephyr-app/src/adau1860_control.c`),
   so the bit period is 325 ns. Signal delay along 100 mm of cable is about 0.5 ns, negligible
   for timing.
@@ -58,9 +78,15 @@ on the pod behind the ear would sound less natural.
 - Crosstalk is low risk. The speaker lines carry audio-band signals from a low-impedance driver,
   and their coupling into the PDM lines is millivolts. The PDM edges coupling back into the speaker
   is far above audio.
-- **Fallback if bring-up shows trouble:** move the mic to the pod (place U13 back on the pod
-  board as in `kicad_v2/`), which drops the cable to 2 conductors (SPK±). This is a layout change
-  only; the netlist is the same as the single-board design.
+- **Build variants**, from the same two boards and cable pads:
+
+  | Variant | In-ear unit | Cable | Mic used |
+  |---|---|---|---|
+  | **6-wire** (primary) | U13, C1 and R1 fitted | All six conductors (W1–W6) | In-ear U13 (DMIC0); pod U14 optional |
+  | **2-wire** (fallback) | Speaker only: U13, C1 and R1 not fitted, or just the speaker leads with no in-ear board | Only SPK+/SPK− (W5, W6); W1–W4 left unwired | Pod U14 (DMIC1) |
+
+  The pod board is identical in both variants. In the 2-wire build, the pod still drives
+  CBL_PDMCLK onto an unused pad, which is harmless.
 
 **ESD on every cable line leaving the pod** (D2–D6, TI TPD1E05U06DYAR, SOD-523: 5.5 V stand-off,
 0.42 pF, ±IEC 61000-4-2 level 4). The cable is touched and the in-ear unit has an open mic port.
@@ -90,13 +116,14 @@ Case pogo pin (5 V) ─ P1 ─┬─ D1 TPD1E05U06 ESD
                                          ├─ MDBT53V-1M VDD + VDDH (LDO mode on the first build)
                                          └─ U3 (SENSORS_ENABLE, P1.11) ─ V_LS
                                               ├─ ADAU1860
-                                              └─ cable W1 ─ in-ear V_MIC ─ SPH0641
+                                              ├─ pod mic U14 (fallback)
+                                              └─ cable W1 ─ in-ear V_MIC ─ SPH0641 U13 (primary)
 ```
 
 ## nRF5340 pins and firmware impact
 **None.** Every nRF pin is the same as the single-board v2 schematic (`kicad_v2/README.md` pin
 table), so the `haven_v2` board target in `haven-zephyr-app` (PR #25) applies unchanged. The codec
-still drives the same PDM pins. Only the mic's physical location changes. Firmware may want to
+still drives the same PDM pins. The in-ear mic stays on DMIC0 (no change); using the pod mic means selecting DMIC1 as the input. Firmware may want to
 retune for the cable only if bring-up shows PDM errors (for example by lowering the DMIC clock).
 
 ## In-ear board
