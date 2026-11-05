@@ -42,13 +42,15 @@ LiPo ── TPS61023 boost, 4.95 V, always on ── pogo pins: L pod (VBUS, GND
   flush with the back edge, and the charge LED (D2) is at the back edge behind the case's light hole.
 - Boost layout: U2's SW pin sits straight under L1's SW pad (0.35 mm trace, ~1.3 mm long). The
   output caps are on the side the VOUT pin faces, and the input cap is beside L1's VBAT pad.
-- Spring pins: SMD, about 9.8 mm tall, ≥ 1 mm travel. The board top is 9.3 mm below the pod
-  contacts. The footprint is a 2.2 mm round seat until the part is chosen.
+- Spring pins: candidate Kinghelm KH-PG2011005-DZ (LCSC C2842935), SMD, 11 mm free, 2 mm base, on
+  the 2.2 mm round seat. The case puts the board top 10.0 mm below the pod contacts (~1 mm of
+  compression); the stroke isn't published, so measure a real pin and adjust `POGO_WORK_H` in
+  haven-hardware `case.py`.
 
 ## Firmware impact
 - Pods see 5 V on VBUS whenever they sit in the case (VBUS_DET). The pod firmware should drop to
   its lowest-power state there (no advertising), or it will drain the case battery.
 
 ## Open
-1. Pogo pin part (2.0 mm base, ~1.5 mm travel) and its land pattern.
+1. Pogo pin: confirm KH-PG2011005-DZ's stroke and base land pattern on a real part.
 2. (Done 2026-11-05: every placed part has a verified LCSC number.)
