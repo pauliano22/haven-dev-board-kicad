@@ -89,11 +89,35 @@ def commit(b, net, path, s, e):
 
 def main():
     todo = pairs(drc())
-    print(len(todo), "signal pairs open:", " ".join(t[0] for t in todo))
+    first = sys.argv[1:]                # nets to route first, e.g. /SDA1 /SHPHLD
+    todo.sort(key=lambda t: first.index(t[0]) if t[0] in first else len(first))
+    if os.environ.get("ROUTE_ONLY"):           # route just the listed nets
+        todo = [t for t in todo if t[0] in first]
     b = pcbnew.LoadBoard(PCB)
+    print(len(todo), "signal pairs open:", " ".join(t[0] for t in todo))
     failed = []
+    def via_at(net, pt):
+        q = pcbnew.VECTOR2I_MM(*pt)
+        return any(v.GetClass() == "PCB_VIA" and v.GetNetname() == net
+                   and (v.GetPosition() - q).EuclideanNorm() < pcbnew.FromMM(0.05) for v in b.GetTracks())
+
+    def track_end(net, pt, other, layer):
+        # DRC names a track by its start point; attach at whichever end of it faces the other item
+        q = pcbnew.VECTOR2I_MM(*pt)
+        for t in b.GetTracks():
+            if (t.GetClass() == "PCB_TRACK" and t.GetNetname() == net and t.GetLayer() == layer
+                    and (t.GetStart() - q).EuclideanNorm() < pcbnew.FromMM(0.002)):
+                o = pcbnew.VECTOR2I_MM(*other)
+                end = min((t.GetStart(), t.GetEnd()), key=lambda p: (p - o).EuclideanNorm())
+                return (pcbnew.ToMM(end.x), pcbnew.ToMM(end.y))
+        return pt
+
+    todo = [(net, track_end(net, s, e, son[0]) if son and pad_at(b, net, s) is None else s,
+             track_end(net, e, s, eon[0]) if eon and pad_at(b, net, e) is None else e, son, eon)
+            for net, s, e, son, eon in todo]
     for net, s, e, son, eon in todo:
-        kw = dict(start_on=son, end_on=eon)
+        # a pad with a via already in it can be left on any layer
+        kw = dict(start_on=None if via_at(net, s) else son, end_on=None if via_at(net, e) else eon)
         path, why = mr.multilayer_astar(b, net, s, e, CLR_MM, cell=0.05, margin=1.5, max_iters=900000, **kw)
         if path is None:
             # a boxed-in SMD pad: drill a filled 0.15 / 0.25 via into it and start from the via instead

@@ -157,6 +157,42 @@ def main():
                 t.SetNet(gnd); b.Add(t); obst.add_track(t)
             obst.add_via(spot)
             added += 1
+    # A GND pad whose zone island holds no GND via is cut off from the planes even when a via sits
+    # within 0.5 mm on the far side of a track. Give each such island a via of its own.
+    b.Save(PCB)
+    b = pcbnew.LoadBoard(PCB)
+    pcbnew.ZONE_FILLER(b).Fill(b.Zones())
+    gnd = b.FindNet("/GND")
+    obst = Obstacles(b)
+    gvias = [v.GetPosition() for v in b.GetTracks() if v.GetClass() == "PCB_VIA" and v.GetNetname() == "/GND"]
+    for z in b.Zones():
+        if z.GetIsRuleArea() or z.GetNetname() != "/GND":
+            continue
+        for lay in z.GetLayerSet().Seq():
+            fill = z.GetFilledPolysList(lay)
+            for i in range(fill.OutlineCount()):
+                isl = fill.Outline(i)
+                if any(isl.PointInside(v) for v in gvias):
+                    continue
+                for fp in b.GetFootprints():
+                    for pad in fp.Pads():
+                        if (pad.GetNetname() != "/GND" or not pad.IsOnLayer(lay)
+                                or pad.GetAttribute() != pcbnew.PAD_ATTRIB_SMD or not isl.PointInside(pad.GetPosition())):
+                            continue
+                        spot = obst.find_via_spot(pad)
+                        if spot is None:
+                            failed.append(fp.GetReference() + "." + pad.GetNumber() + "(island)"); continue
+                        v = pcbnew.PCB_VIA(b); v.SetPosition(spot)
+                        v.SetDrill(pcbnew.FromMM(0.15)); v.SetWidth(pcbnew.FromMM(0.25)); v.SetNet(gnd); b.Add(v)
+                        if spot != pad.GetPosition():
+                            t = pcbnew.PCB_TRACK(b); t.SetStart(pad.GetPosition()); t.SetEnd(spot)
+                            t.SetWidth(pcbnew.FromMM(0.1)); t.SetLayer(lay); t.SetNet(gnd); b.Add(t); obst.add_track(t)
+                        obst.add_via(spot); gvias.append(spot); added += 1
+                        print("  island via for", fp.GetReference() + "." + pad.GetNumber())
+                        break
+                    else:
+                        continue
+                    break
     if failed:
         print("no legal GND via spot for:", " ".join(failed))
     for z in b.Zones():
