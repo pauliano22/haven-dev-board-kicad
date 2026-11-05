@@ -1,0 +1,92 @@
+{
+"U15": {
+"A1": "ROM_BOOT_MODE/MP21",
+"A2": "HPVDD_L",
+"A3": "DVDD",
+"A4": "DGND",
+"A5": "TCK/MP22",
+"A6": "TMS/MP23",
+"A7": "TDO/MP24",
+"A8": "TDI/MP25",
+"B1": "SDATAO_0/MP5",
+"B2": "BCLK_0/MP3",
+"B3": "DVDD",
+"B4": "DGND",
+"B5": "IOVDD",
+"B6": "XTALO",
+"B7": "XTALI/MCLKIN",
+"B8": "QSPIM_CLK/MP11",
+"C1": "SDATAI_0/MP6",
+"C2": "FSYNC_0/MP4",
+"C3": "DMIC23/MP2",
+"C4": "DMIC_CLK/MP0",
+"C5": "DMIC01/MP1",
+"C6": "SDA/MISO/UART_CTRL_TX",
+"C7": "SCL/SCLK",
+"C8": "QSPIM_SDIO0/MP13",
+"D1": "HPVDD_L",
+"D2": "UART_COMM_TX/MP17",
+"D3": "SDATAO_1/MP9",
+"D4": "SDATAI_1/MP10",
+"D5": "BCLK_1/MP7",
+"D6": "ADDR0/SS#",
+"D7": "ADDR1/MOSI/UART_CTRL_RX",
+"D8": "QSPIM_SDIO1/MP14",
+"E1": "HPVDD",
+"E2": "UART_COMM_RX/MP18",
+"E3": "IRQ/MP20",
+"E4": "PD#",
+"E5": "FSYNC_1/MP8",
+"E6": "SELFBOOT/MP19",
+"E7": "QSPIM_SDIO3/MP16",
+"E8": "QSPIM_SDIO2/MP15",
+"F1": "HPGND",
+"F2": "HPOUTP",
+"F3": "REG_EN",
+"F4": "AINP2",
+"F5": "AINP1",
+"F6": "AINP0",
+"F7": "AVDD",
+"F8": "QSPIM_CS/MP12",
+"G1": "HPOUTN",
+"G2": "AVDD",
+"G3": "AGND",
+"G4": "CM",
+"G5": "AINN2",
+"G6": "AINN1",
+"G7": "AGND",
+"G8": "AINN0"
+},
+"U13": {
+"1": "DATA",
+"2": "SELECT",
+"3": "GROUND",
+"4": "CLOCK",
+"5": "VDD"
+},
+"U3": {
+"A1": "VOUT",
+"A2": "VIN",
+"B1": "GND",
+"B2": "ON"
+},
+"CRYSTAL1": {
+"1": "1",
+"2": "GND",
+"3": "3",
+"4": "GND"
+},
+"X1": {
+"1": "1",
+"2": "2"
+},
+"Q2": {
+"1": "G",
+"2": "S",
+"3": "D"
+},
+"U4": {
+"1": "A",
+"2": "K"
+}
+}
