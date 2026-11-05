@@ -7,7 +7,8 @@ Charge-only, no microcontroller:
   -> ~800 mAh 1S LiPo with its own protection board (PCM), on a JST-SH 2-pin
   -> TPS61023 boost to 5 V (always enabled; ~30 uA standby, true disconnect only when disabled,
      output short limited to ~350 mA by the IC, TI SLVSF14B 7.3.7)
-  -> two pogo pins per pod (VBUS, GND), 7.2 mm apart = the pod's P1/P2 charge pads.
+  -> two pogo pins per pod (VBUS, GND), 5.0 mm apart = the pod shell's two charge contacts
+     (haven-hardware v2_bte: PAD_PITCH 2.5 mm either side of the magnet).
 
 Each pod's nPM1100 limits its own input to 100 mA, so the two pods together draw <= 200 mA from
 the boost. The same TPD1E05U06 ESD diode as the pod protects every exposed pin.
@@ -127,9 +128,9 @@ def case_parts():
     # Pogo pins: left pod and right pod, each VBUS + GND, with ESD on VBUS
     for side, n0 in (("L", 1), ("R", 3)):
         p.append(P(f"P{n0}", "PAD", f"POGO_{side}_VBUS", "PogoPin_SMD_D2.0", {"1": "V5"},
-                   note=f"{side} pod VBUS spring pin, mates the pod's P1. 7.2 mm from P{n0 + 1}"))
+                   note=f"{side} pod VBUS spring pin, mates the pod shell contact wired to P1. 5.0 mm from P{n0 + 1}"))
         p.append(P(f"P{n0 + 1}", "PAD", f"POGO_{side}_GND", "PogoPin_SMD_D2.0", {"1": "GND"},
-                   note=f"{side} pod GND spring pin, mates the pod's P2"))
+                   note=f"{side} pod GND spring pin, mates the shell contact wired to P2"))
     p.append(P("D3", "TVS", "TPD1E05U06", "D_SOD-523", {"1": "V5", "2": "GND"}, mpn=TVS[0], lcsc=TVS[1],
                note="ESD on the exposed pogo VBUS pins (both pods share V5)"))
     p.append(P("TP1", "PAD", "VBAT", "Pad_1.2", {"1": "VBAT"}, note="Test pad"))

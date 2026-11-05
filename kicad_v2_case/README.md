@@ -23,7 +23,9 @@ LiPo ── TPS61023 boost, 4.95 V, always on ── pogo pins: L pod (VBUS, GND
 - **Battery:** 800 mAh is about 3 full recharges of both pods (2 × ~100 mAh per recharge,
   ~85% boost efficiency, plus margin). Buy a cell **with** a protection board (PCM); the board has
   no undervoltage cut-off of its own.
-- **Pogo pins:** 2 per pod, **7.2 mm apart**, to match the pod's P1 (VBUS) / P2 (GND) pads.
+- **Pogo pins:** 2 per pod, **5.0 mm apart**, centred on the pod's 3 mm magnet. They mate the two
+  Ø1.5 mm contacts in the pod shell's bottom end (haven-hardware `v2_bte`, PAD_PITCH 2.5 mm), not
+  the board pads directly: on the first build each shell contact is a short wire to P1/P2.
   The footprint is a 2.2 mm round seat for a 2.0 mm-base SMD spring pin; the actual part is open.
 - ESD (TPD1E05U06, same as the pod) on USB VBUS and on the pogo VBUS rail.
 
