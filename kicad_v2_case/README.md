@@ -53,4 +53,4 @@ LiPo ── TPS61023 boost, 4.95 V, always on ── pogo pins: L pod (VBUS, GND
 
 ## Open
 1. Pogo pin: confirm KH-PG2011005-DZ's stroke and base land pattern on a real part.
-2. LCSC numbers for the passives, the LED, the JST-SH header and the 1 µH inductor (marked blank).
+2. (Done 2026-11-05: every placed part has a verified LCSC number.)
