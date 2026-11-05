@@ -84,11 +84,11 @@ def case_parts():
                {"A4": "VUSB", "A9": "VUSB", "B4": "VUSB", "B9": "VUSB", "A5": "CC1", "B5": "CC2",
                 "A1": "GND", "A12": "GND", "B1": "GND", "B12": "GND", "S1": "GND"},
                mpn="TYPE-C-31-M-12", lcsc="C165948", note="Korean Hroparts USB-C 16-pin receptacle; power only"))
-    p.append(P("R1", "R", "5.1k", "R_0402_1005Metric", {"1": "CC1", "2": "GND"}, note="CC1 sink pull-down (USB-C 5 V / default current)"))
-    p.append(P("R2", "R", "5.1k", "R_0402_1005Metric", {"1": "CC2", "2": "GND"}, note="CC2 sink pull-down"))
+    p.append(P("R1", "R", "5.1k", "R_0402_1005Metric", {"1": "CC1", "2": "GND"}, mpn="0402WGF5101TCE", lcsc="C25905", note="CC1 sink pull-down (USB-C 5 V / default current)"))
+    p.append(P("R2", "R", "5.1k", "R_0402_1005Metric", {"1": "CC2", "2": "GND"}, mpn="0402WGF5101TCE", lcsc="C25905", note="CC2 sink pull-down"))
     p.append(P("D1", "TVS", "TPD1E05U06", "D_SOD-523", {"1": "VUSB", "2": "GND"}, mpn=TVS[0], lcsc=TVS[1],
                note="ESD on USB VBUS"))
-    p.append(P("C1", "C", "4.7uF", "C_0603_1608Metric", {"1": "VUSB", "2": "GND"}, note="Charger input, 10 V X5R"))
+    p.append(P("C1", "C", "4.7uF", "C_0603_1608Metric", {"1": "VUSB", "2": "GND"}, mpn="CL10A475KO8NNNC", lcsc="C19666", note="Charger input, 10 V X5R"))
 
     # Charger
     p.append(P("U1", "MCP73831", "MCP73831T-2ACI/OT", "SOT-23-5",
@@ -97,16 +97,16 @@ def case_parts():
                note="1-cell Li-ion charger, 4.20 V. TP4054 is a pin-compatible drop-in if stock is short "
                     "(one LCSC listing marks MCP73831 not-recommended-for-new-designs). Thermal regulation "
                     "will throttle 250 mA when hot; that is fine."))
-    p.append(P("R3", "R", "4.02k 1%", "R_0402_1005Metric", {"1": "PROG", "2": "GND"},
+    p.append(P("R3", "R", "4.02k 1%", "R_0402_1005Metric", {"1": "PROG", "2": "GND"}, mpn="CRCW04024K02FKED", lcsc="C844509",
                note="Charge current ~1000/R(kOhm) mA = ~250 mA (0.3C for 800 mAh)"))
-    p.append(P("C2", "C", "4.7uF", "C_0603_1608Metric", {"1": "VBAT", "2": "GND"}, note="Charger output / battery, 10 V X5R"))
-    p.append(P("R4", "R", "1k", "R_0402_1005Metric", {"1": "VUSB", "2": "LED_A"}, note="Charge LED current ~3 mA"))
-    p.append(P("D2", "LED", "red", "LED_0603_1608Metric", {"1": "LED_A", "2": "STAT"},
+    p.append(P("C2", "C", "4.7uF", "C_0603_1608Metric", {"1": "VBAT", "2": "GND"}, mpn="CL10A475KO8NNNC", lcsc="C19666", note="Charger output / battery, 10 V X5R"))
+    p.append(P("R4", "R", "1k", "R_0402_1005Metric", {"1": "VUSB", "2": "LED_A"}, mpn="0402WGF1001TCE", lcsc="C11702", note="Charge LED current ~3 mA"))
+    p.append(P("D2", "LED", "red", "LED_0603_1608Metric", {"1": "LED_A", "2": "STAT"}, mpn="KT-0603R", lcsc="C2286",
                note="On while charging (STAT pulls low), off when full or unplugged"))
 
     # Battery
     p.append(P("J2", "BAT_JST2", "LiPo 1S ~800 mAh", "JST_SH_SM02B-SRSS-TB_1x02-1MP_P1.00mm_Horizontal",
-               {"1": "VBAT", "2": "GND", "MP": "GND"},
+               {"1": "VBAT", "2": "GND", "MP": "GND"}, mpn="SM02B-SRSS-TB(LF)(SN)", lcsc="C160402",
                note="1S LiPo pouch WITH protection board (PCM), ~800 mAh (603040 class), JST-SH lead. "
                     "Pin 1 = +. Check the cell's lead polarity: it is not standardised."))
 
@@ -117,13 +117,13 @@ def case_parts():
                note="Boost to 5.0 V for the pods. EN tied to VIN: always on (20-30 uA standby). "
                     "Output short: current folds back to ~350 mA and it restarts when released. "
                     "LCSC C1852149 is the DRLT reel variant: same part."))
-    p.append(P("L1", "L", "1uH", "L_1008_2520Metric", {"1": "VBAT", "2": "SW"},
+    p.append(P("L1", "L", "1uH", "L_1008_2520Metric", {"1": "VBAT", "2": "SW"}, mpn="MPIH252010-1R0M-LF", lcsc="C490445",
                note="1 uH, >= 1.5 A saturation, <= 80 mOhm, 2520. Pods draw <= 200 mA, so a small part is enough"))
-    p.append(P("C3", "C", "10uF", "C_0805_2012Metric", {"1": "VBAT", "2": "GND"}, note="Boost input, 10 V X5R, at VIN"))
-    p.append(P("C4", "C", "22uF", "C_0805_2012Metric", {"1": "V5", "2": "GND"}, note="Boost output, 10 V X5R"))
-    p.append(P("C5", "C", "22uF", "C_0805_2012Metric", {"1": "V5", "2": "GND"}, note="Boost output, 10 V X5R"))
-    p.append(P("R5", "R", "732k 1%", "R_0402_1005Metric", {"1": "V5", "2": "FB"}, note="FB top: VOUT = 0.595 V x (1 + 732k/100k) = 4.95 V"))
-    p.append(P("R6", "R", "100k 1%", "R_0402_1005Metric", {"1": "FB", "2": "GND"}, note="FB bottom"))
+    p.append(P("C3", "C", "10uF", "C_0805_2012Metric", {"1": "VBAT", "2": "GND"}, mpn="CL21A106KAYNNNE", lcsc="C15850", note="Boost input, 10 V X5R, at VIN"))
+    p.append(P("C4", "C", "22uF", "C_0805_2012Metric", {"1": "V5", "2": "GND"}, mpn="CL21A226MAQNNNE", lcsc="C45783", note="Boost output, 10 V X5R"))
+    p.append(P("C5", "C", "22uF", "C_0805_2012Metric", {"1": "V5", "2": "GND"}, mpn="CL21A226MAQNNNE", lcsc="C45783", note="Boost output, 10 V X5R"))
+    p.append(P("R5", "R", "732k 1%", "R_0402_1005Metric", {"1": "V5", "2": "FB"}, mpn="0402WGF7323TCE", lcsc="C27016", note="FB top: VOUT = 0.595 V x (1 + 732k/100k) = 4.95 V"))
+    p.append(P("R6", "R", "100k 1%", "R_0402_1005Metric", {"1": "FB", "2": "GND"}, mpn="0402WGF1003TCE", lcsc="C25741", note="FB bottom"))
 
     # Pogo pins: left pod and right pod, each VBUS + GND, with ESD on VBUS
     for side, n0 in (("L", 1), ("R", 3)):
