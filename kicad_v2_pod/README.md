@@ -44,6 +44,8 @@ in `kicad_v2/`. Edit the scripts, not the `.kicad_sch` files.
 - Two GND balls have no via of their own and reach GND through a short B.Cu trace to a neighbouring
   GND ball: codec U15 D6 (to D7) and PMIC U2 D5 (to C5). That freed escape routes for SDA1 and
   SHIP_EN.
+- Charge contacts: P1 (VBUS) / P2 (GND) are wire-landing pads. The case mates two Ø1.5 mm metal
+  contacts in the shell's bottom end, 5.0 mm apart around the magnet; wire each to its pad.
 - Before ordering: view it in KiCad's 3D viewer and check the mic port hole (U14) lines up with the
   shell's mic hole; check paste on the bottom-port mic ring as on the in-ear board.
 
