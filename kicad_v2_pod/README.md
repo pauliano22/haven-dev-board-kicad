@@ -41,7 +41,7 @@ in `kicad_v2/`. Edit the scripts, not the `.kicad_sch` files.
   → `tools/rip_reroute_v2_pod.py` (rip up a blocking net and reroute both). The last two steps
   were run by hand on a handful of nets, so re-running the generator does **not** reproduce this
   board; treat `haven_v2_pod.kicad_pcb` as the source from here on.
-- Three balls have no via of their own and reach GND through a short B.Cu trace to a neighbouring
+- Two GND balls have no via of their own and reach GND through a short B.Cu trace to a neighbouring
   GND ball: codec U15 D6 (to D7) and PMIC U2 D5 (to C5). That freed escape routes for SDA1 and
   SHIP_EN.
 - Before ordering: view it in KiCad's 3D viewer and check the mic port hole (U14) lines up with the
