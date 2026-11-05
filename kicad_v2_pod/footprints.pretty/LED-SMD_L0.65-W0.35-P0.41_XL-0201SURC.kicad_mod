@@ -1,0 +1,8 @@
+(footprint "LED-SMD_L0.65-W0.35-P0.41_XL-0201SURC" (version 20221018) (generator haven_kicad_port)
+  (layer "F.Cu")
+  (attr smd)
+  (fp_text reference "REF**" (at 0 -1.5) (layer "F.SilkS") (effects (font (size 0.8 0.8) (thickness 0.12))))
+  (fp_text value "LED-SMD_L0.65-W0.35-P0.41_XL-0201SURC" (at 0 1.5) (layer "F.Fab") (effects (font (size 0.8 0.8) (thickness 0.12))))
+  (pad "2" smd rect (at -0.2049 -0.0001 270) (size 0.2800 0.1700) (layers "F.Cu" "F.Paste" "F.Mask"))
+  (pad "1" smd rect (at 0.2050 -0.0001 90) (size 0.2800 0.1700) (layers "F.Cu" "F.Paste" "F.Mask"))
+)
