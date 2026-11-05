@@ -8,7 +8,9 @@ ALL_VIA_LAYERS = [pcbnew.F_Cu, pcbnew.B_Cu, pcbnew.In1_Cu, pcbnew.In2_Cu, pcbnew
 VIA_PENALTY_MM = 0.4  # equivalent path-length cost per layer change, discourages via spam
 VIA_R_MM = 0.10  # via radius for the standard 0.20mm/0.10mm via used throughout this board
 
-def multilayer_astar(board, net, start, end, clearance_mm, cell=0.1, margin=2.0, max_iters=600000):
+def multilayer_astar(board, net, start, end, clearance_mm, cell=0.1, margin=2.0, max_iters=600000,
+                     start_on=None, end_on=None):
+    """start_on / end_on: optional lists of pcbnew layer ids the route must start / end on."""
     rl.set_clearance(clearance_mm)
     xmin = min(start[0], end[0]) - margin
     xmax = max(start[0], end[0]) + margin
@@ -70,6 +72,10 @@ def multilayer_astar(board, net, start, end, clearance_mm, cell=0.1, margin=2.0,
 
     start_layers = usable_layers(start)
     end_layers = usable_layers(end)
+    if start_on is not None:
+        start_layers = [li for li in start_layers if LAYERS[li] in start_on]
+    if end_on is not None:
+        end_layers = [li for li in end_layers if LAYERS[li] in end_on]
     if not start_layers or not end_layers:
         return None, f'start_layers={start_layers} end_layers={end_layers}'
 

@@ -41,7 +41,7 @@ GASKET_R = 1.4
 EDGE = 0.3                             # part keep-back from the board edge
 CLR, TRACK, VIA_D, VIA_DRILL = 0.10, 0.1, 0.35, 0.2   # 0.10: keeps tracks 0.15 mm from via holes
 FAN_D, FAN_DRILL = 0.25, 0.15
-SPACING = 0.12                         # courtyard-to-courtyard gap for auto-placed parts
+SPACING = 0.22                         # courtyard-to-courtyard gap for auto-placed parts
 C0 = (100.0, 100.0)
 
 # Fixed placements: ref -> (x, y, rot, side). Side "F" top, "B" bottom.
@@ -51,11 +51,11 @@ FIXED = {
     "W4": (5.65, 4.00, 0, "F"), "W5": (5.65, 2.85, 0, "F"), "W6": (5.65, 1.70, 0, "F"),
     "TP8": (3.0, -0.6, 0, "F"), "TP9": (-3.0, -0.6, 0, "F"),
     "U4": (-5.0, 9.1, 0, "F"),
-    "U15": (1.0, 4.4, 0, "B"),
-    "U2": (1.2, -5.2, 0, "B"),
+    "U15": (-2.4, -4.6, 0, "B"),            # codec in the open lower half, off the module
+    "U2": (3.4, -5.6, 0, "B"),
     "U3": (-1.6, 0.9, 0, "B"),
     "X1": (2.6, 0.3, 0, "B"),
-    "CRYSTAL1": (2.9, 7.0, 0, "B"),
+    "CRYSTAL1": (-4.6, -1.9, 0, "B"),
     "P1": (-3.6, -12.0, 0, "B"), "P2": (3.6, -12.0, 0, "B"),
     **{f"TP{i + 1}": (-4.5 + 1.5 * i, -10.1, 0, "B") for i in range(7)},
     **{f"D{i}": (5.0, y, 0, "B") for i, y in zip(range(2, 7), (7.45, 6.30, 4.00, 2.85, 1.70))},
@@ -231,6 +231,17 @@ def main():
     for ref, (x, y, rot, side) in FIXED.items():
         place_at(fps[ref], x, y, rot, side)
         occ.add(side, fp_rect(fps[ref]))
+    # module inner-column pads (staggered behind the outer column): via-in-pad when connected, as on Rev A
+    for pad in fps["U1"].Pads():
+        n = pad.GetNetname()
+        num = int(pad.GetNumber())
+        if n and not n.startswith("unconnected") and (num in range(3, 18, 2) or num in range(28, 37, 2)):
+            v = pcbnew.PCB_VIA(board); v.SetPosition(pad.GetPosition())
+            v.SetDrill(pcbnew.FromMM(FAN_DRILL)); v.SetWidth(pcbnew.FromMM(FAN_D)); v.SetNet(pad.GetNet())
+            board.Add(v)
+            vx, vy = dxf(pad.GetPosition())
+            occ.add("B", (vx - FAN_D / 2, vy - FAN_D / 2, vx + FAN_D / 2, vy + FAN_D / 2))
+
     # mic: rotate until its port pad lands on MIC_PORT
     mic = fps[MIC[0]]
     place_at(mic, 0, 0, MIC[2], MIC[3])
@@ -271,7 +282,7 @@ def main():
         ax, ay = dxf(pad.GetPosition())
         fp = fps[ref]
         done = False
-        for k in range(1, 400):
+        for k in range(1, 2000):
             rad = 0.15 * k ** 0.5 * 1.6
             ang = k * 2.39996
             x, y = ax + rad * math.cos(ang), ay + rad * math.sin(ang)
@@ -287,8 +298,9 @@ def main():
             raise SystemExit(f"no room for {ref}")
         placed.add(ref)
 
-    # fan-out vias: every connected BGA / WLCSP ball not on the array's outer ring, plus every
-    # GND and supply ball, gets a 0.15 / 0.25 mm via in its pad (filled and capped at fab)
+    # fan-out vias: every connected BGA / WLCSP ball gets a 0.15 / 0.25 mm via in its pad (filled and
+    # capped at fab). Reserving them before autorouting keeps other nets from routing under a ball,
+    # which is what left nets unroutable when only the inner balls were fanned out.
     for ref, rows, cols in (("U15", "ABCDEFG", range(1, 9)), ("U2", "ABCDE", range(1, 6))):
         for pad in fps[ref].Pads():
             n = pad.GetNetname()
@@ -296,8 +308,7 @@ def main():
                 continue
             num = pad.GetNumber()
             r, c = num[0], int(num[1:])
-            inner = r not in (rows[0], rows[-1]) and c not in (cols[0], cols[-1])
-            if inner or n in ("/GND", "/V_LS", "/DVDD", "/+1V8"):
+            if True:
                 v = pcbnew.PCB_VIA(board); v.SetPosition(pad.GetPosition())
                 v.SetDrill(pcbnew.FromMM(FAN_DRILL)); v.SetWidth(pcbnew.FromMM(FAN_D)); v.SetNet(pad.GetNet())
                 board.Add(v)

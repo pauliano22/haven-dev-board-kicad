@@ -22,6 +22,7 @@ MIN_W = 0.09
 
 
 MM = pcbnew.FromMM
+TOL = MM(0.002)                     # rounding slack on exact-minimum spacings (0.35 mm BGA grid)
 
 
 def seg_dist(p, a, b):
@@ -65,18 +66,18 @@ class Obstacles:
         if not (x0 + m < q.x < x1 - m and y0 + m < q.y < y1 - m):
             return False
         for a, c, hw, n, _ in self.tracks:            # copper 0.10 and hole 0.15 to other nets
-            if n != "/GND" and seg_dist(q, a, c) - hw < max(self.VIA_R + MM(0.10), self.HOLE_R + MM(0.15)):
+            if n != "/GND" and seg_dist(q, a, c) - hw < max(self.VIA_R + MM(0.10), self.HOLE_R + MM(0.15)) - TOL:
                 return False
         for p, r, n in self.vias:                      # hole-to-hole 0.2 for every via
             d = math.hypot(p.x - q.x, p.y - q.y)
-            if d < 2 * self.HOLE_R + MM(0.2) or (n != "/GND" and d < r + self.VIA_R + MM(0.10)):
+            if d < 2 * self.HOLE_R + MM(0.2) - TOL or (n != "/GND" and d < r + self.VIA_R + MM(0.10) - TOL):
                 return False
         for l, t, r, bt, n, pth, _, pad in self.pads:
-            if pad is own_pad:
+            if pad.m_Uuid.AsString() == own_pad.m_Uuid.AsString():
                 continue
             dx = max(l - q.x, 0, q.x - r); dy = max(t - q.y, 0, q.y - bt)
             d = math.hypot(dx, dy)
-            if n != "/GND" and d < max(self.VIA_R + MM(0.10), self.HOLE_R + MM(0.15)):
+            if n != "/GND" and d < max(self.VIA_R + MM(0.10), self.HOLE_R + MM(0.15)) - TOL:
                 return False
             if n == "/GND" and pth and d < MM(0.2):
                 return False
@@ -90,7 +91,7 @@ class Obstacles:
                     if seg_dist(p, s, e) - hw < MM(0.05 + 0.10):
                         return False
         for l, t, r, bt, n, pth, onf, pad in self.pads:
-            if n == "/GND" or pad is own_pad or (onf != (layer == pcbnew.F_Cu) and not pth):
+            if n == "/GND" or pad.m_Uuid.AsString() == own_pad.m_Uuid.AsString() or (onf != (layer == pcbnew.F_Cu) and not pth):
                 continue
             for k in range(11):                         # sample the track against the pad box
                 x = a.x + (c.x - a.x) * k / 10; y = a.y + (c.y - a.y) * k / 10
