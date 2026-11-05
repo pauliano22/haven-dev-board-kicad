@@ -2,3 +2,4 @@ __pycache__/
 *.pyc
 *.kicad_prl
 fab_output/
+fab/rev_a/gerbers/
