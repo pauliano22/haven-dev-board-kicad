@@ -29,6 +29,22 @@ LiPo ── TPS61023 boost, 4.95 V, always on ── pogo pins: L pod (VBUS, GND
   The footprint is a 2.2 mm round seat for a 2.0 mm-base SMD spring pin; the actual part is open.
 - ESD (TPD1E05U06, same as the pod) on USB VBUS and on the pogo VBUS rail.
 
+## Layout (2026-11-05)
+- 44 × 15.5 mm, 2 layers, 1.0 mm, all parts on top. Outline and pin positions come from
+  haven-hardware `mechanical_cad/v2_bte/case.json` (the board sits on the case's bottom plate
+  under the pods).
+- `kicad-cli pcb drc --schematic-parity --severity-all`: **0 violations, 0 unconnected, 0 parity
+  issues.** JLCPCB standard 2-layer rules (0.15 mm clearance, 0.6/0.3 mm vias).
+- Flow: `tools/gen_v2_case_schematic.py` → `tools/gen_v2_case_pcb.py` (placement, the SW trace,
+  pours) → `tools/route_v2_case_pcb.py` (Freerouting) → `tools/stitch_v2_case_pcb.py` (GND
+  stitching). One GND island (under R2) got a via by hand after stitching.
+- The spring pins sit exactly under the pod contacts. USB-C (J1) is at x = −2 mm with its mouth
+  flush with the back edge, and the charge LED (D2) is at the back edge behind the case's light hole.
+- Boost layout: U2's SW pin sits straight under L1's SW pad (0.35 mm trace, ~1.3 mm long). The
+  output caps are on the side the VOUT pin faces, and the input cap is beside L1's VBAT pad.
+- Spring pins: SMD, about 9.8 mm tall, ≥ 1 mm travel. The board top is 9.3 mm below the pod
+  contacts. The footprint is a 2.2 mm round seat until the part is chosen.
+
 ## Firmware impact
 - Pods see 5 V on VBUS whenever they sit in the case (VBUS_DET). The pod firmware should drop to
   its lowest-power state there (no advertising), or it will drain the case battery.
@@ -36,4 +52,3 @@ LiPo ── TPS61023 boost, 4.95 V, always on ── pogo pins: L pod (VBUS, GND
 ## Open
 1. Pogo pin part (2.0 mm base, ~1.5 mm travel) and its land pattern.
 2. LCSC numbers for the passives, the LED, the JST-SH header and the 1 µH inductor (marked blank).
-3. Case board outline and layout: waits for the case shell.

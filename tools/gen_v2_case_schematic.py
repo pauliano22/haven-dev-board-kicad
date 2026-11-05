@@ -150,3 +150,11 @@ if __name__ == "__main__":
     txt = open(sch).read().replace('(title "Haven v2 earbud")', '(title "Haven v2 BTE charging case")', 1)
     txt = txt.replace("tools/gen_v2_schematic.py", "tools/gen_v2_case_schematic.py", 1)
     open(sch, "w").write(txt)
+    # USB-C mouth sits on the board edge: drop the connector's silk outline in the project copy
+    import pcbnew
+    lib = f"{g.OUT}/footprints.pretty"
+    fp = pcbnew.FootprintLoad(lib, "USB_C_Receptacle_HRO_TYPE-C-31-M-12")
+    for gr in list(fp.GraphicalItems()):
+        if gr.GetLayer() == pcbnew.F_SilkS:
+            fp.Remove(gr)
+    pcbnew.FootprintSave(lib, fp)
