@@ -20,12 +20,34 @@ cable. Two projects keep each board's DRC rules, stackup and BOM independent: th
 and writer in `tools/gen_v2_schematic.py`, which still generates the single-board pebble design
 in `kicad_v2/`. Edit the scripts, not the `.kicad_sch` files.
 
-## Status (2026-11-04)
+## Status (2026-11-05)
 - Pod: 79 parts, 48 nets. In-ear: 11 parts, 7 nets.
 - `kicad-cli sch erc`: **0 violations on both**.
 - Exported netlists match the scripts' intended netlists on every net (0 mismatches).
 - BOM export works: `kicad_v2_pod/haven_v2_pod_bom.csv`, `kicad_v2_inear/haven_v2_inear_bom.csv`.
-- No PCB layout yet. All symbol pins are "passive", so ERC checks wiring, not driver conflicts.
+- Both boards are laid out (pod: see "Pod layout" below; in-ear: `kicad_v2_inear/README.md`). All symbol pins are "passive", so ERC checks wiring, not driver conflicts.
+
+## Pod layout (2026-11-05)
+- 13 × 27 mm, 6 layers, 0.8 mm, outline from haven-hardware `mechanical_cad/v2_bte`.
+  Stackup: F.Cu signal | In1 solid GND | In2, In3 signal | In4 signal + GND | B.Cu signal + GND.
+- `kicad-cli pcb drc --schematic-parity --severity-all`: **0 violations, 0 unconnected, 0 parity
+  issues.** 826 tracks, 143 vias, narrowest track 0.09 mm.
+- Rules are JLCPCB's standard 6-layer process: 0.1 mm clearance, 0.09 mm min track, 0.2/0.35 mm
+  routing vias, 0.15/0.25 mm vias-in-pad on the codec and PMIC balls and some 0201 GND pads.
+  **Order with via-in-pad filled and capped (POFV)**; without it, solder wicks down the ball vias.
+- Antenna keep-out: top 3.8 mm, full width, all layers.
+- Flow: `tools/gen_v2_pod_pcb.py` (placement, fan-out) → `tools/route_v2_pod_pcb.py`
+  (Freerouting) → `tools/fix_v2_pod_pcb.py` → `tools/route_rest_v2_pod.py` (A* for what's left)
+  → `tools/rip_reroute_v2_pod.py` (rip up a blocking net and reroute both). The last two steps
+  were run by hand on a handful of nets, so re-running the generator does **not** reproduce this
+  board; treat `haven_v2_pod.kicad_pcb` as the source from here on.
+- Two GND balls have no via of their own and reach GND through a short B.Cu trace to a neighbouring
+  GND ball: codec U15 D6 (to D7) and PMIC U2 D5 (to C5). That freed escape routes for SDA1 and
+  SHIP_EN.
+- Charge contacts: P1 (VBUS) / P2 (GND) are wire-landing pads. The case mates two Ø1.5 mm metal
+  contacts in the shell's bottom end, 5.0 mm apart around the magnet; wire each to its pad.
+- Before ordering: view it in KiCad's 3D viewer and check the mic port hole (U14) lines up with the
+  shell's mic hole; check paste on the bottom-port mic ring as on the in-ear board.
 
 ## Cable harness (6 conductors, ~80–100 mm, fixed)
 | Pad | Pod net | In-ear net | Signal | Notes |
