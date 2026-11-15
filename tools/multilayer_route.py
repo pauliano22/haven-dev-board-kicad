@@ -8,6 +8,9 @@ ALL_VIA_LAYERS = [pcbnew.F_Cu, pcbnew.B_Cu, pcbnew.In1_Cu, pcbnew.In2_Cu, pcbnew
 VIA_PENALTY_MM = 0.4  # equivalent path-length cost per layer change, discourages via spam
 VIA_R_MM = 0.10  # via radius for the standard 0.20mm/0.10mm via used throughout this board
 
+HEUR_W = 1.0     # >1 = greedier search (weighted A*): long routes are found far sooner, paths slightly longer
+
+
 def multilayer_astar(board, net, start, end, clearance_mm, cell=0.1, margin=2.0, max_iters=600000,
                      start_on=None, end_on=None):
     """start_on / end_on: optional lists of pcbnew layer ids the route must start / end on."""
@@ -81,7 +84,14 @@ def multilayer_astar(board, net, start, end, clearance_mm, cell=0.1, margin=2.0,
 
     def heuristic(state):
         x, y, li = state
-        return math.hypot(to_coord((x,y))[0]-end[0], to_coord((x,y))[1]-end[1])
+        return HEUR_W * math.hypot(to_coord((x,y))[0]-end[0], to_coord((x,y))[1]-end[1])
+
+    _via_cache = {}
+    _via_raw = via_clear_fast
+    def via_clear_fast(pt):                      # one check per grid point, not one per target layer
+        if pt not in _via_cache:
+            _via_cache[pt] = _via_raw(pt)
+        return _via_cache[pt]
 
     starts = [(start_c[0], start_c[1], li) for li in start_layers]
     open_set = [(heuristic(s), s) for s in starts]

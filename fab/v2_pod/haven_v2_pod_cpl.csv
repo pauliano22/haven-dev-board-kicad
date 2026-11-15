@@ -45,6 +45,7 @@ R112,6.8163mm,14.5027mm,Bottom,90
 R113,6.2998mm,15.4790mm,Bottom,0
 R114,5.6126mm,20.1078mm,Bottom,90
 R115,5.8508mm,21.1089mm,Bottom,0
+R116,7.3853mm,17.6097mm,Bottom,90
 R120,11.6400mm,22.1022mm,Bottom,0
 R122,3.3081mm,18.2653mm,Bottom,90
 R28,4.6018mm,10.6702mm,Bottom,0
@@ -57,5 +58,4 @@ U15,4.1250mm,8.9250mm,Bottom,0
 U2,9.9250mm,7.9250mm,Bottom,0
 U3,4.9250mm,14.4250mm,Bottom,0
 U4,1.5250mm,22.6250mm,Top,0
-U8,7.3853mm,17.6097mm,Bottom,90
 X1,9.1250mm,13.8250mm,Bottom,0

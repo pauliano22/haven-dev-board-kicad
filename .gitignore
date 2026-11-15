@@ -3,3 +3,6 @@ __pycache__/
 *.kicad_prl
 fab_output/
 fab/rev_a/gerbers/
+
+# Box-build package: rebuilt by tools/make_v3_box_build.py
+fab/v3_box_build/*.zip

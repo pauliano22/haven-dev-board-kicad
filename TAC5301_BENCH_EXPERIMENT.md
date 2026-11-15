@@ -14,6 +14,21 @@ evaluation doc cited).
 week — most of the "cheap experiment" cost in the original architecture memo was the AIC3254
 EVM purchase, which this avoids entirely.**
 
+> **Corrections, 2026-11-14 (before any hardware run). Use `TAC5301_BENCH_GUIDE.md` at the bench, not the
+> "Real wiring" and "5 register writes" sections below.**
+> - The 5-write sequence below never wakes the chip. It powers up in sleep mode (`DEV_MISC_CFG`, page 0 register
+>   0x02, reset 0x00); `SLEEP_ENZ` must be set first (datasheet 8.2.3 step 2a). The driver now does software reset,
+>   wake (0x02 = 0x09), 10 ms wait, then the writes below.
+> - BCLK / FSYNC were NOT continuous: `tone_gen` stops the I2S link when no tone plays. The bench build now streams
+>   silence from boot.
+> - The outputs reset to line-out drive (300 ohm minimum). For the 8 ohm speaker the driver now sets
+>   `OUT1x_CFG1` / `OUT1x_CFG2` drive = 2 (`CONFIG_HAVEN_TAC5301_OUT_DRIVE`).
+> - The package has four corner ground pins and a ground belly pad that the Schmartboard adapter has no pads for.
+>   The belly pad must be soldered through the adapter's centre hole.
+> - DK VDD is 3.0 V; AVDD is specified 3.0 to 3.6 V. I2C needs external pull-ups (the DK pin config has none).
+> - New: `tac5301_control_log_status()` reads `DEV_STS1` (0x7A) and logs PASS / what is missing;
+>   `firmware/haven_zephyr_app/tools/tac5301_bench.sh` builds, flashes and prints it.
+
 ## What this proves or disproves
 
 1. **Real hear-through latency**, measured, not computed from filter-delay tables. The

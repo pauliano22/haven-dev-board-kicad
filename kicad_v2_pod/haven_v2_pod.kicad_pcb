@@ -6673,7 +6673,7 @@
 		(layer "B.Cu")
 		(uuid "e7ff346e-5eed-4aa7-ade0-a048dcacfe91")
 		(at 100.8603 95.9153 90)
-		(property "Reference" "U8"
+		(property "Reference" "R116"
 			(at 0 1.5 270)
 			(layer "B.SilkS")
 			(hide yes)

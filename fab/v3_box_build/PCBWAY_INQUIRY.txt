@@ -1,0 +1,31 @@
+Subject: Quote request - box build / final assembly of 2 prototype units (wearable, BLE)
+
+Hello,
+
+I'd like a quote for building 2 prototype units of a small Bluetooth wearable, plus 1 charging cradle. The full
+package is attached (haven_v3_box_build_2026-11-15.zip): Gerbers, BOMs and placement files for two boards, STL/STEP
+files for the 3D-printed housings, firmware hex files, a list of off-board parts, and step-by-step build and test
+instructions (BUILD_INSTRUCTIONS.md).
+
+Please quote two options:
+
+Option A - final assembly with boards I supply
+- I would have JLCPCB make and assemble the two circuit boards and ship them to you. Please tell me the address to
+  ship to.
+- On the 2 pod boards, JLCPCB cannot place two parts. Please source and solder them:
+  U1 Raytac MDBT53V-1M Bluetooth module (LGA pads underneath), and U14 Knowles SPK0641HT4H-1 microphone. X-ray after.
+- Source the off-board parts in BOM_bought_parts.csv (batteries, speakers, spring pins, resistors, cable, ear tips,
+  magnets, screws).
+- 3D-print the housings in resin (files in print/).
+- Assemble, program the firmware over SWD, and run the bench tests in sections 5 and 6 of the instructions.
+- Ship the finished units to the USA.
+
+Option B - full turnkey
+- Same as Option A, but you also make and assemble both circuit boards (specs in section 2 of the instructions).
+
+For each option, please give the price, lead time, and anything in the files you need changed or clarified.
+These are development prototypes for bench testing only, not products for sale.
+
+Thank you,
+[your name]
+[your email / phone]

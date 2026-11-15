@@ -93,14 +93,16 @@ for fp_uuid in footprints_needed:
     pads = parse_pads(path)
     name = friendly_name.get(fp_uuid, fp_uuid)
     lines = []
-    lines.append(f'(footprint "{name}" (version 20221018) (generator haven_kicad_port)')
+    lines.append(f'(footprint "{name}" (version 20221018) (generator haven_kicad_port_yfix)')
     lines.append('  (layer "F.Cu")')
     lines.append('  (attr smd)')
     lines.append(f'  (fp_text reference "REF**" (at 0 -1.5) (layer "F.SilkS") (effects (font (size 0.8 0.8) (thickness 0.12))))')
     lines.append(f'  (fp_text value "{name}" (at 0 1.5) (layer "F.Fab") (effects (font (size 0.8 0.8) (thickness 0.12))))')
     for p in pads:
         shape_kind, w, h, corner_r = pad_geometry(p["shape"])
-        x, y = p["x"] * MM, p["y"] * MM
+        # EasyEDA footprint coordinates are y-up; KiCad is y-down. Without this negation every
+        # footprint comes out mirrored (found 2026-11-11, DESIGN_REVIEW_2026-11.md finding 1).
+        x, y = p["x"] * MM, -p["y"] * MM
         rot = p["rot"]
         num = p["number"] or "?"
         extra = ""
