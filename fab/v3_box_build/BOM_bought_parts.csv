@@ -1,0 +1,9 @@
+Item,Qty,Manufacturer,Part number,Where (as found 2026-11-15),Note
+LiPo cell 3.7 V 40 mAh with protection board,3,TinyCircuits,ASR00072,https://tinycircuits.com/products/lithium-ion-polymer-battery-3-7v-40mah,"3.5 +-0.5 x 8 +-2 x 20 +-3 mm (seller's figures); 1 spare; measure before printing shells (instructions 5.1)"
+Speaker 4.9 mm micro speaker 16 ohm,2,Ole Wolff,OWR-0504T-16,https://www.digikey.com/en/products/detail/ole-wolff-electronics-inc/OWR-0504T-16/19285332,
+Spring pin (pogo) SMD 4.5 mm free height,4,Xinyangze,YZ160615045R-01,LCSC C5157428,"Alternative with the same drawing: Kinghelm KH-PG204505-DZ, LCSC C2842924"
+Resistor 220 ohm 0402,2,any,e.g. Yageo RC0402FR-07220RL,any,In series with the speaker (+) tab; required
+Cable 2-conductor 34-36 AWG,150 mm,any,,any,Outer diameter 1.1 mm max; flexible; cut 2 x 60 mm
+Ear tip for 5.4 mm nozzle / 4.5 mm bore,2,any,,any,Foam or silicone; medium size
+Disc magnet 5 x 2 mm N52,8,any,,any,Axially magnetised
+Screw M2 x 8 self-tapping for plastic,4,any,,any,Head diameter 4 mm max

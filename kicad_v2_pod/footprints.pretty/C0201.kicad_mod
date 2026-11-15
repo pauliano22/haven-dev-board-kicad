@@ -1,4 +1,4 @@
-(footprint "C0201" (version 20221018) (generator haven_kicad_port)
+(footprint "C0201" (version 20221018) (generator haven_kicad_port_yfix)
   (layer "F.Cu")
   (attr smd)
   (fp_text reference "REF**" (at 0 -1.5) (layer "F.SilkS") (effects (font (size 0.8 0.8) (thickness 0.12))))

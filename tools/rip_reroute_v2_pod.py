@@ -18,8 +18,8 @@ import sys
 import pcbnew
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-PCB = os.path.join(ROOT, "kicad_v2_pod", "haven_v2_pod.kicad_pcb")
-WORK = os.path.expanduser("~/.cache/haven_builds/pod_pcb")
+PCB = os.environ.get("HAVEN_PCB", os.path.join(ROOT, "kicad_v2_pod", "haven_v2_pod.kicad_pcb"))      # v3: set HAVEN_PCB / HAVEN_WORK
+WORK = os.environ.get("HAVEN_WORK", os.path.expanduser("~/.cache/haven_builds/pod_pcb"))
 MM = pcbnew.FromMM
 
 
@@ -111,7 +111,7 @@ def main():
         b = pcbnew.LoadBoard(PCB)
         n = rip(b, c, q, r)
         b.Save(PCB)
-        out = subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), "route_rest_v2_pod.py"), net, c],
+        out = subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), os.environ.get("HAVEN_ROUTER", "route_rest_v2_pod.py")), net, c],
                              capture_output=True, text=True, env=dict(os.environ, ROUTE_ONLY="1")).stdout
         kinds, _ = drc_counts()
         opn = kinds.get("unconnected_items", 0)
@@ -124,9 +124,6 @@ def main():
     shutil.copy(backup, PCB)
     print("  no single rip-up worked; board restored")
 
-
-if __name__ == "__main__":
-    main()
 
 
 def gnd_via_with_rip(padref, r_mm=0.8):
@@ -203,3 +200,7 @@ def remove_dangling_safe(max_items=40):
     pcbnew.ZONE_FILLER(b).Fill(b.Zones())
     b.Save(PCB)
     return removed
+
+
+if __name__ == "__main__":
+    main()

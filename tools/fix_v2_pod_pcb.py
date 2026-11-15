@@ -16,8 +16,8 @@ import subprocess
 import pcbnew
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-PCB = os.path.join(ROOT, "kicad_v2_pod", "haven_v2_pod.kicad_pcb")
-WORK = os.path.expanduser("~/.cache/haven_builds/pod_pcb")
+PCB = os.environ.get("HAVEN_PCB", os.path.join(ROOT, "kicad_v2_pod", "haven_v2_pod.kicad_pcb"))      # v3: set HAVEN_PCB / HAVEN_WORK
+WORK = os.environ.get("HAVEN_WORK", os.path.expanduser("~/.cache/haven_builds/pod_pcb"))
 MIN_W = 0.09
 
 

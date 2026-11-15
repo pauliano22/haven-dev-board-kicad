@@ -21,14 +21,18 @@ import multilayer_route as mr  # noqa: E402
 import route_lib as rl  # noqa: E402
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-PCB = os.path.join(ROOT, "kicad_v2_pod", "haven_v2_pod.kicad_pcb")
-WORK = os.path.expanduser("~/.cache/haven_builds/pod_pcb")
+PCB = os.environ.get("HAVEN_PCB", os.path.join(ROOT, "kicad_v2_pod", "haven_v2_pod.kicad_pcb"))      # v3: set HAVEN_PCB / HAVEN_WORK
+WORK = os.environ.get("HAVEN_WORK", os.path.expanduser("~/.cache/haven_builds/pod_pcb"))
 
 mr.LAYERS = [pcbnew.F_Cu, pcbnew.In2_Cu, pcbnew.In3_Cu, pcbnew.In4_Cu, pcbnew.B_Cu]
 mr.VIA_R_MM = 0.175                 # 0.35 mm routing via
+mr.HEUR_W = float(os.environ.get("HAVEN_HEUR_W", "1.0"))   # v3: 2.0 makes the long module-to-power-chip routes findable
 rl.VIA_DRILL_R_MM = 0.10            # 0.2 mm drill
 rl.MIN_HOLE_EDGE_MM = 0.2           # hole-to-hole
 TRACK_MM, CLR_MM = 0.09, 0.105
+SMALL_VIA = bool(os.environ.get("HAVEN_SMALL_VIA"))   # v3: route with the 0.15 / 0.25 filled via (same as the chip fan-out) in tight spots
+if SMALL_VIA:
+    mr.VIA_R_MM, rl.VIA_DRILL_R_MM = 0.125, 0.075
 LAYER_ID = {"F.Cu": pcbnew.F_Cu, "In1.Cu": pcbnew.In1_Cu, "In2.Cu": pcbnew.In2_Cu, "In3.Cu": pcbnew.In3_Cu,
             "In4.Cu": pcbnew.In4_Cu, "B.Cu": pcbnew.B_Cu}      # a hair over the 0.10 rule, for rounding
 
@@ -77,7 +81,7 @@ def commit(b, net, path, s, e):
     for (a, la), (c, lc) in zip(simp, simp[1:]):
         if la != lc:
             v = pcbnew.PCB_VIA(b); v.SetPosition(pcbnew.VECTOR2I_MM(*a))
-            v.SetDrill(pcbnew.FromMM(0.2)); v.SetWidth(pcbnew.FromMM(0.35)); v.SetNet(ni); b.Add(v)
+            v.SetDrill(pcbnew.FromMM(0.15 if SMALL_VIA else 0.2)); v.SetWidth(pcbnew.FromMM(0.25 if SMALL_VIA else 0.35)); v.SetNet(ni); b.Add(v)
             if a != c:
                 pass
             continue

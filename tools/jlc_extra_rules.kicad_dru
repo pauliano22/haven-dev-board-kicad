@@ -1,0 +1,14 @@
+(version 1)
+# JLCPCB's published multilayer limits (jlcpcb.com/capabilities/pcb-capabilities, read 2026-11-07)
+# that KiCad's own project rules do not enforce. Used by verify_v2_order_files.sh on the pod board.
+(rule "JLC pad to pad, different nets"
+  (condition "A.Type == 'Pad' && B.Type == 'Pad' && A.NetName != B.NetName")
+  (constraint clearance (min 0.15mm)))
+(rule "JLC via hole to other copper"
+  (condition "A.Type == 'Via'")
+  (constraint hole_clearance (min 0.2mm)))
+(rule "JLC through-hole pad hole to copper"
+  (condition "A.Type == 'Pad' && A.Pad_Type == 'Through-hole'")
+  (constraint hole_clearance (min 0.28mm)))
+(rule "JLC hole to hole"
+  (constraint hole_to_hole (min 0.2mm)))

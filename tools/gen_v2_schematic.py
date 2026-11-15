@@ -201,7 +201,7 @@ npm = {"B1": "VBUS", "B2": "VBUS", "D1": "VBAT", "D2": "VBAT",
        "C1": "VSYS", "C2": "VSYS", "A3": "DEC", "A4": "SW", "B5": "+1V8",
        "B4": "GND", "B3": "GND",            # VOUTBSET1/0 = LOW/LOW -> 1.8 V (Table 16)
        "E3": "CHG_ERR", "E4": "CHG_STAT", "D4": "SHIP_EN", "D3": "SHPHLD"}
-add("U2", "nPM1100", "nPM1100-CAAB-R", "WLCSP-25_2.075x2.075_P0.4", npm, "NPM1100-CAAB-R", "",
+add("U2", "nPM1100", "nPM1100-CAAB-R", "WLCSP-25_2.075x2.075_P0.4", npm, "NPM1100-CAAB-R", "C7016010",
     "D+ (A2) unconnected and D- to AVSS: fixed 100 mA VBUS limit (Table 23, config 1). "
     "VTERMSET to VSYS: 4.20 V termination.")
 C("C110", "2.2uF", "VBUS", fp="C0402", note="VBUS input (Nordic C1, 0603 25 V in the reference)")
@@ -237,7 +237,7 @@ add("U4", "LED", "XL-0201SURC", "LED-SMD_L0.65-W0.35-P0.41_XL-0201SURC",
 R("R4", "510R", "LED_K", "LED_D", mpn="WR02X511JAL", lcsc="C180335")
 add("Q2", "NMOS", "CSD15380F3", "PICOSTAR-3_L0.7-W0.6-P0.40-TL",
     {"1": "LED_EN", "2": "GND", "3": "LED_D"}, "CSD15380F3", "C529568")
-R("U8", "1M", "LED_EN", "GND", mpn="CQ01WMJ0105TEE", lcsc="C5151554", note="Gate pull-down (v1 U8)")
+R("R116", "1M", "LED_EN", "GND", mpn="CQ01WMJ0105TEE", lcsc="C5151554", note="Gate pull-down (v1 U8)")
 
 # --- debug pads
 for i, (val, net) in enumerate([("SWDIO", "SWDIO"), ("SWCLK", "SWCLK"), ("RESET", "nRESET"),
@@ -381,6 +381,9 @@ NEW_FPS = {
     "PogoPad_1.6": lambda: round_pad_fp("PogoPad_1.6", 1.6, "Gold charging pad for a case pogo pin"),
     "TestPad_0.8": lambda: round_pad_fp("TestPad_0.8", 0.8, "Test / SWD pad"),
     "Pad_1.2": lambda: round_pad_fp("Pad_1.2", 1.2, "Wire pad for battery tab or speaker lead"),
+    "TestPad_0.6": lambda: round_pad_fp("TestPad_0.6", 0.6, "Small test pad (v3 pod: next to a spring-pin land)"),
+    "SpringPin_2.0": lambda: round_pad_fp("SpringPin_2.0", 2.0, "Land for a surface-mount spring pin with a 2.0 mm base "
+                                          "(Xinyangze YZ160615045R-01 / Kinghelm KH-PG204505-DZ family)"),
     "D_SOD-523": sod523_fp,
 }
 V1_FP_DIR = os.path.join(ROOT, "kicad", "footprints.pretty")

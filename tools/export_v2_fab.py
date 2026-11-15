@@ -20,7 +20,7 @@ import zipfile
 import pcbnew
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-BOARDS = {"pod": 6, "inear": 2, "case": 2}
+BOARDS = {"pod": 6, "inear": 2, "case": 2, "v3pod": 6, "v3podpanel": 6}     # v3podpanel: v3 pod with break-off rails (tools/make_v3_pod_panel.py)
 
 
 def sch_parts(sch):
@@ -37,10 +37,15 @@ def sch_parts(sch):
 
 
 def export(name, layers_n):
-    prj = os.path.join(ROOT, f"kicad_v2_{name}")
-    pcb = os.path.join(prj, f"haven_v2_{name}.kicad_pcb")
-    sch = os.path.join(prj, f"haven_v2_{name}.kicad_sch")
-    out = os.path.join(ROOT, "fab", f"v2_{name}")
+    panel = name == "v3podpanel"
+    ver, name = ("v3", "pod") if name in ("v3pod", "v3podpanel") else ("v2", name)      # v3pod: kicad_v3_pod -> fab/v3_pod
+    prj = os.path.join(ROOT, f"kicad_{ver}_{name}")
+    pcb = os.path.join(prj, f"haven_{ver}_{name}.kicad_pcb")
+    sch = os.path.join(prj, f"haven_{ver}_{name}.kicad_sch")
+    out = os.path.join(ROOT, "fab", f"{ver}_{name}")
+    if panel:
+        pcb = os.path.join(prj, "panel", "haven_v3_pod_panel.kicad_pcb")
+        out, name = out + "_panel", name + "_panel"
     gdir = os.path.join(out, "gerbers")
     os.makedirs(gdir, exist_ok=True)
     for f in os.listdir(gdir):
@@ -61,7 +66,7 @@ def export(name, layers_n):
     subprocess.run(["kicad-cli", "pcb", "export", "drill", "--format", "excellon", "--drill-origin", "plot",
                     "--excellon-separate-th", "--generate-map", "--map-format", "gerberx2", "-o", gdir + "/", pcb],
                    check=True, capture_output=True)
-    with zipfile.ZipFile(os.path.join(out, f"haven_v2_{name}_gerbers.zip"), "w", zipfile.ZIP_DEFLATED) as z:
+    with zipfile.ZipFile(os.path.join(out, f"haven_{ver}_{name}_gerbers.zip"), "w", zipfile.ZIP_DEFLATED) as z:
         for f in sorted(os.listdir(gdir)):
             z.write(os.path.join(gdir, f), f)
 
@@ -70,6 +75,8 @@ def export(name, layers_n):
     for fp in sorted(board.GetFootprints(), key=lambda f: f.GetReference()):
         ref = fp.GetReference()
         val, fpn, mpn, lcsc, dnp = parts.get(ref, (fp.GetValue(), "", "", "", False))
+        if fp.GetAttributes() & pcbnew.FP_BOARD_ONLY:          # break holes and fiducials on a panel
+            continue
         if dnp or fp.IsDNP():
             skipped.append(f"{ref} (DNP)")
             continue
@@ -81,12 +88,12 @@ def export(name, layers_n):
         p = fp.GetPosition()
         cpl.append([ref, f"{pcbnew.ToMM(p.x - origin.x):.4f}mm", f"{pcbnew.ToMM(origin.y - p.y):.4f}mm",
                     "Bottom" if fp.GetLayer() == pcbnew.B_Cu else "Top", f"{fp.GetOrientationDegrees() % 360:g}"])
-    with open(os.path.join(out, f"haven_v2_{name}_bom.csv"), "w", newline="") as f:
+    with open(os.path.join(out, f"haven_{ver}_{name}_bom.csv"), "w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["Comment", "Designator", "Footprint", "Manufacturer Part", "LCSC Part #"])
         for (val, fpn, mpn, lcsc), refs in groups.items():
             w.writerow([val, ",".join(refs), fpn, mpn, lcsc])
-    with open(os.path.join(out, f"haven_v2_{name}_cpl.csv"), "w", newline="") as f:
+    with open(os.path.join(out, f"haven_{ver}_{name}_cpl.csv"), "w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["Designator", "Mid X", "Mid Y", "Layer", "Rotation"])
         w.writerows(cpl)
