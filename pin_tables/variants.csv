@@ -1,0 +1,8 @@
+family_regex,required_mpn,reason
+^NPM1100-,NPM1100-CAAA-E-R,"CA = WLCSP; function variant AA = standard VTERM (4.20 V with VTERMSET high), AB = high VTERM (4.35 V). PS v1.5 Tables 12, 33. The cell is a 4.2 V LiPo."
+^ADAU1860,ADAU1860BCBZRL,ADAU1860-1 is a different ROM variant; the firmware is written for ADAU1860
+^AP22916,AP22916CCA4-7,C version: slow turn-on (1 mV/us); the B version's 0.3-0.4 A inrush could brown out the radio
+^MDBT53,MDBT53V-1M,"V = nRF5340 with chip antenna, 1M = 1 MB flash; firmware and antenna keep-out assume this module"
+^SPK0641,SPK0641HT4H-1,top-port PDM mic; the shell's mic hole is above the board
+^TPD1E05U06,TPD1E05U06DYAR,DYA = SOD-523 package the footprint is drawn for
+^DFE201610,DFE201610E-2R2M=P2,"E series, not P (C237554): DCR and Isat checked against nPM1100 PS Table 20"

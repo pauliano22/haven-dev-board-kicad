@@ -1,0 +1,40 @@
+pin,name,type,source
+1,GND,Power,Raytac MDBT53V-1M spec 2.5
+2,SWDIO,Debug,Raytac MDBT53V-1M spec 2.5
+3,SWCLK,Debug,Raytac MDBT53V-1M spec 2.5
+4,nRESET,Reset,Raytac MDBT53V-1M spec 2.5
+5,P0.26,Digital I/O,Raytac MDBT53V-1M spec 2.5
+6,P0.18,Digital I/O,Raytac MDBT53V-1M spec 2.5
+7,P0.25,Digital I/O,Raytac MDBT53V-1M spec 2.5
+8,P0.17,Digital I/O,Raytac MDBT53V-1M spec 2.5
+9,P0.12,Digital I/O,Raytac MDBT53V-1M spec 2.5
+10,P0.16,Digital I/O,Raytac MDBT53V-1M spec 2.5
+11,P0.11,Digital I/O,Raytac MDBT53V-1M spec 2.5
+12,P0.15,Digital I/O,Raytac MDBT53V-1M spec 2.5
+13,P0.10,Digital I/O,Raytac MDBT53V-1M spec 2.5
+14,P0.14,Digital I/O,Raytac MDBT53V-1M spec 2.5
+15,P0.09,Digital I/O,Raytac MDBT53V-1M spec 2.5
+16,P0.13,Digital I/O,Raytac MDBT53V-1M spec 2.5
+17,P0.08,Digital I/O,Raytac MDBT53V-1M spec 2.5
+18,GND,Power,Raytac MDBT53V-1M spec 2.5
+19,P1.03,Digital I/O,Raytac MDBT53V-1M spec 2.5
+20,P1.02,Digital I/O,Raytac MDBT53V-1M spec 2.5
+21,P0.03,Digital I/O,Raytac MDBT53V-1M spec 2.5
+22,P0.02,Digital I/O,Raytac MDBT53V-1M spec 2.5
+23,P0.00,Digital I/O,Raytac MDBT53V-1M spec 2.5
+24,P0.01,Digital I/O,Raytac MDBT53V-1M spec 2.5
+25,DCCH,Power,Raytac MDBT53V-1M spec 2.5
+26,VDD,Power,Raytac MDBT53V-1M spec 2.5
+27,GND,Power,Raytac MDBT53V-1M spec 2.5
+28,P0.05,Digital I/O,Raytac MDBT53V-1M spec 2.5
+29,VDDH,Power,Raytac MDBT53V-1M spec 2.5
+30,P0.04,Digital I/O,Raytac MDBT53V-1M spec 2.5
+31,DCCD,Power,Raytac MDBT53V-1M spec 2.5
+32,P1.13,Digital I/O,Raytac MDBT53V-1M spec 2.5
+33,DECD,Power,Raytac MDBT53V-1M spec 2.5
+34,P1.12,Digital I/O,Raytac MDBT53V-1M spec 2.5
+35,DCC,Power,Raytac MDBT53V-1M spec 2.5
+36,P1.11,Digital I/O,Raytac MDBT53V-1M spec 2.5
+37,DECR,Power,Raytac MDBT53V-1M spec 2.5
+38,P0.31,Digital I/O,Raytac MDBT53V-1M spec 2.5
+39,GND,Power,Raytac MDBT53V-1M spec 2.5
