@@ -63,6 +63,10 @@ def l2016_fp():
 g.NEW_FPS["MIC_SPK0641HT4H-1"] = spk0641_fp
 g.NEW_FPS["L_2016"] = l2016_fp
 
+# 2026-11-19 audit: the Xinglight XL-0201SURC datasheet (page 7) numbers the cathode 1 and the anode 2. Pin positions
+# unchanged (anode left, cathode right), numbers swapped. On the board U4 is turned 180 degrees to match.
+g.SYMBOLS["LED"] = dict(left=[("2", "A")], right=[("1", "K")], ref="D", width=5.08, small=True)
+
 
 def pod_parts():
     parts = bte.pod_parts()
@@ -78,6 +82,13 @@ def pod_parts():
     refs = bte.by_ref(parts)
     assert not any(n in cable_mic_nets for p in parts for n in p["nets"].values())
 
+    # 2026-11-19 audit: CAAB is the high-VTERM variant (PS v1.5 Table 33) and with VTERMSET to VSYS charges to 4.35 V
+    # (Table 12). The cell is a 4.2 V LiPo: use the standard-VTERM part, same package.
+    refs["U2"].update(value="nPM1100-CAAA-E-R", mpn="NPM1100-CAAA-E-R", lcsc="C5200749",
+                      note="D+ (A2) unconnected and D- to AVSS: fixed 100 mA VBUS limit (Table 23, config 1). VTERMSET to "
+                           "VSYS: 4.20 V termination ONLY on the standard-VTERM part (CAAA); CAAB would give 4.35 V.")
+    refs["U4"]["nets"] = {"1": "LED_K", "2": "VSYS"}
+    refs["U4"]["note"] = "Red status LED. Pin 1 = cathode (Xinglight datasheet p.7)"
     refs["U3"].update(value="AP22916CCA4-7", mpn="AP22916CCA4-7", lcsc="C3246319",
                       note="Switches the codec + mic rail. C version: 1 mV/us turn-on, about 30 mA inrush "
                            "(the B version's 0.3-0.4 A could brown out the radio). Firmware supply-delay ~6000 us.")

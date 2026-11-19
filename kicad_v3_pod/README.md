@@ -277,3 +277,15 @@ Snapshot before: `~/.cache/haven_builds/v3_pod_pcb/v3_pod_before_review_fixes_20
   files and the box-build package re-exported.
 - Not changed (known, accepted): parts near the edge / tabs, 0.15 mm vias, thin supply tracks, L2 near U15, D1 far
   from P1, LED polarity, U15 mask web 0.10 mm.
+
+## Datasheet audit (2026-11-19)
+A fixed checklist instead of another open-ended review: every chip pin, support part, maker footprint and firmware pin
+against its primary source. Full table: `AUDIT_2026-11-19.md`. Script: `tools/v3_patches/audit_fix.py`. Snapshot
+before: `v3_pod_before_audit_2026-11-19` (board, schematic, symbol library); after: `v3_pod_FINAL7_audit_2026-11-19`.
+- **U2 was the wrong nPM1100 variant.** CAAB is the high-VTERM part: with VTERMSET to VSYS it charges to 4.35 V. Now
+  **nPM1100-CAAA-E-R** (4.20 V). Same package. Missed by every earlier review. (The v2 pod files carry the same CAAB
+  part; v2 is not being built.)
+- **U4 LED:** pin 1 = cathode per the datasheet; symbol renumbered, footprint turned 180 degrees, copper unchanged.
+- **Raytac "top-layer no ground" area** under the module next to the antenna: ground pour removed (F.Cu rule area).
+- Result: DRC 0 errors, 0 unconnected, parity clean, same 2 intentional warnings; ERC 0; handedness passes; panel DRC 0.
+- Firmware rebuilt from master `e547d71`; `make_v3_box_build.py` now rejects a hex older than the last firmware commit.

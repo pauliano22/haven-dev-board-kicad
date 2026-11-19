@@ -1,12 +1,12 @@
 %TF.GenerationSoftware,KiCad,Pcbnew,9.0.9-9.0.9~ubuntu22.04.1*%
-%TF.CreationDate,2026-11-18T23:50:14-05:00*%
+%TF.CreationDate,2026-11-19T02:59:59-05:00*%
 %TF.ProjectId,haven_v3_pod_panel,68617665-6e5f-4763-935f-706f645f7061,rev?*%
 %TF.SameCoordinates,Original*%
 %TF.FileFunction,Copper,L5,Inr*%
 %TF.FilePolarity,Positive*%
 %FSLAX46Y46*%
 G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
-G04 Created by KiCad (PCBNEW 9.0.9-9.0.9~ubuntu22.04.1) date 2026-11-18 23:50:14*
+G04 Created by KiCad (PCBNEW 9.0.9-9.0.9~ubuntu22.04.1) date 2026-11-19 02:59:59*
 %MOMM*%
 %LPD*%
 G01*

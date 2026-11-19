@@ -1,0 +1,28 @@
+Layout reviewing – MDBT53V-1M – Haven (personal project)
+
+Hello Raytac team,
+
+Section 2.3 of the MDBT53V-1M spec invites layout reviews, so I am sending ours before we order the first boards. Haven is a small behind-the-ear hearing-comfort device I am building as a personal project (2 prototypes, not a product yet). The board is 9.6 x 27 mm, 6 layers, 0.8 mm thick, with one MDBT53V-1M (chip antenna).
+
+Attached:
+- haven_v3_pod_layout.pdf: every copper layer plus top and bottom parts, drawn 6.5:1 as seen from the top
+- haven_v3_pod_pinmap.pdf: circuit summary and every module pin with its net
+
+What we did, following your spec:
+- The module sits at the board's top edge, antenna end flush with the edge.
+- Antenna keep-out: 3.8 mm from the module's top edge, across the full 9.6 mm board width, no copper on any of the 6 layers.
+- Top-layer no-ground area from section 2.2 (1.5 x 1.15 mm): kept free of ground pour. One VBUS via (0.35 mm pad) touches its corner.
+- Solid ground plane on layer 2 under the rest of the module.
+- LDO mode, VDD and VDDH tied together at 1.8 V. 1 uF at pad 29; the 4.7 uF bulk capacitor is about 12 mm away.
+
+Questions:
+1. Are the keep-out and the ground layout acceptable? The board is only 0.9 mm wider than the module on each side.
+2. Is the VBUS via at the corner of the top-layer no-ground area acceptable, or should it move?
+3. Nearby metal: two brass spring-pin charge contacts (2.0 mm base, 1.5 mm barrel, 3 mm tall) stand on the bottom side with their bases right at the lower edge of the keep-out (centres 1.1 mm below it). A LiPo pouch cell (aluminium laminate) lies under the board starting about 3 mm below the keep-out. The device is worn behind the ear inside a 0.8 mm plastic shell, antenna end pointing up. How much range should we expect to lose, and would you change anything?
+4. Is 1 uF at pad 29 plus 4.7 uF further away enough decoupling for VDD in LDO mode?
+
+Thank you very much for your help.
+
+Best regards,
+Paul
+Haven (personal project)

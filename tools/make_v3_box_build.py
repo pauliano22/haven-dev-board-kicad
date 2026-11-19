@@ -45,6 +45,18 @@ for out_key, src in (("print/pod_v3_shell_tray_R.stl", os.path.join(MECH, "pod_v
                      ("pcb/pod_panel/haven_v3_pod_panel_gerbers.zip", os.path.join(ROOT, "kicad_v3_pod", "haven_v3_pod.kicad_pcb"))):
     if os.path.getmtime(src) > os.path.getmtime(FILES[out_key]):
         src_newer.append(f"{out_key} is older than {os.path.basename(src)}")
+# Firmware: the hex must be newer than the firmware repo's last commit (added 2026-11-19; until then nothing checked it).
+import subprocess
+fw_repo = os.path.join(WS, "firmware", "haven_zephyr_app")
+last_commit = int(subprocess.run(["git", "-C", fw_repo, "log", "-1", "--format=%ct"], capture_output=True, text=True,
+                                 check=True).stdout.strip())
+for key in ("firmware/haven_app_core.hex", "firmware/haven_net_core.hex"):
+    if os.path.getmtime(FILES[key]) < last_commit:
+        src_newer.append(f"{key} is older than the last firmware commit (rebuild: see the docstring)")
+dirty = subprocess.run(["git", "-C", fw_repo, "status", "--porcelain", "--untracked-files=no"], capture_output=True,
+                       text=True, check=True).stdout.strip()
+if dirty:
+    src_newer.append("firmware repo has uncommitted changes: " + dirty.replace("\n", ", "))
 if src_newer:
     sys.exit("stale: " + "; ".join(src_newer))
 
