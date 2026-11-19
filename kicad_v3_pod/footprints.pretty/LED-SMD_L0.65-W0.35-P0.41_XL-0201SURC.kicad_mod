@@ -1,8 +1,79 @@
-(footprint "LED-SMD_L0.65-W0.35-P0.41_XL-0201SURC" (version 20221018) (generator haven_kicad_port_yfix)
-  (layer "F.Cu")
-  (attr smd)
-  (fp_text reference "REF**" (at 0 -1.5) (layer "F.SilkS") (effects (font (size 0.8 0.8) (thickness 0.12))))
-  (fp_text value "LED-SMD_L0.65-W0.35-P0.41_XL-0201SURC" (at 0 1.5) (layer "F.Fab") (effects (font (size 0.8 0.8) (thickness 0.12))))
-  (pad "2" smd rect (at -0.2049 0.0001 270) (size 0.2800 0.1700) (layers "F.Cu" "F.Paste" "F.Mask"))
-  (pad "1" smd rect (at 0.2050 0.0001 90) (size 0.2800 0.1700) (layers "F.Cu" "F.Paste" "F.Mask"))
+(footprint "LED-SMD_L0.65-W0.35-P0.41_XL-0201SURC"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -1.5 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "54b82a9f-2b39-4d80-bb79-8033ce7055d6")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.12)
+			)
+		)
+	)
+	(property "Value" "XL-0201SURC"
+		(at 0 1.5 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "8f394ad8-95dd-4ecc-9878-5f444caf04ba")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.12)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "1261074a-4155-486e-9177-22b9097d7aa1")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "2ee6b1a7-7e1d-4ba7-8e69-0b9345ac8191")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_rect
+		(start -0.3399 -0.1899)
+		(end 0.34 0.1901)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "a41c125c-cdc2-4b6b-b941-959076d0d57f")
+	)
+	(pad "1" smd rect
+		(at 0.205 0.0001 90)
+		(size 0.28 0.17)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "5c931768-c994-4495-8f94-1698dcd5d5cf")
+	)
+	(pad "2" smd rect
+		(at -0.2049 0.0001 270)
+		(size 0.28 0.17)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "50ee65aa-255f-4fd5-8681-c5c673f32187")
+	)
+	(embedded_fonts no)
 )

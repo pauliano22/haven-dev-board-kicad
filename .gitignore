@@ -6,3 +6,6 @@ fab/rev_a/gerbers/
 
 # Box-build package: rebuilt by tools/make_v3_box_build.py
 fab/v3_box_build/*.zip
+
+# KiCad editor lock files
+*.lck
