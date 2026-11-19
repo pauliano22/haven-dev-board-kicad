@@ -1,0 +1,9 @@
+pin,name,type,source
+1,DATA,Digital O,SPK0641HT4H-1 Rev D-1 page 7 pin table (image)
+2,CLOCK,Digital I,SPK0641HT4H-1 Rev D-1 page 7 pin table (image)
+3,SELECT,Non-Digital Input,SPK0641HT4H-1 Rev D-1 page 7 pin table (image)
+4,VDD,Power,SPK0641HT4H-1 Rev D-1 page 7 pin table (image)
+5,GROUND,Power,SPK0641HT4H-1 Rev D-1 page 7 pin table (image)
+6,GROUND,Power,SPK0641HT4H-1 Rev D-1 page 7 pin table (image)
+7,GROUND,Power,SPK0641HT4H-1 Rev D-1 page 7 pin table (image)
+8,GROUND,Power,SPK0641HT4H-1 Rev D-1 page 7 pin table (image)

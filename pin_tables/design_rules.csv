@@ -1,0 +1,36 @@
+ref,pin,expect,reason
+U2,C3,/VSYS,VTERMSET high: 4.20 V on CAAA only (PS v1.5 Tables 12 and 33). See variants.csv.
+U2,A1,/GND,D- to AVSS with D+ open: fixed 100 mA VBUS limit (PS Table 27 config 1)
+U2,A2,NC,D+ open (PS Table 27 config 1)
+U2,D5,/GND,ISET low (PS Table 27 config 1)
+U2,B3,/GND,VOUTBSET1 = 0 -> VOUTB 1.8 V with VOUTBSET0 = 0 (PS v1.5 BUCK output voltage selection)
+U2,B4,/GND,VOUTBSET0 = 0 -> VOUTB 1.8 V (PS v1.5 BUCK output voltage selection)
+U2,B5,/+1V8,VOUTB is the 1.8 V rail
+U2,E5,/GND,MODE 0 = automatic (PS Table 23)
+U15,F3,=F7,REG_EN tied to AVDD enables the internal regulator (Rev C Table 13)
+U15,E6,/GND,SELFBOOT low at start-up: no self boot (Rev C Table 13)
+U15,D6,/GND,ADDR0 low: I2C address 0x64 with ADDR1 low (firmware expects 0x64)
+U15,D7,/GND,ADDR1 low: I2C address 0x64
+U15,A1,/GND,ROM_BOOT_MODE to ground = boot-up mode 2 (Rev C Table 13; same as OpenEarable v2)
+U15,G4,/CM,CM needs its own 1 uF to ground (Rev C Table 13)
+U14,3,/GND,SELECT low = data on the falling clock edge = DMIC0 (SPK0641 Rev D-1 Table 7)
+U14,4,/V_LS,mic VDD from the switched codec rail
+U1,26,/+1V8,VDD on 1.8 V
+U1,29,=26,VDDH tied to VDD: normal-voltage mode (Raytac spec 8.1)
+U1,25,NC,DCCH open: LDO mode (Raytac LDO reference)
+U1,31,NC,DCCD open: LDO mode
+U1,33,NC,DECD open: LDO mode
+U1,35,NC,DCC open: LDO mode
+U1,37,NC,DECR open: LDO mode
+U1,23,NC,XL1 open: no 32.768 kHz crystal (firmware built with FILE_SUFFIX=lfrc)
+U1,24,NC,XL2 open: no 32.768 kHz crystal
+U3,B2,/SENSORS_ENABLE,ON driven by nRF P1.11 (firmware codec supply GPIO)
+U3,A2,/+1V8,VIN from the 1.8 V rail
+U3,A1,/V_LS,VOUT is the switched codec + mic rail
+D1,2,/GND,TPD1E05U06 pin 2 = GND (Table 4-1)
+D5,2,/GND,TPD1E05U06 pin 2 = GND
+D6,2,/GND,TPD1E05U06 pin 2 = GND
+D1,1,/VBUS,ESD on the VBUS charge contact
+U4,2,/VSYS,LED anode to VSYS
+U4,1,/LED_K,LED cathode toward the MOSFET
+Q2,2,/GND,MOSFET source to ground (low-side switch)

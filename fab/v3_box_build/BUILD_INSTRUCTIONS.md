@@ -1,6 +1,6 @@
 # Haven v3: build instructions for a turnkey (box build) order
 
-Version 2026-11-15. Prototype quantity: **2 finished pods with their in-ear pieces, and 1 charging cradle.**
+Version 2026-11-19 (replaces 2026-11-15: power chip U2 is now nPM1100-CAAA-E-R, LED U4 pin 1 = cathode, antenna-area copper). Prototype quantity: **2 finished pods with their in-ear pieces, and 1 charging cradle.**
 This is a development prototype, not a consumer product. It is not to be worn: every test below is on the bench.
 
 Everything referenced here is in this package (`haven_v3_box_build_<date>.zip`). Dimensions in mm.
