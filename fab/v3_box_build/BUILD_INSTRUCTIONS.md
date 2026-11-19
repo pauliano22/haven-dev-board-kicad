@@ -23,9 +23,12 @@ Everything referenced here is in this package (`haven_v3_box_build_<date>.zip`).
 - Assemble ALL parts in the BOM, **including U1 (Raytac MDBT53V-1M radio module, LGA pads underneath)**; it has
   no LCSC number because it is sourced from DigiKey / Raytac. Fine-pitch parts: U15 (0.35 mm BGA), U2 (0.4 mm WLCSP),
   U3 (0.4 mm WLCSP). **X-ray U1, U15, U2 and U3.**
+- **U2 must be nPM1100-CAAA-E-R (standard charge voltage, 4.20 V). Do NOT substitute nPM1100-CAAB-R:** it is the
+  same package but charges the 4.2 V cell to 4.35 V on this board.
 - Orientation: please check the polarised parts against `PLACEMENT_CHECK.md` (pin-1 side of each, as seen in the
-  file). Add 7.00 mm to the X positions in that sheet for the railed board. **U4 (LED): the cathode mark must be on
-  the LEFT (the LED_K side).** A reversed LED does no damage but stays dark.
+  file). Add 7.00 mm to the X positions in that sheet for the railed board. **U4 (LED): pad 1 is the cathode, as in
+  the Xinglight datasheet; the cathode mark must be on the LEFT (the LED_K side, toward Q2).** A reversed LED does no
+  damage but stays dark.
 - Remove the rails by **cutting the tabs with flush cutters, not snapping** (C117 and R111 sit about 1.3 mm from a
   tab), then file the four nibs flush. The shell is sized for the 9.6 mm board.
 - Do not populate anything not in the BOM. P1, P2, TP1-TP9, W5, W6 are bare pads.

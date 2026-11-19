@@ -116,8 +116,8 @@
     (rectangle (start -2.54 1.27) (end 2.54 -1.27) (stroke (width 0.254) (type default)) (fill (type background)))
   )
   (symbol "LED_1_1"
-    (pin passive line (at -5.08 0 0) (length 2.54) (name "A" (effects (font (size 1.016 1.016)))) (number "1" (effects (font (size 1.016 1.016)))))
-    (pin passive line (at 5.08 0 180) (length 2.54) (name "K" (effects (font (size 1.016 1.016)))) (number "2" (effects (font (size 1.016 1.016)))))
+    (pin passive line (at -5.08 0 0) (length 2.54) (name "A" (effects (font (size 1.016 1.016)))) (number "2" (effects (font (size 1.016 1.016)))))
+    (pin passive line (at 5.08 0 180) (length 2.54) (name "K" (effects (font (size 1.016 1.016)))) (number "1" (effects (font (size 1.016 1.016)))))
   )
 )
 (symbol "MDBT53V-1M" (pin_names (offset 0.254)) (in_bom yes) (on_board yes)
