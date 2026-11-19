@@ -34,6 +34,10 @@ os.makedirs(OUT_DIR, exist_ok=True)
 shutil.copy(SRC, OUT)
 for ext in (".kicad_pro",):
     shutil.copy(SRC.replace(".kicad_pcb", ext), OUT.replace(".kicad_pcb", ext))
+import json
+_pro = OUT.replace(".kicad_pcb", ".kicad_pro"); _d = json.load(open(_pro))
+# the panel's break holes and fiducials are mechanical marks with no courtyard; the board itself is checked in its own project
+_d["board"]["design_settings"]["rule_severities"]["missing_courtyard"] = "ignore"; json.dump(_d, open(_pro, "w"), indent=2)
 open(os.path.join(OUT_DIR, "fp-lib-table"), "w").write(open(os.path.join(os.path.dirname(SRC), "fp-lib-table")).read().replace("${KIPRJMOD}/", "${KIPRJMOD}/../"))
 b = pcbnew.LoadBoard(OUT)
 edge = b.GetLayerID("Edge.Cuts")

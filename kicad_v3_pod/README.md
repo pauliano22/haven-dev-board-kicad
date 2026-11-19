@@ -256,3 +256,24 @@ The in-ear piece becomes a small speaker on two wires, with no circuit board.
   land pattern are drawn the same way up.
 - Firmware low-battery shutdown is still missing (review finding 4). The pouch cell's own protection is a backstop, not a plan.
 - The speaker (Ole Wolff OWR-0504T-16, 4.9 mm) is unmeasured in a sealed ear.
+
+## Review fixes (2026-11-18, after an outside AI review run in Vector)
+Snapshot before: `~/.cache/haven_builds/v3_pod_pcb/v3_pod_before_review_fixes_2026-11-18.kicad_pcb`; after:
+`v3_pod_FINAL6_review_fixes_2026-11-18.kicad_pcb`. Script: `tools/v3_patches/review_fix.py`.
+- **Battery polarity on the board:** "BAT+" / "BAT-" on the bottom silk above TP8 (VBAT) and TP9 (GND).
+- **Courtyards:** 45 footprints had none and the project ignored "missing courtyard", so "0 errors" never covered
+  parts crowding each other. Added pad-and-body + 0.05 mm courtyards (L2 tightened to body + 0.10 mm), turned the
+  check on (error). Library footprints in `footprints.pretty` updated to match (old copies in
+  `~/.cache/haven_builds/v3_review_fix/footprints.pretty.before`).
+- **U2 / U3 pads 0.20 / 0.18 -> 0.25 mm:** Diodes suggests 0.24 mm for the AP22916 (DS44758 p.31); the nPM1100's
+  balls are 0.195-0.255 mm (PS v1.5 table 25); 0.25 also meets JLCPCB's minimum. The SENSORS_ENABLE via in U3's B2
+  (ON) pad moved 0.05 mm diagonally so it stays >= 0.12 mm from A2 and B1.
+- **Tight pads:** C32.2 and R5.1 trimmed 0.02 mm on the side facing C114 (gaps 0.142 / 0.144 -> 0.162 / 0.165 mm).
+  Smallest pad gap between parts on the board is now 0.153 mm (R9-U15). These two are the only "footprint differs
+  from library" notes in DRC, on purpose.
+- **Dead track removed:** the SCL1 stub on In2 (2.3 mm) and the whole dead XTALO branch on F.Cu (about 4.3 mm, it
+  ran toward the inductor); XTALO now only joins R28 and U15.B6. The earlier prune had removed the wrong segment.
+- Result: DRC 0 errors, 0 unconnected, schematic parity clean; handedness check passes; railed panel DRC 0; fab
+  files and the box-build package re-exported.
+- Not changed (known, accepted): parts near the edge / tabs, 0.15 mm vias, thin supply tracks, L2 near U15, D1 far
+  from P1, LED polarity, U15 mask web 0.10 mm.

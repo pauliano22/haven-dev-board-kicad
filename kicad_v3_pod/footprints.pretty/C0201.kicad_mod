@@ -1,8 +1,79 @@
-(footprint "C0201" (version 20221018) (generator haven_kicad_port_yfix)
-  (layer "F.Cu")
-  (attr smd)
-  (fp_text reference "REF**" (at 0 -1.5) (layer "F.SilkS") (effects (font (size 0.8 0.8) (thickness 0.12))))
-  (fp_text value "C0201" (at 0 1.5) (layer "F.Fab") (effects (font (size 0.8 0.8) (thickness 0.12))))
-  (pad "2" smd rect (at 0.2741 0.0000) (size 0.3684 0.3240) (layers "F.Cu" "F.Paste" "F.Mask"))
-  (pad "1" smd rect (at -0.2743 0.0000) (size 0.3684 0.3240) (layers "F.Cu" "F.Paste" "F.Mask"))
+(footprint "C0201"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -1.5 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "6515e954-fe9d-41bc-9019-1e8750d5ccc7")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.12)
+			)
+		)
+	)
+	(property "Value" "100nF"
+		(at 0 1.5 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "10a91e23-6fc9-441a-935c-e1bec5e787dd")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.12)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "67d3e6e0-e343-4885-97a2-f1a7a89ea2c9")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "2b724157-ef19-440d-b5dd-3af79c18c257")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_rect
+		(start -0.5085 -0.212)
+		(end 0.5083 0.212)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "d4e396b2-ddbc-4021-b991-e67cf5ceee8c")
+	)
+	(pad "1" smd rect
+		(at -0.2743 0)
+		(size 0.3684 0.324)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "93b212da-cca2-4e45-901c-7d6d40e28e06")
+	)
+	(pad "2" smd rect
+		(at 0.2741 0)
+		(size 0.3684 0.324)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "2bf0512f-6b72-4e62-895d-7fa2ad0ed211")
+	)
+	(embedded_fonts no)
 )

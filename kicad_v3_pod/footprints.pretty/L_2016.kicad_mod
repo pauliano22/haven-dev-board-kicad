@@ -1,10 +1,80 @@
-(footprint "L_2016" (version 20240108) (generator "gen_v2_schematic")
-  (layer "F.Cu")
-  (descr "2.0x1.6 mm power inductor, Murata DFE201610E recommended pattern (pads 0.55 x 1.6, gap 0.9, overall 2.0)")
-  (attr smd)
-  (property "Reference" "REF**" (at 0 -1.5 0) (layer "F.SilkS") (effects (font (size 0.5 0.5) (thickness 0.08))))
-  (property "Value" "L_2016" (at 0 1.5 0) (layer "F.Fab") (effects (font (size 0.5 0.5) (thickness 0.08))))
-  (pad "1" smd rect (at -0.725 0) (size 0.55 1.6) (layers "F.Cu" "F.Paste" "F.Mask"))
-  (pad "2" smd rect (at 0.725 0) (size 0.55 1.6) (layers "F.Cu" "F.Paste" "F.Mask"))
-  (fp_rect (start -1.25 -1) (end 1.25 1) (stroke (width 0.05) (type solid)) (fill none) (layer "F.CrtYd"))
+(footprint "L_2016"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "2.0x1.6 mm power inductor, Murata DFE201610E recommended pattern (pads 0.55 x 1.6, gap 0.9, overall 2.0)")
+	(property "Reference" "REF**"
+		(at 0 -1.5 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "07af0c6d-8333-48b2-8767-40cccccdf355")
+		(effects
+			(font
+				(size 0.5 0.5)
+				(thickness 0.08)
+			)
+		)
+	)
+	(property "Value" "2.2uH"
+		(at 0 1.5 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "7b01d8d5-149e-4fef-85e8-52ea013cc72d")
+		(effects
+			(font
+				(size 0.5 0.5)
+				(thickness 0.08)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "fa0917e6-3aa1-4daf-b20e-25c5b79025f7")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "88c17609-ca23-4371-8e2a-e211e15e8d7f")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_rect
+		(start 1.1 0.9)
+		(end -1.1 -0.9)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "d4c097a1-57dd-4e91-a8d2-17787f973376")
+	)
+	(pad "1" smd rect
+		(at -0.725 0)
+		(size 0.55 1.6)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "4e55df7e-a0cd-4e65-a888-872f97c025a9")
+	)
+	(pad "2" smd rect
+		(at 0.725 0)
+		(size 0.55 1.6)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "d13ea5c2-6c63-40ba-9e69-bd44348a8a8f")
+	)
+	(embedded_fonts no)
 )

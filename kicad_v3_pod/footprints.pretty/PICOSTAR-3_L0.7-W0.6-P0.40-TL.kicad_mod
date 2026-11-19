@@ -1,9 +1,85 @@
-(footprint "PICOSTAR-3_L0.7-W0.6-P0.40-TL" (version 20221018) (generator haven_kicad_port_yfix)
-  (layer "F.Cu")
-  (attr smd)
-  (fp_text reference "REF**" (at 0 -1.5) (layer "F.SilkS") (effects (font (size 0.8 0.8) (thickness 0.12))))
-  (fp_text value "PICOSTAR-3_L0.7-W0.6-P0.40-TL" (at 0 1.5) (layer "F.Fab") (effects (font (size 0.8 0.8) (thickness 0.12))))
-  (pad "3" smd rect (at 0.2001 0.0001) (size 0.1500 0.5000) (layers "F.Cu" "F.Paste" "F.Mask"))
-  (pad "1" smd rect (at -0.2000 -0.2001) (size 0.2500 0.2000) (layers "F.Cu" "F.Paste" "F.Mask"))
-  (pad "2" smd rect (at -0.2000 0.2000) (size 0.2500 0.2000) (layers "F.Cu" "F.Paste" "F.Mask"))
+(footprint "PICOSTAR-3_L0.7-W0.6-P0.40-TL"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -1.5 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "65a46e60-f806-40a9-99b5-77754f52a2fc")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.12)
+			)
+		)
+	)
+	(property "Value" "CSD15380F3"
+		(at 0 1.5 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "54e70cd3-c94d-4200-8e83-ee3d2d37947b")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.12)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "13f1f04b-886b-42a6-9b0b-fb7c4772435d")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "54f431dd-1812-4baa-a357-c6adb82ba6ab")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_rect
+		(start -0.375 -0.3501)
+		(end 0.3251 0.35)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "55d3c57d-f0ba-4bc0-942d-7b891fe2d1e5")
+	)
+	(pad "1" smd rect
+		(at -0.2 -0.2001)
+		(size 0.25 0.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "aea9e8d3-9f52-410b-8f32-dacf5b871912")
+	)
+	(pad "2" smd rect
+		(at -0.2 0.2)
+		(size 0.25 0.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "f34d97f2-c201-41b9-8f8d-d955a56d6ad0")
+	)
+	(pad "3" smd rect
+		(at 0.2001 0.0001)
+		(size 0.15 0.5)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "88878c9a-0a37-4e3c-b457-82cb2d60ba48")
+	)
+	(embedded_fonts no)
 )
